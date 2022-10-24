@@ -4,11 +4,11 @@ const PORT = process.env.PORT || 3001;
 
 // Middlewares
 const logger = require('./middlewares/logger');
-// const sessions = require('./middlewares/sessions');
+const sessions = require('./middlewares/sessions');
 
 // Controllers
 const usersController = require('./controllers/users_controller');
-// const sessionsController = require('./controllers/sessions_controller');
+const sessionsController = require('./controllers/sessions_controller');
 
 // Starting back-end server
 app.listen(PORT, () => console.log(`Wishlist Eliminator API\nServer listening on port ${PORT}`));
@@ -30,10 +30,10 @@ if (process.env.NODE_ENV === 'production') {
 app.use(express.json());
 
 // Enables sessions
-// app.use(sessions);
+app.use(sessions);
 
 // Route controllers
 app.use('/api/users', usersController);
-// app.use('/api/sessions', sessionsController);
+app.use('/api/sessions', sessionsController);
 
 // Response is sent back to user/client
