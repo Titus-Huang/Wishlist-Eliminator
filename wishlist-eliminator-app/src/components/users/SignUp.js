@@ -1,6 +1,9 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
-function SignUp() {
+function SignUp(props) {
+    const navigate = useNavigate();
+
     const [ submitted, setSubmitted] = useState(false);
     const [ valid, setValid ] = useState(false);
     const [ signupForm, onSignupFormChange ] = useState({
@@ -38,10 +41,23 @@ function SignUp() {
         if (signupForm.username && signupForm.email && signupForm.password) {
             setSubmitted(true);
             setValid(true);
+            const data = Object.fromEntries(new FormData(e.target));
+
+            fetch('/api/users', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+                .then(res => res.json())
+                .then(userData => {
+                    console.log(userData)
+                    props.updateUserData(userData)
+                    navigate('/')
+                });
         } else {
             setSubmitted(true);
         }
-        console.log(e);
+        // console.log(e);
     };
 
     return (
