@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
 function Home(props) {
-    const [ counter, setCounter ] = useState(0)
+    const [ counter, setCounter ] = useState(0);
 
     const increaseCounter = () => {
-        setCounter(counter + 1)
+        setCounter(counter + 1);
     }
 
     return (
@@ -16,4 +16,4 @@ function Home(props) {
     )
 }
 
-export default Home
+export default Home;

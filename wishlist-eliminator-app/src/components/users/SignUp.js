@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function SignUp(props) {
+function SignUp() {
     const navigate = useNavigate();
 
     const [ submitted, setSubmitted] = useState(false);
@@ -16,6 +16,7 @@ function SignUp(props) {
 
     const handleUsernameInputChange = event => {
         event.persist();
+
         onSignupFormChange((inputValue) => ({
             ...inputValue,
             username: event.target.value,
@@ -24,6 +25,7 @@ function SignUp(props) {
 
     const handleEmailInputChange = event => {
         event.persist();
+
         onSignupFormChange((inputValue) => ({
             ...inputValue,
             email: event.target.value,
@@ -32,6 +34,7 @@ function SignUp(props) {
 
     const handlePasswordInputChange = event => {
         event.persist();
+
         onSignupFormChange((inputValue) => ({
             ...inputValue,
             password: event.target.value,
@@ -40,6 +43,7 @@ function SignUp(props) {
 
     const handleSubmit = e => {
         e.preventDefault();
+        
         if (signupForm.username && signupForm.email && signupForm.password) {
             setSubmitted(true);
             setValid(true);
@@ -55,7 +59,6 @@ function SignUp(props) {
                         renderError(res.error);
                     } else {
                         // console.log(res);
-                        // props.updateUserData(res);
                         console.log("Signed up!");
                         navigate('/users/login');
                     }

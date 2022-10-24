@@ -13,7 +13,7 @@ function App() {
     const [ appData, updateAppData ] = useState({
         wishlist: {},
         userData: {}
-    })
+    });
 
     // first run when the components first loads onto the screen
     const fetchUserDataOnStart = () => {
@@ -24,16 +24,16 @@ function App() {
                 // console.log(data);
 
                 if (!data.error) {
-                    console.log('data being updated')
+                    console.log('data being updated');
                     updateAppData((existingAppData) => ({
                         ...existingAppData,
                         userData: data,
                     }));
                 }
-            })
+            });
     }
 
-    useEffect(fetchUserDataOnStart, [])
+    useEffect(fetchUserDataOnStart, []);
 
     const updateUserData = data => {
         updateAppData((existingAppData) => ({
@@ -48,7 +48,7 @@ function App() {
 
             <Routes>
                 <Route path='/' element={<Home name={appData.userData.username} />} />
-                <Route path='/users/sign-up' element={<SignUp updateUserData={updateUserData} />} />
+                <Route path='/users/sign-up' element={<SignUp />} />
                 <Route path='/users/login' element={<Login updateUserData={updateUserData} />} />
                 <Route path='/users/logout' element={<Logout />} />
             </Routes>

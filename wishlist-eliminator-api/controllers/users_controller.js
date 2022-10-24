@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 
 // models
-const User = require('../models/user')
+const User = require('../models/user');
 
 // routes
 router.post('/', (req, res) => {

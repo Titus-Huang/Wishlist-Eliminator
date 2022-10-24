@@ -1,8 +1,8 @@
 function logger(req, res, next) {
-    console.log(`${new Date()} ${req.method} ${req.path}`)
+    console.log(`${new Date()} ${req.method} ${req.path}`);
 
     // next() calls the next function in middleware to run
-    next()
+    next();
 }
 
-module.exports = logger
+module.exports = logger;

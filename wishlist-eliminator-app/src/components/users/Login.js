@@ -15,7 +15,7 @@ function Login(props) {
 
     const handleUsernameOrEmailInputChange = event => {
         event.persist();
-        
+
         onLoginFormChange((inputValue) => ({
             ...inputValue,
             usernameOrEmail: event.target.value,
@@ -48,7 +48,7 @@ function Login(props) {
                     if (res.error) {
                         renderError(res.error);
                     } else {
-                        console.log(res);
+                        // console.log(res);
                         props.updateUserData(res);
                         console.log("Logged in...");
                         navigate('/');
