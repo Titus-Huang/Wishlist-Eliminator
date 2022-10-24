@@ -1,8 +1,13 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function Login() {
+function Login(props) {
+    const navigate = useNavigate();
+    
     const [ submitted, setSubmitted] = useState(false);
     const [ valid, setValid ] = useState(false);
+    const [ error, setError ] = useState(false);
+    const [ errorMsg, setErrorMsg ] = useState('');
     const [ loginForm, onLoginFormChange ] = useState({
         usernameOrEmail: '',
         username: '',
@@ -12,13 +17,13 @@ function Login() {
 
     const handleUsernameOrEmailInputChange = event => {
         event.persist();
-        let newEmailInput = ''
-        let newUsernameInput = ''
+        let newEmailInput = '';
+        let newUsernameInput = '';
 
         if (/@{1}/g.test(event.target.value)) {
-            newEmailInput = event.target.value
+            newEmailInput = event.target.value;
         } else {
-            newUsernameInput = event.target.value
+            newUsernameInput = event.target.value;
         }
 
         onLoginFormChange((inputValue) => ({
@@ -44,11 +49,37 @@ function Login() {
         if ((loginForm.username || loginForm.email) && loginForm.password) {
             setSubmitted(true);
             setValid(true);
+
+            const data = {};
+            loginForm.username !== '' ? data.username = loginForm.username : data.email = loginForm.email;
+            data.password = loginForm.password;
+
+            fetch('/api/users', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.error) {
+                        renderError(res.error);
+                    } else {
+                        // console.log(res);
+                        props.updateUserData(res);
+                        console.log("Logged in...");
+                        navigate('/');
+                    }
+                });
         } else {
             setSubmitted(true);
         }
-        console.log(e);
+        // console.log(e);
     };
+
+    const renderError = errMsg => {
+        setError(true);
+        setErrorMsg(errMsg);
+    }
 
     return (
         <div className='login-page'>
@@ -56,7 +87,8 @@ function Login() {
 
             <div className='login-form-div'>
                 <form className='login-form' onSubmit={handleSubmit}>
-                    {submitted && valid && <div className="success-message">Success! Logging in...</div>}
+                    {submitted && valid && !error && <div className="success-message">Success! Logging in...</div>}
+                    {submitted && valid && error && <div className="failure-response">Error! {errorMsg}</div>}
 
                     <label htmlFor='usernameOrEmail'>Username or Email: </label>
                     <input

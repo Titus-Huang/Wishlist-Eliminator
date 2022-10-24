@@ -29,7 +29,7 @@ function App() {
             <Routes>
                 <Route path='/' element={<Home name='Titus' />} />
                 <Route path='/users/sign-up' element={<SignUp updateUserData={updateUserData} />} />
-                <Route path='/users/login' element={<Login />} />
+                <Route path='/users/login' element={<Login updateUserData={updateUserData} />} />
                 <Route path='/users/logout' element={<Logout />} />
             </Routes>
         </div>

@@ -6,7 +6,8 @@ function SignUp(props) {
 
     const [ submitted, setSubmitted] = useState(false);
     const [ valid, setValid ] = useState(false);
-    
+    const [ error, setError ] = useState(false);
+    const [ errorMsg, setErrorMsg ] = useState('');
     const [ signupForm, onSignupFormChange ] = useState({
         username: '',
         email: '',
@@ -53,8 +54,9 @@ function SignUp(props) {
                     if (res.error) {
                         renderError(res.error);
                     } else {
-                        console.log(res)
-                        props.updateUserData(res)
+                        // console.log(res);
+                        props.updateUserData(res);
+                        console.log("Signed up & Logged in...");
                         navigate('/')
                     }
                 });
