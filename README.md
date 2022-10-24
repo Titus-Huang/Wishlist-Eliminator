@@ -16,6 +16,7 @@ $ node app.js
 - Add in-app screenshots.
 
 ## :pencil2: Planning & Problem Solving
+- (Day 1) Learning to implement a user authentication system across two different frameworks was tricky, but having implemented it several times within Express. It was just the matter of translating the front-end to React and figuring out how data communitation would flow in React's "waterfall" method and between to the Express API server.
 - Talk about approach to the problem.
 - Add screenshots/drawings of doodles/plans during the planning phase.
 - Flow charts of app logic.
@@ -35,6 +36,9 @@ $ node app.js
 - Buttons to not click too many times (cause its broken :unamused:)
 
 ## :sob: Lessons learnt
+### Day 1
+Would certainly look at more detailed method in how user sessions can be made more secure in the future, as currently it is pretty much open for middleman attacks. It was certainly a challenge in learning how user authentication/login/logout works within the context of this React/Express app.
+
 What I would do differently if I could wind back the clock...
 
 ## :white_check_mark: Future features
