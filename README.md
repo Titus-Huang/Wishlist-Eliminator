@@ -43,3 +43,17 @@ What I would do differently if I could wind back the clock...
 
 ## :white_check_mark: Future features
 Cool things I would add if I can keep working on this
+
+## Day 1 Diary
+Day 1: getting the user signup/login system functional! (done)
+
+Day 2 goals: getting the planned API implemented and functioning, bonus would be starting to have the site be more than barebones. Also will get the project uploaded to Heroku. With a lil bit of writing/thought processes on the project (hhhh)
+
+Day 3 goals: MVP, hopefully! Able to join the app, get the wishlist imported and then sort it out to your needs. 
+Plus definitely to figure out the bootstrap-i-fication of the site layout/etc...
+And colours (not great at picking the colour pallet that isn't my sona... lol)
+
+Day 4 goals: Will hopefully be just some more writing that's required for the project. Hopefully I can then work on some extension work, adding CSS animations/"fancy" functionality alongside maybe implementing Steam third-party login?
+Having posts linked in would be awesome <3
+
+Day 5 goals: Absolutely will still be working on the site the morning of, always never ending things to add and polish and bug fix. Heroku app will certainly be updated and working by today. (will had started testing on Day 2)
