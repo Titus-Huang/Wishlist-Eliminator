@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 function SignUp() {
     const [ submitted, setSubmitted] = useState(false);
@@ -42,7 +42,7 @@ function SignUp() {
             setSubmitted(true);
         }
         console.log(e);
-    }
+    };
 
     return (
         <div className='sign-up-page'>
@@ -87,7 +87,7 @@ function SignUp() {
                         value={signupForm.password}
                         onChange={handlePasswordInputChange}
                     />
-                    {submitted && !signupForm.password && <span id="email-error">Please enter a password</span>}
+                    {submitted && !signupForm.password && <span id="password-error">Please enter a password</span>}
 
                     <br />
 
