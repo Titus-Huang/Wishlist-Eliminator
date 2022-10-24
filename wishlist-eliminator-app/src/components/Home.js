@@ -8,7 +8,7 @@ function Home(props) {
     }
 
     return (
-        <div className="Home">
+        <div className='Home'>
             <h1>Welcome {props.name} to my App</h1>
             <p>Counter: {counter}</p>
             <button onClick={increaseCounter}>Count</button>
