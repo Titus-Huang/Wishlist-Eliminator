@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import NavBar from './components/NavBar';
@@ -15,6 +15,26 @@ function App() {
         userData: {}
     })
 
+    // first run when the components first loads onto the screen
+    const fetchUserDataOnStart = () => {
+        fetch('/api/sessions')
+            .then(res => res.json())
+            .then(data => {
+                // console.log('data blep');
+                // console.log(data);
+
+                if (!data.error) {
+                    console.log('data being updated')
+                    updateAppData((existingAppData) => ({
+                        ...existingAppData,
+                        userData: data,
+                    }));
+                }
+            })
+    }
+
+    useEffect(fetchUserDataOnStart, [])
+
     const updateUserData = data => {
         updateAppData((existingAppData) => ({
             ...existingAppData,
@@ -27,7 +47,7 @@ function App() {
             <NavBar />
 
             <Routes>
-                <Route path='/' element={<Home name='Titus' />} />
+                <Route path='/' element={<Home name={appData.userData.username} />} />
                 <Route path='/users/sign-up' element={<SignUp updateUserData={updateUserData} />} />
                 <Route path='/users/login' element={<Login updateUserData={updateUserData} />} />
                 <Route path='/users/logout' element={<Logout />} />

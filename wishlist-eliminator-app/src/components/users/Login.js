@@ -3,34 +3,22 @@ import { useNavigate } from 'react-router-dom';
 
 function Login(props) {
     const navigate = useNavigate();
-    
+
     const [ submitted, setSubmitted] = useState(false);
     const [ valid, setValid ] = useState(false);
     const [ error, setError ] = useState(false);
     const [ errorMsg, setErrorMsg ] = useState('');
     const [ loginForm, onLoginFormChange ] = useState({
         usernameOrEmail: '',
-        username: '',
-        email: '',
         password: ''
     });
 
     const handleUsernameOrEmailInputChange = event => {
         event.persist();
-        let newEmailInput = '';
-        let newUsernameInput = '';
-
-        if (/@{1}/g.test(event.target.value)) {
-            newEmailInput = event.target.value;
-        } else {
-            newUsernameInput = event.target.value;
-        }
-
+        
         onLoginFormChange((inputValue) => ({
             ...inputValue,
             usernameOrEmail: event.target.value,
-            username: newUsernameInput,
-            email: newEmailInput,
         }));
     };
 
@@ -46,25 +34,21 @@ function Login(props) {
     const handleSubmit = e => {
         e.preventDefault();
 
-        if ((loginForm.username || loginForm.email) && loginForm.password) {
+        if (loginForm.usernameOrEmail && loginForm.password) {
             setSubmitted(true);
             setValid(true);
 
-            const data = {};
-            loginForm.username !== '' ? data.username = loginForm.username : data.email = loginForm.email;
-            data.password = loginForm.password;
-
-            fetch('/api/users', {
+            fetch('/api/sessions', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
+                body: JSON.stringify(loginForm)
             })
                 .then(res => res.json())
                 .then(res => {
                     if (res.error) {
                         renderError(res.error);
                     } else {
-                        // console.log(res);
+                        console.log(res);
                         props.updateUserData(res);
                         console.log("Logged in...");
                         navigate('/');
@@ -99,7 +83,7 @@ function Login(props) {
                         value={loginForm.usernameOrEmail}
                         onChange={handleUsernameOrEmailInputChange}
                     />
-                    {submitted && !(loginForm.username || loginForm.email) && <span id="username-error">Please enter a username or email</span>}
+                    {submitted && !loginForm.usernameOrEmail && <span id="username-error">Please enter a username or email</span>}
 
                     <br />
 

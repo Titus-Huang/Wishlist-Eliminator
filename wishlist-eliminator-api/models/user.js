@@ -12,7 +12,7 @@ const User = {
             .query(sql, [username, email, passwordDigest])
             .then(dbRes => {
                 let userData = dbRes.rows[0];
-                delete userData.password_digest;
+                if (typeof userData !== 'undefined') delete userData.password_digest;
                 return userData;
             });
     },
@@ -25,11 +25,7 @@ const User = {
     
         return db
             .query(sql, [email])
-            .then(dbRes => {
-                let userData = dbRes.rows[0];
-                delete userData.password_digest;
-                return userData;
-            });
+            .then(dbRes => userData = dbRes.rows[0]);
     },
 
     findByUsername: username => {
@@ -40,11 +36,7 @@ const User = {
     
         return db
             .query(sql, [username])
-            .then(dbRes => {
-                let userData = dbRes.rows[0];
-                delete userData.password_digest;
-                return userData;
-            });
+            .then(dbRes => userData = dbRes.rows[0]);
     },
 
     findById: id => {
@@ -57,7 +49,7 @@ const User = {
             .query(sql, [id])
             .then(dbRes => {
                 let userData = dbRes.rows[0];
-                delete userData.password_digest;
+                if (typeof userData !== 'undefined') delete userData.password_digest;
                 return userData;
             });
     }

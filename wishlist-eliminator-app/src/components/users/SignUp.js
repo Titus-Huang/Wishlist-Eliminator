@@ -55,9 +55,9 @@ function SignUp(props) {
                         renderError(res.error);
                     } else {
                         // console.log(res);
-                        props.updateUserData(res);
-                        console.log("Signed up & Logged in...");
-                        navigate('/')
+                        // props.updateUserData(res);
+                        console.log("Signed up!");
+                        navigate('/users/login');
                     }
                 });
         } else {
