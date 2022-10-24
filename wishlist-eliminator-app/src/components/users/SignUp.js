@@ -6,6 +6,7 @@ function SignUp(props) {
 
     const [ submitted, setSubmitted] = useState(false);
     const [ valid, setValid ] = useState(false);
+    
     const [ signupForm, onSignupFormChange ] = useState({
         username: '',
         email: '',
@@ -41,18 +42,21 @@ function SignUp(props) {
         if (signupForm.username && signupForm.email && signupForm.password) {
             setSubmitted(true);
             setValid(true);
-            const data = Object.fromEntries(new FormData(e.target));
 
             fetch('/api/users', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
+                body: JSON.stringify(signupForm)
             })
                 .then(res => res.json())
-                .then(userData => {
-                    console.log(userData)
-                    props.updateUserData(userData)
-                    navigate('/')
+                .then(res => {
+                    if (res.error) {
+                        renderError(res.error);
+                    } else {
+                        console.log(res)
+                        props.updateUserData(res)
+                        navigate('/')
+                    }
                 });
         } else {
             setSubmitted(true);
@@ -60,13 +64,19 @@ function SignUp(props) {
         // console.log(e);
     };
 
+    const renderError = errMsg => {
+        setError(true);
+        setErrorMsg(errMsg);
+    }
+
     return (
         <div className='sign-up-page'>
             <h2>Sign Up:</h2>
 
             <div className='sign-up-form-div'>
                 <form className='sign-up-form' onSubmit={handleSubmit}>
-                    {submitted && valid && <div className="success-message">Success! Thank you for registering</div>}
+                    {submitted && valid && !error && <div className="success-message">Success! Thank you for registering</div>}
+                    {submitted && valid && error && <div className="failure-response">Error! {errorMsg}</div>}
 
                     <label htmlFor='username'>Username: </label>
                     <input
