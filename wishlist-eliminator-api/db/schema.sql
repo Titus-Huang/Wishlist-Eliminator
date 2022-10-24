@@ -14,3 +14,7 @@ CREATE TABLE users(
 
 -- Display total data from users
 SELECT * FROM users;
+
+-- Reset Users table
+TRUNCATE TABLE users;
+ALTER SEQUENCE users_id_seq RESTART WITH 1;
