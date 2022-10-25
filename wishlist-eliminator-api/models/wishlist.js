@@ -20,6 +20,7 @@ const db = require('../db/db');
 
 // -- row data
 // wishlists_data_id integer,
+// master_reference boolean
 // created_at timestamp,
 // edited_at timestamp,
 
@@ -46,6 +47,18 @@ const WishlistData = {
         return db
             .query(sql, [userId])
             .then(dbRes => dbRes.rows[0]);
+    },
+
+    getWishlistDataId: (userId) => {
+        const sql = `
+            SELECT id
+            FROM wishlists_data
+            WHERE user_id = $1
+        `;
+
+        return db
+            .query(sql, [userId])
+            .then(dbRes => dbRes.rows[0].id);
     },
 
     importSteamWishlist: (userId, gameIds) => {
@@ -77,8 +90,60 @@ const WishlistData = {
 // individual lists (users can have multiple)
 const Wishlist = {
     // called when Steam Wishlist data is imported
-    create: (data_table_id, game_id) => {
+    createMasterReference: (dataTableId, gameIds, gameNames, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
+        const sql = `
+            INSERT INTO wishlists (
+                wishlists_data_id,
+                master_reference,
+                created_at,
+                game_ids,
+                game_name,
+                game_img_bg,
+                date_added,
+                release_date,
+                release_date_str,
+                deck_compat
+            )
+            VALUES (
+                $1,
+                'true',
+                now(),
+                $2,
+                $3,
+                $4,
+                $5,
+                $6,
+                $7,
+                $8
+            )
+        `
 
+        return db
+            .query(sql, [dataTableId, gameIds, gameNames, dateAdded, releaseDates, releaseDatesStr, deckCompat])
+    },
+
+    doesMasterReferenceExist: (wishlistDataId) => {
+        const sql = `
+            SELECT *
+            FROM wishlists
+            WHERE wishlists_data_id = $1 AND master_reference = 'true'
+        `;
+
+        return db
+            .query(sql, [wishlistDataId])
+            .then(dbRes => typeof dbRes.rows[0] !== 'undefined');
+    },
+
+    getUserMasterReference: (wishlistDataId) => {
+        const sql = `
+            SELECT *
+            FROM wishlists
+            WHERE wishlists_data_id = $1 AND master_reference = 'true'
+        `;
+        
+        return db
+            .query(sql, [wishlistDataId])
+            .then(dbRes => dbRes.rows[0]);
     }
 };
 

@@ -44,11 +44,12 @@ function Import(props) {
                             .then(res => res.json())
                             .then(steamWishlistData => {
                                 // update local data with downloaded info
-                                console.table(steamWishlistData)
+                                // console.table(steamWishlistData)
                                 props.updateSteamWishlistData(steamWishlistData)
-                            })
+                                console.log("end of fetch");
+                            });
                     }
-                })
+                });
                 // .then(wishlist => {
                 //     console.table(wishlist)
                 // })

@@ -50,6 +50,7 @@ CREATE TABLE wishlists(
     id serial primary key,
     -- row data
     wishlists_data_id integer,
+    master_reference boolean,
     created_at timestamp,
     edited_at timestamp,
     -- local data

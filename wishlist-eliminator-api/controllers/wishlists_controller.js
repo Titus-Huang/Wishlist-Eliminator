@@ -37,8 +37,31 @@ router.get('/import/:steamId', async (req, res) => {
 
                 // after data is put within wishlist_data
                 // now putting data into first OG wishlist post
+                // check if Master Reference exists
+
+                WishlistData
+                    .getWishlistDataId(userId)
+                    .then(dataId => {
+                        // console.log('dataId', dataId)
+                        Wishlist
+                            .doesMasterReferenceExist(dataId)
+                            .then(doesMastExist => { return {dataId, doesMastExist}})
+                            .then(checks => {
+                                // const { } = steamWishlist
+                                // console.log('SteamWishlist', steamWishlist)
+                                // console.log('ResKeys', resKeys)
+                                // console.log('importedSteamList', importedSteamList)
+
+                                if (checks.doesMastExist) {
+                                    console.log("master copy DOES exist!!!");
+                                } else {
+                                    console.log("master copy does NOT exist!!!");
+                                    Wishlist.createMasterReference(checks.dataId, )
+                                }
+                            })
+                    })
             } else {
-                res.status(404).json({ error: 'unable to find wishlist from Steam' })
+                res.status(404).json({ error: 'unable to find wishlist from Steam' });
             }
         })
     // if fetch fails, site will freeze
