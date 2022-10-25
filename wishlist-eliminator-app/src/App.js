@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import './App.css';
 
 import NavBar from './components/NavBar';
 import Home from './components/Home';
 import Login from './components/users/Login';
 import Logout from './components/users/Logout';
-import SignUp from './components/users/SignUp';
-
-import './App.css';
+import SignUp from './components/users/Sign_Up';
+import Import from './components/wishlist/Import';
 
 function App() {
+    const location = useLocation();
+
     const [ appData, updateAppData ] = useState({
         wishlist: {},
         userData: {}
@@ -44,13 +46,14 @@ function App() {
 
     return (
         <div className='App'>
-            <NavBar />
+            {location.pathname !== '/' && <NavBar userData={appData.userData} />}
 
             <Routes>
-                <Route path='/' element={<Home name={appData.userData.username} />} />
+                <Route path='/' element={<Home userData={appData.userData} />} />
                 <Route path='/users/sign-up' element={<SignUp />} />
                 <Route path='/users/login' element={<Login updateUserData={updateUserData} />} />
                 <Route path='/users/logout' element={<Logout />} />
+                <Route path='/wishlists/import' element={<Import />} />
             </Routes>
         </div>
     );
