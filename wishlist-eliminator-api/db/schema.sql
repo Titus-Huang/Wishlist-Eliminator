@@ -27,17 +27,20 @@ ALTER TABLE users ADD COLUMN steam_id TEXT;
 
 CREATE TABLE wishlists(
     id serial primary key,
+    -- user data
     user_id integer,
     added_time timestamp,
     edited_time timestamp,
+    -- steam data
     steam_sorted_game_ids integer[],
-    local_sorted_game_ids integer[],
-    local_sorted_game_name text[],
-    local_sorted_game_background text[],
-    local_sorted_date_added timestamp[],
-    local_sorted_release_date timestamp[],
-    local_sorted_release_date_string text[],
-    local_sorted_deck_compatibility integer[],
+    -- local data
+    game_ids integer[],
+    game_name text[],
+    game_background text[],
+    date_added timestamp[],
+    release_date timestamp[],
+    release_date_string text[],
+    deck_compatibility integer[],
     purchased boolean[]
 );
 
