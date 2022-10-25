@@ -16,13 +16,13 @@ function Import(props) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log('import form submitted');
+        // console.log('import form submitted');
 
         if (steamId) {
             setSubmitted(true);
             setValid(true);
 
-            console.log('import form is valid');
+            // console.log('import form is valid');
             let userId = props.userData.id
             const formData = { userId, steamId }
 
@@ -46,7 +46,7 @@ function Import(props) {
                                 // update local data with downloaded info
                                 // console.table(steamWishlistData)
                                 props.updateSteamWishlistData(steamWishlistData)
-                                console.log("end of fetch");
+                                // console.log("end of fetch");
                             });
                     }
                 })
