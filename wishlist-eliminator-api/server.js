@@ -1,25 +1,23 @@
-const express = require('express')
-const app = express()
-const PORT = process.env.PORT || 3001
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`))
+// Middlewares
+const logger = require('./middlewares/logger');
+const sessions = require('./middlewares/sessions');
 
-app.use(express.json())
+// Controllers
+const usersController = require('./controllers/users_controller');
+const sessionsController = require('./controllers/sessions_controller');
+const wishlistsController = require('./controllers/wishlists_controller');
 
-// You can replace this with a database
-let database = []
+// Starting back-end server
+app.listen(PORT, () => console.log(`Wishlist Eliminator API\nServer listening on port ${PORT}`));
 
-// Routes
-app.get('/database', (req, res) => {
-    res.json({ database })
-})
+// Starting server logger
+app.use(logger);
 
-app.post('/database', (req, res) => {
-    database = req.body.database
-    res.json({ database })
-})
-
-
+// Sending back SPA to user/client
 if (process.env.NODE_ENV === 'production') {
     const path = require('path')
     app.use(express.static(path.join(__dirname, 'build')));
@@ -28,3 +26,16 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.join(__dirname, 'build', 'index.html'));
     });
 }
+
+// Allowing server to parse JSON body during API calls/requests
+app.use(express.json());
+
+// Enables sessions
+app.use(sessions);
+
+// Route controllers
+app.use('/api/users', usersController);
+app.use('/api/sessions', sessionsController);
+app.use('/api/wishlists', wishlistsController);
+
+// Response is sent back to user/client
