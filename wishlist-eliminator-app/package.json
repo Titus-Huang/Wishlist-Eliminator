@@ -19,7 +19,7 @@
     "test": "BROWSER='none' react-scripts test",
     "eject": "BROWSER='none' react-scripts eject",
     "deploy": "npm run build; cp build/index.html build/404.html; surge build titus-wishlist-eliminator-app.surge.sh",
-    "herokuDeploy": "npm run build; cp -r build/ ../build"
+    "herokuDeploy": "npm install; npm run build; cp -r build/ ../build"
   },
   "eslintConfig": {
     "extends": [
