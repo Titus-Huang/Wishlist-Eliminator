@@ -22,7 +22,7 @@ router.get('/import/:steamId', async (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    // this is to add new wishlists
+    // this is to add new local wishlists
 })
 
 module.exports = router;
