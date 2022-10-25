@@ -22,11 +22,12 @@ const User = {
             UPDATE users
             SET steam_id = $2
             WHERE id = $1
+            RETURNING *
         `;
 
         return db
             .query(sql, [id, steamId])
-            .then(dbRes => console.log(dbRes.rows[0]))
+            .then(dbRes => dbRes.rows[0]);
     },
 
     findByEmail: email => {

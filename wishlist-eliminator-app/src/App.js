@@ -15,6 +15,7 @@ function App() {
 
     const [ appData, updateAppData ] = useState({
         wishlist: {},
+        steamWishlist: {},
         userData: {}
     });
 
@@ -49,6 +50,22 @@ function App() {
         }));
     };
 
+    const updateWishlistData = data => {
+        updateAppData((existingAppData) => ({
+            ...existingAppData,
+            wishlist: data,
+        }));
+    };
+
+    const updateSteamWishlistData = data => {
+        updateAppData((existingAppData) => ({
+            ...existingAppData,
+            steamWishlist: data,
+        }));
+
+        navigate('/');
+    };
+
     return (
         <div className='App'>
             {!(location.pathname === '/' && typeof appData.userData.username === 'undefined') && <NavBar userData={appData.userData} />}
@@ -58,7 +75,7 @@ function App() {
                 <Route path='/users/sign-up' element={<SignUp />} />
                 <Route path='/users/login' element={<Login updateUserData={updateUserData} />} />
                 <Route path='/users/logout' element={<Logout />} />
-                <Route path='/wishlists/import' element={<Import userData={appData.userData} />} />
+                <Route path='/wishlists/import' element={<Import userData={appData.userData} updateSteamWishlistData={updateSteamWishlistData} />} />
             </Routes>
         </div>
     );

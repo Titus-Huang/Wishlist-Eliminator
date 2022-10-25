@@ -26,17 +26,33 @@ function Import(props) {
             let userId = props.userData.id
             const formData = { userId, steamId }
 
-            const isSteamIdValid = fetch('/api/wishlists', {
+            fetch('/api/users/steamid', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             })
-                .then(res => res)
+                .then(res => res.json())
+                .then(res => {
+                    if (res.error) {
+                        renderError(res.error);
+                    } else {
+                        // console.log("steam id is valid and can fetch the darn thing")
+                        // console.log('res', res)
+                        // grab wishlist to see if there is a wishlist
+                        // fetch(`https://store.steampowered.com/wishlist/profiles/${res}/wishlistdata/`, {
+                        //     method: 'GET',
+                        //     headers: { 'Cache-Control': 'no-cache', 'Accept': '*/*', 'Access-Control-Allow-Origin': '*' }
+                        // })
+                        fetch('https://store.steampowered.com/wishlist/profiles/76561198128286643/wishlistdata/')
+                            // .then(res => res.json())
+                            // .then(res => {
+                            //     console.log(res)
+                            //     // temporary, will need to cut out a lot of the wishlist data fat in the future
+                            //     props.updateSteamWishlistData(res)
 
-            // grab wishlist to see if there is a wishlist
-            // fetch(`https://store.steampowered.com/wishlist/profiles/${sId.toString()}/wishlistdata/`)
-            //     .then(res => res.json())
-            //     .then(res => console.log(res))
+                            // });
+                    }
+                })
         } else {
             setSubmitted(true);
         }
@@ -51,7 +67,7 @@ function Import(props) {
         <div className='wishlist-import-page'>
             <h2>Wishlist import</h2>
 
-            <p>Find your Steam Id here: <a href='https://steamdb.info/calculator/' alt='Steam Calculator' title='Steam Calculator' target='_blank'>Steam Calculator</a></p>
+            <p>Find your Steam Id here: <a href='https://steamdb.info/calculator/' alt='Steam Calculator' title='Steam Calculator' target='_blank' rel='noreferrer'>Steam Calculator</a></p>
 
             <p>Find what is your Steam Profile URL and paste the link into the website.</p> 
             
