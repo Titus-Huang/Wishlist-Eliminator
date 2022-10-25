@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt');
 
 // models
 const User = require('../models/user');
+const { WishlistData } = require('../models/wishlist');
 
 // routes
 router.post('/', (req, res) => {
@@ -18,7 +19,12 @@ router.post('/', (req, res) => {
 
     User
         .create(username, email, passwordDigest)
-        .then(userData => res.json(userData));
+        .then(userData => {
+            WishlistData
+                .create(userData.id);
+                // .then(wishlistDataRes => console.log(wishlistDataRes))
+            res.json(userData);
+        });
 })
 
 router.post('/steamid', (req, res) => {

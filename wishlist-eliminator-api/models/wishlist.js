@@ -1,45 +1,61 @@
 const db = require('../db/db');
 
-//     < wishlists_data >
+// < wishlists_data >
 
-//     id serial primary key,
+// id serial primary key,
 
-//     -- user data
-//     user_id integer,
-//     added_time timestamp,
-//     edited_time timestamp,
+// -- user data
+// user_id integer,
+// added_at timestamp,
+// steam_sorted_game_ids integer[],
 
-//     -- steam data
-//     steam_sorted_game_ids integer[],
-
-//     -- local list data
-//     local_lists integer[]
+// -- local list data
+// local_lists integer[]
 
 
 
-//     < wishlists >
+// < wishlists >
 
-//     id serial primary key,
+// id serial primary key,
 
-//     -- reference wishlists_data
-//     wishlists_data_id integer,
+// -- row data
+// wishlists_data_id integer,
+// created_at timestamp,
+// edited_at timestamp,
 
-//     -- local data
-//     game_ids integer[],
-//     game_name text[],
-//     game_background text[],
-//     date_added timestamp[],
-//     release_date timestamp[],
-//     release_date_string text[],
-//     deck_compatibility integer[],
-//     purchased boolean[]
+// -- local data
+// game_ids integer[],
+// game_name text[],
+// game_img_bg text[],
+// date_added timestamp[],
+// release_date timestamp[],
+// release_date_str text[],
+// deck_compat integer[],
+// purchased boolean[]
 
-
-const Wishlist = {
+// wishlist data (ONE per user)
+const WishlistData = {
     // this is called when a user is created
-    create: () => {
+    create: (userId) => {
+        const sql = `
+            INSERT INTO wishlists_data (user_id)
+            VALUES ($1)
+            RETURNING *
+        `;
 
+        return db
+            .query(sql, [userId])
+            .then(dbRes => dbRes.rows[0])
     }
 };
 
-module.exports = Wishlist;
+
+// individual lists (users can have multiple)
+const Wishlist = {
+    // called when Steam Wishlist data is imported
+    // create: () => {
+
+    // }
+};
+
+module.exports = { WishlistData, Wishlist }
