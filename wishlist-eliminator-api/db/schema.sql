@@ -30,9 +30,7 @@ CREATE TABLE wishlists_data(
     id serial primary key,
     -- user data
     user_id integer,
-    added_time timestamp,
-    edited_time timestamp,
-    -- steam data
+    added_at timestamp,
     steam_sorted_game_ids integer[],
     -- local list data
     local_lists integer[]
@@ -50,16 +48,18 @@ ALTER SEQUENCE wishlists_data_id_seq RESTART WITH 1;
 
 CREATE TABLE wishlists(
     id serial primary key,
-    -- reference wishlists_data
+    -- row data
     wishlists_data_id integer,
+    created_at timestamp,
+    edited_at timestamp,
     -- local data
     game_ids integer[],
     game_name text[],
-    game_background text[],
+    game_img_bg text[],
     date_added timestamp[],
     release_date timestamp[],
-    release_date_string text[],
-    deck_compatibility integer[],
+    release_date_str text[],
+    deck_compat integer[],
     purchased boolean[]
 );
 
