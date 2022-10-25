@@ -1,6 +1,12 @@
 CREATE DATABASE wishlist_eliminator_db;
 -- \c wishlist_eliminator_db
 
+-- Reset & Updates database
+-- heroku pg:reset --confirm wishlist-eliminator-titus; heroku pg:push wishlist_eliminator_db DATABASE_URL
+
+-- Manually access Heroku database
+-- heroku pg:psql
+
 CREATE TYPE user_types AS ENUM ('user', 'admin');
 
 CREATE TABLE users(

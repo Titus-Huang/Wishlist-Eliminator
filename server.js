@@ -17,6 +17,12 @@ app.listen(PORT, () => console.log(`Wishlist Eliminator API\nServer listening on
 // Starting server logger
 app.use(logger);
 
+// Allowing server to parse JSON body during API calls/requests
+app.use(express.json());
+
+// Enables sessions
+app.use(sessions);
+
 // Sending back SPA to user/client
 if (process.env.NODE_ENV === 'production') {
     const path = require('path')
@@ -26,12 +32,6 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.join(__dirname, 'build', 'index.html'));
     });
 }
-
-// Allowing server to parse JSON body during API calls/requests
-app.use(express.json());
-
-// Enables sessions
-app.use(sessions);
 
 // Route controllers
 app.use('/api/users', usersController);
