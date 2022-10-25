@@ -46,9 +46,6 @@ function App() {
 
     return (
         <div className='App'>
-            {/* {console.log(location.pathname === '/')}
-            {console.log(typeof appData.userData.username === 'undefined')}
-            {console.log(location.pathname === '/' || typeof appData.userData.username === 'undefined')} */}
             {!(location.pathname === '/' && typeof appData.userData.username === 'undefined') && <NavBar userData={appData.userData} />}
 
             <Routes>
