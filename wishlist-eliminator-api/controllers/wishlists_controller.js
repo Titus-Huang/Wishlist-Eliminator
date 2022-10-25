@@ -18,24 +18,28 @@ router.get('/import/:steamId', async (req, res) => {
 
             // convert object to array of keys
             const resKeys = Object.keys(steamWishlist);
-            // iterate through object to create steam games
-            let importedSteamList = {};
-            // create list of games in order arranged
-            resKeys.forEach((key) => {
-                let gameSortIndex = steamWishlist[key].priority;
-                importedSteamList = {
-                    ...importedSteamList,
-                    [gameSortIndex] : key,
-                }
-            });
+            // check if there are any items in the wishlist
+            if (resKeys.length > 0) {
+                // iterate through object to create steam games
+                let importedSteamList = {};
+                // create list of games in order arranged
+                resKeys.forEach((key) => {
+                    let gameSortIndex = steamWishlist[key].priority;
+                    importedSteamList = {
+                        ...importedSteamList,
+                        [gameSortIndex] : key,
+                    }
+                });
 
-            // console.log(importedSteamList);
-            WishlistData.importSteamWishlist(userId, Object.values(importedSteamList))
-            res.json(importedSteamList);
+                // console.log(importedSteamList);
+                WishlistData.importSteamWishlist(userId, Object.values(importedSteamList))
+                res.json(importedSteamList);
 
-            // after data is put within wishlist_data
-            // now putting data into first OG wishlist post
-            
+                // after data is put within wishlist_data
+                // now putting data into first OG wishlist post
+            } else {
+                res.status(404).json({ error: 'unable to find wishlist from Steam' })
+            }
         })
     // if fetch fails, site will freeze
     // find a way to send data regardless
