@@ -39,9 +39,12 @@ const WishlistData = {
     // this is called when a user is created
     create: (userId) => {
         const sql = `
-            INSERT INTO wishlists_data (user_id)
-            VALUES ($1)
-            RETURNING *
+            INSERT INTO
+                wishlists_data (user_id)
+            VALUES
+                ($1)
+            RETURNING
+                *
         `;
 
         return db
@@ -51,9 +54,12 @@ const WishlistData = {
 
     getWishlistDataId: (userId) => {
         const sql = `
-            SELECT id
-            FROM wishlists_data
-            WHERE user_id = $1
+            SELECT
+                id
+            FROM
+                wishlists_data
+            WHERE
+                user_id = $1
         `;
 
         return db
@@ -83,9 +89,12 @@ const WishlistData = {
 
     getSteamWishlist: (userId) => {
         const sql = `
-            SELECT steam_sorted_game_ids
-            FROM wishlists_data
-            WHERE user_id = $1
+            SELECT
+                steam_sorted_game_ids
+            FROM
+                wishlists_data
+            WHERE
+                user_id = $1
         `;
 
         return db
@@ -127,12 +136,13 @@ const Wishlist = {
         `;
 
         return db
-            .query(sql, [dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat])
+            .query(sql, [dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat]);
     },
     
     updateMasterReference: (dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
         const sql = `
-            UPDATE wishlists
+            UPDATE
+                wishlists
             SET (
                 edited_at,
                 game_ids,
@@ -155,10 +165,10 @@ const Wishlist = {
             WHERE
                 wishlists_data_id = $1
                 AND master_reference = 'true'
-        `
+        `;
 
         return db
-            .query(sql, [dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat])
+            .query(sql, [dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat]);
             // .then(dbRes => {
             //     console.log("database return", dbRes);
             // })
@@ -166,9 +176,13 @@ const Wishlist = {
 
     doesMasterReferenceExist: (wishlistDataId) => {
         const sql = `
-            SELECT *
-            FROM wishlists
-            WHERE wishlists_data_id = $1 AND master_reference = 'true'
+            SELECT
+                *
+            FROM
+                wishlists
+            WHERE
+                wishlists_data_id = $1
+                AND master_reference = 'true'
         `;
 
         return db
@@ -178,9 +192,13 @@ const Wishlist = {
 
     getUserMasterReference: (wishlistDataId) => {
         const sql = `
-            SELECT *
-            FROM wishlists
-            WHERE wishlists_data_id = $1 AND master_reference = 'true'
+            SELECT
+                *
+            FROM
+                wishlists
+            WHERE
+                wishlists_data_id = $1
+                AND master_reference = 'true'
         `;
         
         return db
@@ -189,4 +207,4 @@ const Wishlist = {
     }
 };
 
-module.exports = { WishlistData, Wishlist }
+module.exports = { WishlistData, Wishlist };
