@@ -40,6 +40,7 @@ router.post('/', (req, res) => {
                     if (user && isValidPassword) {
                         // log the user in
                         req.session.userId = user.id;
+                        delete user.password_digest;
                         res.json(user);
                     } else if (!isValidPassword) {
                         res.status(401).json({ error: 'Password is incorrect' });

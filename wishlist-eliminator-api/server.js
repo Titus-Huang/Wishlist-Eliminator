@@ -9,6 +9,7 @@ const sessions = require('./middlewares/sessions');
 // Controllers
 const usersController = require('./controllers/users_controller');
 const sessionsController = require('./controllers/sessions_controller');
+const wishlistsController = require('./controllers/wishlists_controller');
 
 // Starting back-end server
 app.listen(PORT, () => console.log(`Wishlist Eliminator API\nServer listening on port ${PORT}`));
@@ -35,5 +36,6 @@ app.use(sessions);
 // Route controllers
 app.use('/api/users', usersController);
 app.use('/api/sessions', sessionsController);
+app.use('/api/wishlists', wishlistsController);
 
 // Response is sent back to user/client

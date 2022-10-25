@@ -44,15 +44,21 @@ function Login(props) {
                 body: JSON.stringify(loginForm)
             })
                 .then(res => res.json())
-                .then(res => {
-                    if (res.error) {
-                        renderError(res.error);
+                .then(userData => {
+                    if (userData.error) {
+                        renderError(userData.error);
                     } else {
-                        // console.log(res);
-                        props.updateUserData(res);
-                        console.log("Logged in...");
-                        navigate('/');
-                    }
+                        fetch('/api/wishlists')
+                            .then(res => res.json())
+                            .then(wishlistDataData => {
+                                props.updateUserWishlistDataData(wishlistDataData);
+                                props.updateUserData(userData);
+                                console.log("Logged in...");
+
+                                // auto move
+                                navigate('/');
+                            })
+                    } // call back hellllllll
                 });
         } else {
             setSubmitted(true);
