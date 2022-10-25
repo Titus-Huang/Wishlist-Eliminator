@@ -8,23 +8,20 @@ const Wishlist = require('../models/wishlist');
 
 // routes
 router.get('/import/:steamId', async (req, res) => {
-    const steamId = req.params.steamId
+    const { steamId } = req.params
 
     const steamWishlist = await fetch(`https://store.steampowered.com/wishlist/profiles/${steamId}/wishlistdata/`)
         .then(res => res.json())
+        .then(res => {
+            // add wishlist data into local database
+            
+        })
     // if fetch fails, site will freeze
     // find a way to send data regardless
-    res.send(steamWishlist);
-
-        // .then(res => {
-        //     console.log(res)
-        //     // temporary, will need to cut out a lot of the wishlist data fat in the future
-        //     // props.updateSteamWishlistData(res)
-
-        // });
+    res.status(200).send(steamWishlist);
 });
 
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
     // this is to add new wishlists
 })
 
