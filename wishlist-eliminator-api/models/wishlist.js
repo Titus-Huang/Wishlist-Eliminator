@@ -45,7 +45,31 @@ const WishlistData = {
 
         return db
             .query(sql, [userId])
-            .then(dbRes => dbRes.rows[0])
+            .then(dbRes => dbRes.rows[0]);
+    },
+
+    importSteamWishlist: (userId, gameIds) => {
+        const sql = `
+            UPDATE wishlists_data
+            SET steam_sorted_game_ids = $2
+            WHERE user_id = $1
+        `;
+
+        return db
+            .query(sql, [userId, gameIds])
+            .then(dbRes => dbRes.rows[0]);
+    },
+
+    getSteamWishlist: (userId) => {
+        const sql = `
+            SELECT steam_sorted_game_ids
+            FROM wishlists_data
+            WHERE user_id = $1
+        `;
+
+        return db
+            .query(sql, [userId])
+            .then(dbRes => dbRes.rows[0]);
     }
 };
 
