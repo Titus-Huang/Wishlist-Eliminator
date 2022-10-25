@@ -36,16 +36,12 @@ function Import(props) {
                     if (res.error) {
                         throw res.error;
                     } else {
+                        // grab wishlist to see if there is a wishlist
+
                         // console.log("steam id is valid and can fetch the darn thing")
                         // console.log('res', res)
-                        // grab wishlist to see if there is a wishlist
-                        // fetch(`https://store.steampowered.com/wishlist/profiles/${res}/wishlistdata/`, {
-                        //     method: 'GET',
-                        //     headers: { 'Cache-Control': 'no-cache', 'Accept': '*/*', 'Access-Control-Allow-Origin': '*' }
-                        // })
                         return fetch(`/api/wishlists/import/${res}`)
                             .then(res => res.json())
-                            // .then(wishlist => console.log(wishlist))
                             // .then(res => res.json())
                             // .then(res => {
                             //     console.log(res)
@@ -55,7 +51,11 @@ function Import(props) {
                             // });
                     }
                 })
-                .then(wishlist => console.table(wishlist))
+                .then(wishlist => {
+                    console.table(wishlist)
+
+                    
+                })
                 .catch((error) => renderError(error))
         } else {
             setSubmitted(true);
