@@ -1,7 +1,7 @@
 CREATE DATABASE wishlist_eliminator_db;
 -- \c wishlist_eliminator_db
 
--- heroku pg:push local_database_name wishlist_eliminator_db
+-- heroku pg:push wishlist_eliminator_db DATABASE_URL
 
 CREATE TYPE user_types AS ENUM ('user', 'admin');
 
