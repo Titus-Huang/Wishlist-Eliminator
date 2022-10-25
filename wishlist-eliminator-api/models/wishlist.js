@@ -90,7 +90,7 @@ const WishlistData = {
 // individual lists (users can have multiple)
 const Wishlist = {
     // called when Steam Wishlist data is imported
-    createMasterReference: (dataTableId, gameIds, gameNames, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
+    createMasterReference: (dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
         const sql = `
             INSERT INTO wishlists (
                 wishlists_data_id,
@@ -118,8 +118,12 @@ const Wishlist = {
             )
         `
 
+        console.log("am at least getting to the wishlist model file");
         return db
-            .query(sql, [dataTableId, gameIds, gameNames, dateAdded, releaseDates, releaseDatesStr, deckCompat])
+            .query(sql, [dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat])
+            .then(dbRes => {
+                console.log("database return", dbRes);
+            })
     },
 
     doesMasterReferenceExist: (wishlistDataId) => {
