@@ -53,7 +53,7 @@ function Login(props) {
                         console.log("Logged in...");
 
                         // auto move
-                        navigate('/wishlists/import');
+                        navigate('/wishlists/create');
                     }
                 });
         } else {
