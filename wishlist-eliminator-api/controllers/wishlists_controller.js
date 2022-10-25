@@ -64,6 +64,7 @@ router.get('/import/:steamId', async (req, res) => {
                                     gameIds.push(importedSteamList[i]);
                                     gameNames.push(steamWishlist[importedSteamList[i]].name);
                                     gameImgBg.push(steamWishlist[importedSteamList[i]].background);
+                                    
                                     let date_added = new Date(steamWishlist[importedSteamList[i]].added * 1000)
                                     dateAdded.push(date_added.toISOString());
                                     
@@ -71,15 +72,10 @@ router.get('/import/:steamId', async (req, res) => {
                                     const epochZero = new Date(0)
                                     const timeCheckCuttoff = Date.now() - (60 * 1000);
                                     // check if the time has been inputted by the developers
-                                    if (release_date !== '') {
+                                    if (release_date !== '' && release_date < timeCheckCuttoff) {
                                         // check if it's far in the past or "recently" (within the last 1 minute, due to internet latency sometimes)
                                         // console.log('release_date', release_date, 'compared to', timeCheckCuttoff)
-                                        if (release_date < timeCheckCuttoff) {
-                                            releaseDates.push(release_date.toISOString());
-                                        } else {
-                                            // this just means "it is not released yet"
-                                            releaseDates.push(epochZero.toISOString());
-                                        }
+                                        releaseDates.push(release_date.toISOString());
                                     } else {
                                         releaseDates.push(epochZero.toISOString());
                                     }
@@ -92,7 +88,7 @@ router.get('/import/:steamId', async (req, res) => {
                                     console.log("master copy DOES exist!!!");
                                 } else {
                                     console.log("master copy does NOT exist!!!");
-                                    console.log(dateAdded);
+                                    // console.log(dateAdded);
                                     Wishlist.createMasterReference(checks.dataId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat);
                                 }
                             })
