@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 
 import NavBar from './components/NavBar';
@@ -11,6 +11,7 @@ import Import from './components/wishlist/Import';
 
 function App() {
     const location = useLocation();
+    const navigate = useNavigate();
 
     const [ appData, updateAppData ] = useState({
         wishlist: {},
@@ -31,6 +32,10 @@ function App() {
                         ...existingAppData,
                         userData: data,
                     }));
+                } else {
+                    // you are not logged in, kick back to home page
+                    console.log('not logged in, back to landing page')
+                    navigate('/');
                 }
             });
     }
@@ -53,7 +58,7 @@ function App() {
                 <Route path='/users/sign-up' element={<SignUp />} />
                 <Route path='/users/login' element={<Login updateUserData={updateUserData} />} />
                 <Route path='/users/logout' element={<Logout />} />
-                <Route path='/wishlists/import' element={<Import />} />
+                <Route path='/wishlists/import' element={<Import userData={appData.userData} />} />
             </Routes>
         </div>
     );

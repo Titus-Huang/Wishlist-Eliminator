@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './Import.scss'
 
-function Import() {
+function Import(props) {
     const [ submitted, setSubmitted] = useState(false);
     const [ valid, setValid ] = useState(false);
     const [ error, setError ] = useState(false);
@@ -21,8 +21,19 @@ function Import() {
         if (steamId) {
             setSubmitted(true);
             setValid(true);
-            
+
             console.log('import form is valid');
+            let userId = props.userData.id
+            console.log('userData:', props.userData)
+            const formData = { userId, steamId }
+            console.log('formData:', formData)
+
+            // fetch('/api/wishlists', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(formData)
+            // })
+            //     .then(res => res.json())
         } else {
             setSubmitted(true);
         }
