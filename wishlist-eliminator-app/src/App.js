@@ -28,7 +28,7 @@ function App() {
                 // console.log(data);
 
                 if (!data.error) {
-                    console.log('data being updated');
+                    console.log('user session found, local data being updated');
                     updateAppData((existingAppData) => ({
                         ...existingAppData,
                         userData: data,

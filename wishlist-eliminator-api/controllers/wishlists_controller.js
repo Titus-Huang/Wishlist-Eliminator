@@ -13,36 +13,33 @@ router.get('/import/:steamId', async (req, res) => {
 
     const steamWishlist = await fetch(`https://store.steampowered.com/wishlist/profiles/${steamId}/wishlistdata/`)
         .then(res => res.json())
-        .then(res => {
+        .then(steamWishlist => {
             // add wishlist data into local database
 
             // convert object to array of keys
-            const resKeys = Object.keys(res);
+            const resKeys = Object.keys(steamWishlist);
             // iterate through object to create steam games
             let importedSteamList = {};
             // create list of games in order arranged
-            resKeys.forEach((key, index) => {
-                let gameSortIndex = res[key].priority;
+            resKeys.forEach((key) => {
+                let gameSortIndex = steamWishlist[key].priority;
                 importedSteamList = {
                     ...importedSteamList,
                     [gameSortIndex] : key,
                 }
             });
 
-            console.log(importedSteamList);
-            WishlistData.importSteamWishlist(userId, Object.values(importedSteamList));
+            // console.log(importedSteamList);
+            WishlistData.importSteamWishlist(userId, Object.values(importedSteamList))
+            res.json(importedSteamList);
 
-            // let steamWishlist = res
-            //     .forEach((key, index) => {
-            //         console.log(game)
-            //         return game
-            //     })
-                // .sort((a, b) => a.priority < b.priority)
-            // console.table(steamWishlist)
+            // after data is put within wishlist_data
+            // now putting data into first OG wishlist post
+            
         })
     // if fetch fails, site will freeze
     // find a way to send data regardless
-    res.status(200).send(steamWishlist);
+    // res.status(200).send(steamWishlist);
 });
 
 router.post('/', (req, res) => {

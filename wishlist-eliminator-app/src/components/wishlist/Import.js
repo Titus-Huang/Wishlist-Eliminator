@@ -40,23 +40,19 @@ function Import(props) {
 
                         // console.log("steam id is valid and can fetch the darn thing")
                         // console.log('res', res)
-                        return fetch(`/api/wishlists/import/${res}`)
+                        fetch(`/api/wishlists/import/${res}`)
                             .then(res => res.json())
-                            // .then(res => res.json())
-                            // .then(res => {
-                            //     console.log(res)
-                            //     // temporary, will need to cut out a lot of the wishlist data fat in the future
-                            //     props.updateSteamWishlistData(res)
-
-                            // });
+                            .then(steamWishlistData => {
+                                // update local data with downloaded info
+                                console.table(steamWishlistData)
+                                props.updateSteamWishlistData(steamWishlistData)
+                            })
                     }
                 })
-                .then(wishlist => {
-                    console.table(wishlist)
-
-                    
-                })
-                .catch((error) => renderError(error))
+                // .then(wishlist => {
+                //     console.table(wishlist)
+                // })
+                // .catch((error) => renderError(error))
         } else {
             setSubmitted(true);
         }
