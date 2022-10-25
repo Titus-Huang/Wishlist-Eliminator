@@ -64,7 +64,7 @@ router.get('/import/:steamId', async (req, res) => {
                                     gameIds.push(importedSteamList[i]);
                                     gameNames.push(steamWishlist[importedSteamList[i]].name);
                                     gameImgBg.push(steamWishlist[importedSteamList[i]].background);
-                                    
+
                                     let date_added = new Date(steamWishlist[importedSteamList[i]].added * 1000)
                                     dateAdded.push(date_added.toISOString());
                                     
@@ -85,9 +85,10 @@ router.get('/import/:steamId', async (req, res) => {
                                 }
 
                                 if (checks.doesMastExist) {
-                                    console.log("master copy DOES exist!!!");
+                                    // console.log("master copy DOES exist!!!");
+                                    Wishlist.updateMasterReference(checks.dataId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat);
                                 } else {
-                                    console.log("master copy does NOT exist!!!");
+                                    // console.log("master copy does NOT exist!!!");
                                     // console.log(dateAdded);
                                     Wishlist.createMasterReference(checks.dataId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat);
                                 }

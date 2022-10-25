@@ -63,9 +63,17 @@ const WishlistData = {
 
     importSteamWishlist: (userId, gameIds) => {
         const sql = `
-            UPDATE wishlists_data
-            SET steam_sorted_game_ids = $2, added_at = now()
-            WHERE user_id = $1
+            UPDATE
+                wishlists_data
+            SET (
+                steam_sorted_game_ids,
+                added_at
+            ) = (
+                $2,
+                now()
+            )
+            WHERE
+                user_id = $1
         `;
 
         return db
@@ -116,14 +124,44 @@ const Wishlist = {
                 $7,
                 $8
             )
-        `
+        `;
 
-        console.log("am at least getting to the wishlist model file");
         return db
             .query(sql, [dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat])
-            .then(dbRes => {
-                console.log("database return", dbRes);
-            })
+    },
+    
+    updateMasterReference: (dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
+        const sql = `
+            UPDATE wishlists
+            SET (
+                edited_at,
+                game_ids,
+                game_name,
+                game_img_bg,
+                date_added,
+                release_date,
+                release_date_str,
+                deck_compat
+            ) = (
+                now(),
+                $2,
+                $3,
+                $4,
+                $5,
+                $6,
+                $7,
+                $8
+            )
+            WHERE
+                wishlists_data_id = $1
+                AND master_reference = 'true'
+        `
+
+        return db
+            .query(sql, [dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat])
+            // .then(dbRes => {
+            //     console.log("database return", dbRes);
+            // })
     },
 
     doesMasterReferenceExist: (wishlistDataId) => {
