@@ -25,7 +25,8 @@ ALTER TABLE users ADD COLUMN steam_id TEXT;
 
 
 
-CREATE TABLE wishlists(
+
+CREATE TABLE wishlists_data(
     id serial primary key,
     -- user data
     user_id integer,
@@ -33,6 +34,24 @@ CREATE TABLE wishlists(
     edited_time timestamp,
     -- steam data
     steam_sorted_game_ids integer[],
+    -- local list data
+    local_lists integer[]
+);
+
+-- Display total data from wishlists_data
+SELECT * FROM wishlists_data;
+
+-- Reset Wishlists Data table
+TRUNCATE TABLE wishlists_data;
+ALTER SEQUENCE wishlists_data_id_seq RESTART WITH 1;
+
+
+
+
+CREATE TABLE wishlists(
+    id serial primary key,
+    -- reference wishlists_data
+    wishlists_data_id integer,
     -- local data
     game_ids integer[],
     game_name text[],
@@ -44,9 +63,9 @@ CREATE TABLE wishlists(
     purchased boolean[]
 );
 
--- Display total data from users
+-- Display total data from wishlists
 SELECT * FROM wishlists;
 
--- Reset Users table
+-- Reset Wishlists table
 TRUNCATE TABLE wishlists;
 ALTER SEQUENCE wishlists_id_seq RESTART WITH 1;
