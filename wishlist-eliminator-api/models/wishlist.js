@@ -51,7 +51,7 @@ const WishlistData = {
     importSteamWishlist: (userId, gameIds) => {
         const sql = `
             UPDATE wishlists_data
-            SET steam_sorted_game_ids = $2
+            SET steam_sorted_game_ids = $2, added_at = now()
             WHERE user_id = $1
         `;
 
@@ -77,9 +77,9 @@ const WishlistData = {
 // individual lists (users can have multiple)
 const Wishlist = {
     // called when Steam Wishlist data is imported
-    // create: () => {
+    create: (data_table_id, game_id) => {
 
-    // }
+    }
 };
 
 module.exports = { WishlistData, Wishlist }

@@ -51,7 +51,9 @@ function Login(props) {
                         // console.log(res);
                         props.updateUserData(res);
                         console.log("Logged in...");
-                        navigate('/');
+
+                        // auto move
+                        navigate('/wishlists/import');
                     }
                 });
         } else {
