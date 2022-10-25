@@ -10,7 +10,7 @@ function Home(props) {
     const loggedInView = () => {
         return (
             <>
-                <h1>Welcome {props.userData.username} to my App</h1>
+                <h1>Welcome <i>{props.userData.username}</i> to my App</h1>
                 <p>Counter: {counter}</p>
                 <button onClick={increaseCounter}>Count</button>
             </>

@@ -56,7 +56,7 @@ function Login(props) {
                                 console.log("Logged in...");
 
                                 // auto move
-                                navigate('/wishlists/create');
+                                navigate('/');
                             })
                     } // call back hellllllll
                 });
