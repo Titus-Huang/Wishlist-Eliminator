@@ -24,16 +24,19 @@ function Import(props) {
 
             console.log('import form is valid');
             let userId = props.userData.id
-            console.log('userData:', props.userData)
             const formData = { userId, steamId }
-            console.log('formData:', formData)
 
-            // fetch('/api/wishlists', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(formData)
-            // })
+            const isSteamIdValid = fetch('/api/wishlists', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+                .then(res => res)
+
+            // grab wishlist to see if there is a wishlist
+            // fetch(`https://store.steampowered.com/wishlist/profiles/${sId.toString()}/wishlistdata/`)
             //     .then(res => res.json())
+            //     .then(res => console.log(res))
         } else {
             setSubmitted(true);
         }
@@ -67,7 +70,7 @@ function Import(props) {
                     <input 
                         id='steam-id'
                         className='form-field'
-                        type='number'
+                        type='text'
                         name='steam-id'
                         value={steamId}
                         onChange={handleSteamIdInputChange}
