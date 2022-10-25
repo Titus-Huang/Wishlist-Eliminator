@@ -15,13 +15,15 @@ function App() {
     const navigate = useNavigate();
 
     const [ appData, updateAppData ] = useState({
-        wishlist: {},
+        wishlists: {},
         steamWishlist: {},
+        userWishlistData: {},
         userData: {}
     });
 
     // first run when the components first loads onto the screen
     const fetchUserDataOnStart = () => {
+        // grab user data on load
         fetch('/api/sessions')
             .then(res => res.json())
             .then(data => {
@@ -37,9 +39,33 @@ function App() {
                 } else {
                     // you are not logged in, kick back to home page
                     console.log('not logged in, back to landing page')
+                    updateAppData((existingAppData) => ({
+                        ...existingAppData,
+                        userData: {},
+                    }));
                     navigate('/');
                 }
             });
+        
+        // grab wishlist data on load
+        fetch('/api/wishlists')
+            .then(res => res.json())
+            .then(data => {
+                if (!data.error) {
+                    console.log('user session found, local wishlist data... data being updated');
+                    updateAppData((existingAppData) => ({
+                        ...existingAppData,
+                        userWishlistData: data,
+                    }));
+                } else {
+                    updateAppData((existingAppData) => ({
+                        ...existingAppData,
+                        userWishlistData: {},
+                    }));
+                }
+            })
+
+        // grab user's wishlists
     }
 
     useEffect(fetchUserDataOnStart, []);
@@ -55,6 +81,13 @@ function App() {
         updateAppData((existingAppData) => ({
             ...existingAppData,
             wishlist: data,
+        }));
+    };
+
+    const updateUserWishlistDataData = data => {
+        updateAppData((existingAppData) => ({
+            ...existingAppData,
+            userWishlistData: data,
         }));
     };
 
@@ -74,7 +107,7 @@ function App() {
             <Routes>
                 <Route path='/' element={<Home userData={appData.userData} />} />
                 <Route path='/users/sign-up' element={<SignUp />} />
-                <Route path='/users/login' element={<Login updateUserData={updateUserData} />} />
+                <Route path='/users/login' element={<Login updateUserData={updateUserData} updateUserWishlistDataData={updateUserWishlistDataData} />} />
                 <Route path='/users/logout' element={<Logout />} />
                 <Route path='/wishlists/import' element={<Import userData={appData.userData} updateSteamWishlistData={updateSteamWishlistData} />} />
                 <Route path='/wishlists/create' element={<Create />} />

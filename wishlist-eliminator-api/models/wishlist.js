@@ -52,6 +52,21 @@ const WishlistData = {
             .then(dbRes => dbRes.rows[0]);
     },
 
+    getWishlistDataByUserId: (userId) => {
+        const sql = `
+            SELECT
+                *
+            FROM
+                wishlists_data
+            WHERE
+                user_id = $1
+        `;
+
+        return db
+            .query(sql, [userId])
+            .then(dbRes => dbRes.rows[0]);
+    },
+
     getWishlistDataId: (userId) => {
         const sql = `
             SELECT

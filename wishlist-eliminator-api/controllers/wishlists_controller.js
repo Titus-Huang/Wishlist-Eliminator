@@ -7,6 +7,21 @@ const User = require('../models/user');
 const { Wishlist, WishlistData } = require('../models/wishlist');
 
 // routes
+router.get('/', (req, res) => {
+    // this is to send user's wishlist data... data :P
+    if (req.session.userId) {
+        WishlistData
+            .getWishlistDataByUserId(req.session.userId)
+            .then(wishlistData => res.json(wishlistData));
+    } else {
+        res.json({ error: 'no one logged in' });
+    }
+})
+
+router.post('/', (req, res) => {
+    // this is to add new local wishlists
+})
+
 router.get('/import/:steamId', async (req, res) => {
     const { steamId } = req.params
     const userId = req.session.userId
@@ -102,9 +117,5 @@ router.get('/import/:steamId', async (req, res) => {
     // find a way to send data regardless
     // res.status(200).send(steamWishlist);
 });
-
-router.post('/', (req, res) => {
-    // this is to add new local wishlists
-})
 
 module.exports = router;
