@@ -49,11 +49,11 @@ function Import(props) {
                                 console.log("end of fetch");
                             });
                     }
-                });
+                })
                 // .then(wishlist => {
                 //     console.table(wishlist)
                 // })
-                // .catch((error) => renderError(error))
+                .catch((error) => renderError(error));
         } else {
             setSubmitted(true);
         }
