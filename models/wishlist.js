@@ -182,7 +182,8 @@ const Wishlist = {
                 date_added,
                 release_date,
                 release_date_str,
-                deck_compat
+                deck_compat,
+                purchased
             )
             VALUES (
                 $1,
@@ -196,14 +197,20 @@ const Wishlist = {
                 $5,
                 $6,
                 $7,
-                $8
+                $8,
+                $9
             )
             RETURNING
                 id
         `;
 
+        let purchasedArr;
+        if (gameIds.length > 0) {
+            purchasedArr = 'false '.repeat(gameIds.length).trim(' ').split(' ')
+        }
+
         return db
-            .query(sql, [dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat])
+            .query(sql, [dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat, purchasedArr])
             .then(dbRes => {
                 WishlistData.addNewListId(userId, dbRes.rows[0].id)
             });
