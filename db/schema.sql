@@ -39,7 +39,7 @@ CREATE TABLE wishlists_data(
     added_at timestamp,
     steam_sorted_game_ids integer[],
     -- local list data
-    local_lists integer[]
+    lists integer[]
 );
 
 -- Display total data from wishlists_data
@@ -57,6 +57,8 @@ CREATE TABLE wishlists(
     -- row data
     wishlists_data_id integer,
     master_reference boolean,
+    name text,
+    description text,
     created_at timestamp,
     edited_at timestamp,
     -- local data
