@@ -80,7 +80,7 @@ function App() {
         }
     }
 
-    useEffect(fetchUserDataOnStart, [appData]);
+    useEffect(fetchUserDataOnStart, [isInitalized]);
 
     const updateUserData = data => {
         updateAppData((existingAppData) => ({

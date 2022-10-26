@@ -39,7 +39,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     // this is to add new local wishlists
     const userId = req.session.userId;
-    const { userDataTableId, title, description } = res.body;
+    const { userDataTableId, title, description } = req.body;
 
     if (userId) {
         Wishlist

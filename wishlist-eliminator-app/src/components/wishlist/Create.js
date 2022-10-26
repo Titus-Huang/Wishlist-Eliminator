@@ -82,19 +82,19 @@ function Create(props) {
 
             console.log('newListForm:', newListForm);
 
-            // fetch('/api/wishlists', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(newListForm)
-            // })
-            //     .then(res => res.json())
-            //     .then(response => {
-            //         console.log(response);
-            //         // update the local data with this new wishlit
-            //         updateLocalData(response);
-            //         // navigate to edite the wishlist
-            //         navigate(`/wishlists/edit/${response.id}`);
-            //     })
+            fetch('/api/wishlists', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newListForm)
+            })
+                .then(res => res.json())
+                .then(response => {
+                    console.log(response);
+                    // update the local data with this new wishlit
+                    updateLocalData(response);
+                    // navigate to edite the wishlist
+                    navigate(`/wishlists/edit/${response.id}`);
+                })
             // response here should be the new list in object form
         } else {
             setSubmitted(true);

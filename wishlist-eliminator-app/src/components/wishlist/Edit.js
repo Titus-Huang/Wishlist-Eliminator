@@ -34,7 +34,7 @@ function Edit(props) {
 
     // this should run on initialise
     useEffect(getListsData, [])
-    useEffect(getListsData, [editingListData])
+    useEffect(updateListsData, [editingListData])
 
     return (
         <div className="WishlistEdit">
