@@ -123,7 +123,7 @@ router.get('/import/:steamId', async (req, res) => {
                                 } else {
                                     // console.log("main copy does NOT exist!!!");
                                     // console.log(dateAdded);
-                                    Wishlist.createMainReference(checks.dataId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat);
+                                    Wishlist.createMainReference(userId, checks.dataId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat);
                                 }
                             })
                     })

@@ -117,6 +117,46 @@ const WishlistData = {
         return db
             .query(sql, [userId])
             .then(dbRes => dbRes.rows[0]);
+    },
+
+    addNewListId: (userId, newListId) => {
+        console.log('newListId:', newListId)
+        // const sqlErrCheck = `
+        //     UPDATE
+        //         wishlists_data
+        //     SET
+        //         lists = lists || $2
+        //     WHERE NOT
+        //         lists @> '{$2}'
+        //         AND
+        //         user_id = $1
+        // `;
+
+        const sql = `
+            UPDATE
+                wishlists_data
+            SET
+                lists = array_append(lists, $2)
+            WHERE
+                user_id = $1
+        `;
+
+        return db
+            .query(sql, [userId, newListId]);
+    },
+
+    updateListIds: (userId, arrOfListIds) => {
+        const sql = `
+            UPDATE
+                wishlists_data
+            SET
+                lists = $2
+            WHERE
+                user_id = $1
+        `;
+
+        return db
+            .query(sql, [userId, arrOfListIds]);
     }
 };
 
@@ -124,7 +164,7 @@ const WishlistData = {
 // individual lists (users can have multiple)
 const Wishlist = {
     // called when Steam Wishlist data is imported
-    createMainReference: (dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
+    createMainReference: (userId, dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
         const sql = `
             INSERT INTO wishlists (
                 wishlists_data_id,
@@ -154,10 +194,15 @@ const Wishlist = {
                 $7,
                 $8
             )
+            RETURNING
+                id
         `;
 
         return db
-            .query(sql, [dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat]);
+            .query(sql, [dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat])
+            .then(dbRes => {
+                WishlistData.addNewListId(userId, dbRes.rows[0].id)
+            });
     },
     
     updateMainReference: (dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
@@ -225,6 +270,45 @@ const Wishlist = {
         return db
             .query(sql, [wishlistsDataId])
             .then(dbRes => dbRes.rows[0]);
+    },
+
+    addNewUserWishlist: (userId, dataTableId, listTitle, listDescription, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
+        const sql = `
+            INSERT INTO wishlists (
+                wishlists_data_id,
+                main_reference,
+                name,
+                description,
+                created_at,
+                game_ids,
+                game_name,
+                game_img_bg,
+                date_added,
+                release_date,
+                release_date_str,
+                deck_compat
+            )
+            VALUES (
+                $1,
+                'false',
+                $2,
+                $3,
+                now(),
+                $4,
+                $5,
+                $6,
+                $7,
+                $8,
+                $9,
+                $10
+            )
+            RETURNING
+                id
+        `;
+
+        return db
+            .query(sql, [dataTableId, listTitle, listDescription, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat])
+            .then(dbRes => WishlistData.addNewListId(userId, dbRes.rows[0]));
     },
 
     getUserWishlists: (wishlistsDataId) => {
