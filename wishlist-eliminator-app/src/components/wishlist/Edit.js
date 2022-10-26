@@ -1,10 +1,12 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import WishlistDisplay from "./WishlistDisplay";
-import { DataRowMessage } from "pg-protocol/dist/messages";
+import './Edit.scss';
 
 function Edit(props) {
     let { wishlistId } = useParams();
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const [ editingListData, setEditingListData ] = useState({})
     const [ referenceListData, setReferenceListData ] = useState({})
@@ -28,6 +30,7 @@ function Edit(props) {
     let isInitialized = false;
     const onInitialize = () => {
         if (!isInitialized) {
+            // fetch wishlist to edit
             fetch(`/api/wishlists/${wishlistId}`)
                 .then(res => res.json())
                 .then(data => {
@@ -52,8 +55,42 @@ function Edit(props) {
                         })
                     } else {
                         console.error("list not found, try again");
+                        navigate('/wishlists/create');
                     }
                 })
+
+            // if there is a reference id provided, use it!
+            // location.search
+            let refListId = location.search.includes('ref') ? location.search.split('=')[1] : ''
+            // console.log(refListId);
+            if (location.search && typeof (refListId * 1) === 'number') {
+                fetch(`/api/wishlists/${refListId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (!data.error) {
+                            setReferenceListData({
+                                listId: data.id,
+                                name: data.name,
+                                description: data.description,
+                                mainReference: data.main_reference,
+                                createdAt: data.created_at,
+                                editedAt: data.edited_at,
+                                list_data: {
+                                    gameId: data.game_ids,
+                                    gameName: data.game_name,
+                                    gameImgBg: data.game_img_bg,
+                                    dateAddedToOgList: data.date_added,
+                                    releaseDate: data.release_date,
+                                    releaseDateStr: data.release_date_str,
+                                    deckCompat: data.deck_compat,
+                                    purchased: data.purchased
+                                }
+                            })
+                        } else {
+                            console.error("list not found, try again");
+                        }
+                    })
+            }
             isInitialized = true;
         }
     }
@@ -70,12 +107,14 @@ function Edit(props) {
     useEffect(onInitialize, [isInitialized])
     // useEffect(updateListsData, [editingListData])
 
+    const [ manuallyShowReferenceData, setManuallyShowReferenceData] = useState(false);
+
     return (
         <div className="WishlistEdit">
             <h2>Edit Wishlist time</h2>
 
             <div className="displayCreateColumns">
-                <WishlistDisplay />
+                {(typeof referenceListData.listId !== 'undefined' ||manuallyShowReferenceData) && <WishlistDisplay />}
                 <WishlistDisplay />
             </div>
         </div>

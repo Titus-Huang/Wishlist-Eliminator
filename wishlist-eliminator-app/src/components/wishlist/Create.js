@@ -92,8 +92,8 @@ function Create(props) {
                     console.log(response);
                     // update the local data with this new wishlit
                     updateLocalData(response);
-                    // navigate to edite the wishlist
-                    navigate(`/wishlists/edit/${response.id}`);
+                    // navigate to edit the wishlist
+                    navigate(`/wishlists/edit/${response.id}?ref=${newListForm.referenceListId}`);
                 })
             // response here should be the new list in object form
         } else {
