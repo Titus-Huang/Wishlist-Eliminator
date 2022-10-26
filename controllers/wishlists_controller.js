@@ -10,9 +10,27 @@ const { Wishlist, WishlistData } = require('../models/wishlist');
 router.get('/', (req, res) => {
     // this is to send user's wishlist data... data :P
     if (req.session.userId) {
+        let returnData = {
+            userListdata: {},
+            userWishlists: {}
+        }
         WishlistData
             .getWishlistDataByUserId(req.session.userId)
-            .then(wishlistData => res.json(wishlistData));
+            .then(wishlistData => {
+                returnData.userListdata = wishlistData;
+                console.log('wishlistData:', wishlistData);
+
+                Wishlist
+                    .getUserWishlists(wishlistData.id)
+                    .then(lists => {
+                        // console.log('lists:', lists);
+                        returnData.userWishlists = lists
+                    })
+                    .then(() => {
+                        // console.log('returndata:', returnData);
+                        res.status(200).json(returnData)
+                    })
+            })
     } else {
         res.json({ error: 'no one logged in' });
     }

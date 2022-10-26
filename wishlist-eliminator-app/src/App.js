@@ -15,8 +15,8 @@ function App() {
     const navigate = useNavigate();
 
     const [ appData, updateAppData ] = useState({
-        wishlists: {},
         steamWishlist: {}, // remove this down the line, as the data already exists within userWishlistData
+        userWishlists: {},
         userWishlistData: {},
         userData: {}
     });
@@ -53,14 +53,18 @@ function App() {
             .then(data => {
                 if (!data.error) {
                     console.log('user session found, local wishlist data... data being updated');
+                    // console.table(data.userListData);
+                    console.log('returndata', data);
                     updateAppData((existingAppData) => ({
                         ...existingAppData,
-                        userWishlistData: data,
+                        userWishlistData: data.userListData,
+                        userWishlists: data.userWishlists
                     }));
                 } else {
                     updateAppData((existingAppData) => ({
                         ...existingAppData,
                         userWishlistData: {},
+                        userWishlists: {}
                     }));
                 }
             })
@@ -77,14 +81,16 @@ function App() {
         }));
     };
 
-    const updateWishlistData = data => {
+    const updateUserWishlistsData = data => {
+        console.log('wishlists being updated', data);
         updateAppData((existingAppData) => ({
             ...existingAppData,
-            wishlist: data,
+            userWishlists: data,
         }));
     };
 
     const updateUserWishlistDataData = data => {
+        console.log('wishlistData being updated', data);
         updateAppData((existingAppData) => ({
             ...existingAppData,
             userWishlistData: data,
@@ -107,7 +113,7 @@ function App() {
             <Routes>
                 <Route path='/' element={<Home userData={appData.userData} />} />
                 <Route path='/users/sign-up' element={<SignUp />} />
-                <Route path='/users/login' element={<Login updateUserData={updateUserData} updateUserWishlistDataData={updateUserWishlistDataData} />} />
+                <Route path='/users/login' element={<Login updateUserData={updateUserData} updateUserWishlistDataData={updateUserWishlistDataData} updateUserWishlistsData={updateUserWishlistsData} />} />
                 <Route path='/users/logout' element={<Logout />} />
                 <Route path='/wishlists/import' element={<Import userData={appData.userData} updateSteamWishlistData={updateSteamWishlistData} />} />
                 <Route path='/wishlists/create' element={<WishlistModification type={'create'} appData={appData} updateAppData={updateAppData} />} />

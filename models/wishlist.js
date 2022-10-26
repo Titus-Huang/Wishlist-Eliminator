@@ -195,7 +195,7 @@ const Wishlist = {
             // })
     },
 
-    doesMainReferenceExist: (wishlistDataId) => {
+    doesMainReferenceExist: (wishlistsDataId) => {
         const sql = `
             SELECT
                 *
@@ -207,11 +207,11 @@ const Wishlist = {
         `;
 
         return db
-            .query(sql, [wishlistDataId])
+            .query(sql, [wishlistsDataId])
             .then(dbRes => typeof dbRes.rows[0] !== 'undefined');
     },
 
-    getUserMainReference: (wishlistDataId) => {
+    getUserMainReference: (wishlistsDataId) => {
         const sql = `
             SELECT
                 *
@@ -223,8 +223,23 @@ const Wishlist = {
         `;
         
         return db
-            .query(sql, [wishlistDataId])
+            .query(sql, [wishlistsDataId])
             .then(dbRes => dbRes.rows[0]);
+    },
+
+    getUserWishlists: (wishlistsDataId) => {
+        const sql = `
+            SELECT
+                *
+            FROM
+                wishlists
+            WHERE
+                wishlists_data_id = $1
+        `;
+
+        return db
+            .query(sql, [wishlistsDataId])
+            .then(dbRes => dbRes.rows);
     }
 };
 
