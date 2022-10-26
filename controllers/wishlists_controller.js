@@ -52,15 +52,15 @@ router.get('/import/:steamId', async (req, res) => {
 
                 // after data is put within wishlist_data
                 // now putting data into first OG wishlist post
-                // check if Master Reference exists
+                // check if Main Reference exists
 
                 WishlistData
                     .getWishlistDataId(userId)
                     .then(dataId => {
                         // console.log('dataId', dataId)
                         Wishlist
-                            .doesMasterReferenceExist(dataId)
-                            .then(doesMastExist => { return {dataId, doesMastExist}})
+                            .doesMainReferenceExist(dataId)
+                            .then(doesMainExist => { return {dataId, doesMainExist}})
                             .then(checks => {
                                 // console.log('SteamWishlist', steamWishlist);
                                 // console.log('ResKeys', resKeys);
@@ -99,13 +99,13 @@ router.get('/import/:steamId', async (req, res) => {
                                     deckCompat.push(steamWishlist[importedSteamList[i]].deck_compat);
                                 }
 
-                                if (checks.doesMastExist) {
-                                    // console.log("master copy DOES exist!!!");
-                                    Wishlist.updateMasterReference(checks.dataId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat);
+                                if (checks.doesMainExist) {
+                                    // console.log("main copy DOES exist!!!");
+                                    Wishlist.updateMainReference(checks.dataId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat);
                                 } else {
-                                    // console.log("master copy does NOT exist!!!");
+                                    // console.log("main copy does NOT exist!!!");
                                     // console.log(dateAdded);
-                                    Wishlist.createMasterReference(checks.dataId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat);
+                                    Wishlist.createMainReference(checks.dataId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat);
                                 }
                             })
                     })

@@ -56,7 +56,7 @@ CREATE TABLE wishlists(
     id serial primary key,
     -- row data
     wishlists_data_id integer,
-    master_reference boolean,
+    main_reference boolean,
     name text,
     description text,
     created_at timestamp,

@@ -10,7 +10,7 @@ const db = require('../db/db');
 // steam_sorted_game_ids integer[],
 
 // -- local list data
-// local_lists integer[]
+// lists integer[]
 
 
 
@@ -20,7 +20,9 @@ const db = require('../db/db');
 
 // -- row data
 // wishlists_data_id integer,
-// master_reference boolean
+// main_reference boolean,
+// name text,
+// description text,
 // created_at timestamp,
 // edited_at timestamp,
 
@@ -122,11 +124,13 @@ const WishlistData = {
 // individual lists (users can have multiple)
 const Wishlist = {
     // called when Steam Wishlist data is imported
-    createMasterReference: (dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
+    createMainReference: (dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
         const sql = `
             INSERT INTO wishlists (
                 wishlists_data_id,
-                master_reference,
+                main_reference,
+                name,
+                description,
                 created_at,
                 game_ids,
                 game_name,
@@ -139,6 +143,8 @@ const Wishlist = {
             VALUES (
                 $1,
                 'true',
+                'Main Reference',
+                'The Main Reference that the app uses from your imported Steam Wishlist',
                 now(),
                 $2,
                 $3,
@@ -154,7 +160,7 @@ const Wishlist = {
             .query(sql, [dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat]);
     },
     
-    updateMasterReference: (dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
+    updateMainReference: (dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
         const sql = `
             UPDATE
                 wishlists
@@ -179,7 +185,7 @@ const Wishlist = {
             )
             WHERE
                 wishlists_data_id = $1
-                AND master_reference = 'true'
+                AND main_reference = 'true'
         `;
 
         return db
@@ -189,7 +195,7 @@ const Wishlist = {
             // })
     },
 
-    doesMasterReferenceExist: (wishlistDataId) => {
+    doesMainReferenceExist: (wishlistDataId) => {
         const sql = `
             SELECT
                 *
@@ -197,7 +203,7 @@ const Wishlist = {
                 wishlists
             WHERE
                 wishlists_data_id = $1
-                AND master_reference = 'true'
+                AND main_reference = 'true'
         `;
 
         return db
@@ -205,7 +211,7 @@ const Wishlist = {
             .then(dbRes => typeof dbRes.rows[0] !== 'undefined');
     },
 
-    getUserMasterReference: (wishlistDataId) => {
+    getUserMainReference: (wishlistDataId) => {
         const sql = `
             SELECT
                 *
@@ -213,7 +219,7 @@ const Wishlist = {
                 wishlists
             WHERE
                 wishlists_data_id = $1
-                AND master_reference = 'true'
+                AND main_reference = 'true'
         `;
         
         return db
