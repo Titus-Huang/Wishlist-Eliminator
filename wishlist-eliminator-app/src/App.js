@@ -21,58 +21,66 @@ function App() {
         userData: {}
     });
 
+    let { hasSessionsBeenFetched, hasWishlistsBeenFetched, isInitalized } = false;
     // first run when the components first loads onto the screen
     const fetchUserDataOnStart = () => {
-        // grab user data on load
-        fetch('/api/sessions')
-            .then(res => res.json())
-            .then(data => {
-                // console.log('data blep');
-                // console.log(data);
+        if (!hasSessionsBeenFetched) {
+            // grab user data on load
+            fetch('/api/sessions')
+                .then(res => res.json())
+                .then(data => {
+                    // console.log('data blep');
+                    // console.log(data);
 
-                if (!data.error) {
-                    console.log('user session found, local data being updated');
-                    updateAppData((existingAppData) => ({
-                        ...existingAppData,
-                        userData: data,
-                    }));
-                } else {
-                    // you are not logged in, kick back to home page
-                    console.log('not logged in, back to landing page')
-                    updateAppData((existingAppData) => ({
-                        ...existingAppData,
-                        userData: {},
-                    }));
-                    navigate('/');
-                }
-            });
+                    if (!data.error) {
+                        console.log('user session found, local data being updated');
+                        updateAppData((existingAppData) => ({
+                            ...existingAppData,
+                            userData: data,
+                        }));
+                    } else {
+                        // you are not logged in, kick back to home page
+                        console.log('not logged in, back to landing page')
+                        updateAppData((existingAppData) => ({
+                            ...existingAppData,
+                            userData: {},
+                        }));
+                        navigate('/');
+                    }
+                });
+            hasSessionsBeenFetched = true;
+        }
         
-        // grab wishlist data on load
-        fetch('/api/wishlists')
-            .then(res => res.json())
-            .then(data => {
-                if (!data.error) {
-                    console.log('user session found, local wishlist data... data being updated');
-                    // console.table(data.userListData);
-                    // console.log('returndata', data);
-                    updateAppData((existingAppData) => ({
-                        ...existingAppData,
-                        userWishlistData: data.userListData,
-                        userWishlists: data.userWishlists
-                    }));
-                } else {
-                    updateAppData((existingAppData) => ({
-                        ...existingAppData,
-                        userWishlistData: {},
-                        userWishlists: {}
-                    }));
-                }
-            })
+        if (!hasWishlistsBeenFetched) {
+            fetch('/api/wishlists')
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.error) {
+                        console.log('user session found, local wishlist data... data being updated');
+                        // console.table(data.userListData);
+                        // console.log('returndata', data);
+                        updateAppData((existingAppData) => ({
+                            ...existingAppData,
+                            userWishlistData: data.userListData,
+                            userWishlists: data.userWishlists
+                        }));
+                    } else {
+                        updateAppData((existingAppData) => ({
+                            ...existingAppData,
+                            userWishlistData: {},
+                            userWishlists: {}
+                        }));
+                    }
+                });
+            hasWishlistsBeenFetched = true;
+        }
 
-        // grab user's wishlists
+        if (hasWishlistsBeenFetched && hasSessionsBeenFetched && !isInitalized) {
+            isInitalized = true;
+        }
     }
 
-    useEffect(fetchUserDataOnStart, []);
+    useEffect(fetchUserDataOnStart, [appData]);
 
     const updateUserData = data => {
         updateAppData((existingAppData) => ({
