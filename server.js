@@ -23,13 +23,23 @@ app.use(express.json());
 // Enables sessions
 app.use(sessions);
 
+console.log('Node environment:', process.env.NODE_ENV)
+
 // Sending back SPA to user/client
 if (process.env.NODE_ENV === 'production') {
     const path = require('path')
     app.use(express.static(path.join(__dirname, 'build')));
 
-    app.get('/*', (req, res) => {
+    app.get('/\/[^api]/', (req, res) => {
         res.sendFile(path.join(__dirname, 'build', 'index.html'));
+    });
+} else if (process.env.NODE_ENV === 'development') {
+    const path = require('path')
+    app.use(express.static(path.join(__dirname, 'wishlist-eliminator-app/build')));
+
+    // console.log("running development")
+    app.get('/\/[^api]/', (req, res) => {
+        res.sendFile(path.join(__dirname, 'wishlist-eliminator-app/build', 'index.html'));
     });
 }
 
