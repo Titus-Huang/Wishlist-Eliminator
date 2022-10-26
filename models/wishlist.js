@@ -142,7 +142,8 @@ const WishlistData = {
         `;
 
         return db
-            .query(sql, [userId, newListId]);
+            .query(sql, [userId, newListId])
+            .then(() => {console.log('New list has been created by user id:', userId)});
     },
 
     updateListIds: (userId, arrOfListIds) => {
@@ -272,7 +273,35 @@ const Wishlist = {
             .then(dbRes => dbRes.rows[0]);
     },
 
-    addNewUserWishlist: (userId, dataTableId, listTitle, listDescription, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
+    addNewUserWishlist: (userId, dataTableId, listTitle, listDescription) => {
+        const sql = `
+            INSERT INTO wishlists (
+                wishlists_data_id,
+                main_reference,
+                name,
+                description,
+                created_at
+            )
+            VALUES (
+                $1,
+                'false',
+                $2,
+                $3,
+                now()
+            )
+            RETURNING
+                *
+        `;
+
+        return db
+            .query(sql, [dataTableId, listTitle, listDescription])
+            .then(dbRes => {
+                WishlistData.addNewListId(userId, dbRes.rows[0].id);
+                return dbRes.rows[0];
+            });
+    },
+
+    addNewUserWishlistWithData: (userId, dataTableId, listTitle, listDescription, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
         const sql = `
             INSERT INTO wishlists (
                 wishlists_data_id,

@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Create(props) {
+    const navigate = useNavigate();
     // const [ readyToCreate, setReadyToCreate ] = useState(false)
     // const [ newListData, setNewListData ] = useState({
     //     name: '',
@@ -39,7 +41,7 @@ function Create(props) {
         title: '',
         description: '',
         // For now, auto set it to user "a"'s Main Reference list
-        referenceListId: 1
+        referenceListId: props.referenceListId
         // default in the future will automatically find user's Main Reference within appData.userWishlists
         // referenceListId: -1
     });
@@ -77,9 +79,43 @@ function Create(props) {
             // Using the returned data's id to redirect to /wishlists/edit/:wishlistId
             // Once in Edit.js, fill out the form with the data
             // Fill up the left hand side based from userWishlists id that
+            // insert that data in for the data required to create a new wishlist
+
+            onNewListFormChange((existingData) => ({
+                ...existingData,
+                userDataTableId: props.appData.userWishlistData.id,
+            }))
+
+            fetch('/api/wishlists', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newListForm)
+            })
+                .then(res => res.json())
+                .then(response => {
+                    console.log(response);
+                    // update the local data with this new wishlit
+                    updateLocalData(response);
+                    // navigate to edite the wishlist
+                    navigate(`/wishlists/edit/${response.id}`);
+                })
+            // response here should be the new list in object form
         } else {
             setSubmitted(true);
         }
+    };
+
+    const updateLocalData = data => {
+        let updatedUserWishlists = props.appData.userWishlists;
+        let updatedUserWishlistData = props.appData.userWishlistData;
+        updatedUserWishlists.push(data);
+        updatedUserWishlistData.lists.push(data.id);
+
+        props.updateAppData((existingAppData) => ({
+            ...existingAppData,
+            userWishlistData: updatedUserWishlistData,
+            userWishlists: updatedUserWishlists,
+        }));
     };
 
     const renderError = errMsg => {

@@ -1,38 +1,40 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WishlistDisplay from "./WishlistDisplay";
 
 function Edit(props) {
     let { wishlistId } = useParams();
 
-    const [ editingListData, setEditingListData ] = useState({
-        name: '',
-        description: '',
-        list_order: {
-            id: 0,
-            name: '',
-            img_bg: '',
-            dateAddedToOgList: '',
-            releaseDate: '',
-            releaseDateStr: '',
-            deckCompat: '',
-            purchased: false
-        }
-    })
-    const [ referenceListData, setReferenceListData ] = useState({
-        name: '',
-        description: '',
-        list_order: {
-            id: 0,
-            name: '',
-            img_bg: '',
-            dateAddedToOgList: '',
-            releaseDate: '',
-            releaseDateStr: '',
-            deckCompat: '',
-            purchased: false
-        }
-    })
+    const [ editingListData, setEditingListData ] = useState({})
+    const [ referenceListData, setReferenceListData ] = useState({})
+
+    // what the list data should look like
+    // {
+    //     name: '',
+    //     description: '',
+    //     list_data: [{
+    //         id: 0,
+    //         name: '',
+    //         img_bg: '',
+    //         dateAddedToOgList: '',
+    //         releaseDate: '',
+    //         releaseDateStr: '',
+    //         deckCompat: '',
+    //         purchased: false
+    //     }]
+    // }
+
+    const getListsData = () => {
+        console.log('get lists data is being run');
+    }
+
+    const updateListsData = () => {
+        console.log('update list data is being run');
+    }
+
+    // this should run on initialise
+    useEffect(getListsData, [])
+    useEffect(getListsData, [editingListData])
 
     return (
         <div className="WishlistEdit">
