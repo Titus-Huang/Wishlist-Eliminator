@@ -11,13 +11,13 @@ router.get('/', (req, res) => {
     // this is to send user's wishlist data... data :P
     if (req.session.userId) {
         let returnData = {
-            userListdata: {},
+            userListData: {},
             userWishlists: {}
         }
         WishlistData
             .getWishlistDataByUserId(req.session.userId)
             .then(wishlistData => {
-                returnData.userListdata = wishlistData;
+                returnData.userListData = wishlistData;
                 // console.log('wishlistData:', wishlistData);
 
                 Wishlist

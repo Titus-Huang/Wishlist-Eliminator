@@ -52,7 +52,7 @@ function Login(props) {
                             .then(res => res.json())
                             .then(loginData => {
                                 // console.log('loginData:', loginData);
-                                props.updateUserWishlistDataData(loginData.userListdata);
+                                props.updateUserWishlistDataData(loginData.userListData);
                                 props.updateUserWishlistsData(loginData.userWishlists);
                                 props.updateUserData(userData);
                                 console.log('Logged in...');
