@@ -13,8 +13,8 @@ function NavBar(props) {
                 {props.userData.username && <li><Link to='/wishlists/create'>Create Wishlist</Link></li>}
                 {props.userData.username && location.pathname.match(/(\/)(?=wishlist)\w+/gi) && <li><Link to='/wishlists/edit/1'>Edit First Wishlist</Link></li>}
                 {props.userData.username && location.pathname.match(/(\/)(?=wishlist)\w+/gi) && <li><Link to='/wishlists/view/1'>View First Wishlist</Link></li>}
-                {props.userData.username && location.pathname.match(/(\/)(?=wishlist)\w+/gi) && <li><Link to='/wishlists/edit/1'>Edit Third Wishlist</Link></li>}
-                {props.userData.username && location.pathname.match(/(\/)(?=wishlist)\w+/gi) && <li><Link to='/wishlists/view/1'>View Third Wishlist</Link></li>}
+                {props.userData.username && location.pathname.match(/(\/)(?=wishlist)\w+/gi) && <li><Link to='/wishlists/edit/4'>Edit Fourth Wishlist</Link></li>}
+                {props.userData.username && location.pathname.match(/(\/)(?=wishlist)\w+/gi) && <li><Link to='/wishlists/view/4'>View Fourth Wishlist</Link></li>}
                 {props.userData.username && <li><Link to='/users/logout'>Log out</Link></li>}
             </ul>
             {console.log('hash', location.hash, '|', 'pathname', location.pathname, '|', 'search', location.search)}

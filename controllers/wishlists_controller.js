@@ -9,6 +9,7 @@ const { Wishlist, WishlistData } = require('../models/wishlist');
 // routes
 router.get('/', (req, res) => {
     // this is to send user's wishlist data... data :P
+    // grabs all of user's wishlist data and wishlists
     if (req.session.userId) {
         let returnData = {
             userListData: {},
@@ -45,6 +46,44 @@ router.post('/', (req, res) => {
         Wishlist
             .addNewUserWishlist(userId, userDataTableId, title, description)
             .then(newList => res.json(newList))
+    } else {
+        res.status(401).json({ error: 'no one logged in' });
+    }
+})
+
+router.get('/:wishlistId', (req, res) => {
+    const { wishlistId } = req.params;
+    const userId = req.session.userId;
+
+    if (userId && typeof (wishlistId * 1) === 'number') {
+        Wishlist
+            .getUserWishlist(wishlistId)
+            .then(wishlist => {
+                // console.log(typeof wishlist)
+                if (typeof wishlist !== 'undefined') {
+                    res.status(200).send(wishlist)
+                } else {
+                    res.status(404).json({ error: 'list not found' })
+                }
+            })
+    } else {
+        res.json({ error: 'no one logged in' });
+    }
+})
+
+router.get('/data/:userId', (req, res) => {
+    const { userId } = req.params;
+
+    if (userId === req.session.userId && typeof (userId * 1) === 'number') {
+        WishlistData
+            .getWishlistDataByUserId(userId)
+            .then(wishlistData => {
+                if (typeof wishlistData !== 'undefined') {
+                    res.status(200).send(wishlistData)
+                }
+            })
+    } else {
+        res.json({ error: 'no one logged in' });
     }
 })
 

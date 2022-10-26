@@ -353,6 +353,24 @@ const Wishlist = {
         return db
             .query(sql, [wishlistsDataId])
             .then(dbRes => dbRes.rows);
+    },
+
+    getUserWishlist: (wishlistsId) => {
+        const sql = `
+            SELECT
+                *
+            FROM
+                wishlists
+            WHERE
+                id = $1
+        `;
+
+        return db
+            .query(sql, [wishlistsId])
+            .then(dbRes => {
+                // console.log(dbRes.rows[0]);
+                return dbRes.rows[0];
+            });
     }
 };
 
