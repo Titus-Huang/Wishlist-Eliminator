@@ -42,7 +42,9 @@ router.post('/', (req, res) => {
     const { userDataTableId, title, description } = res.body;
 
     if (userId) {
-        Wishlist.addNewUserWishlist(userId, userDataTableId, title, description);
+        Wishlist
+            .addNewUserWishlist(userId, userDataTableId, title, description)
+            .then(newList => res.json(newList))
     }
 })
 

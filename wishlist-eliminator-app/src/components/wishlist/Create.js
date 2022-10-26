@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Create(props) {
@@ -46,7 +46,6 @@ function Create(props) {
         // referenceListId: -1
     });
 
-
     const handleTitleInputChange = event => {
         event.persist();
 
@@ -81,24 +80,21 @@ function Create(props) {
             // Fill up the left hand side based from userWishlists id that
             // insert that data in for the data required to create a new wishlist
 
-            onNewListFormChange((existingData) => ({
-                ...existingData,
-                userDataTableId: props.appData.userWishlistData.id,
-            }))
+            console.log('newListForm:', newListForm);
 
-            fetch('/api/wishlists', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newListForm)
-            })
-                .then(res => res.json())
-                .then(response => {
-                    console.log(response);
-                    // update the local data with this new wishlit
-                    updateLocalData(response);
-                    // navigate to edite the wishlist
-                    navigate(`/wishlists/edit/${response.id}`);
-                })
+            // fetch('/api/wishlists', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(newListForm)
+            // })
+            //     .then(res => res.json())
+            //     .then(response => {
+            //         console.log(response);
+            //         // update the local data with this new wishlit
+            //         updateLocalData(response);
+            //         // navigate to edite the wishlist
+            //         navigate(`/wishlists/edit/${response.id}`);
+            //     })
             // response here should be the new list in object form
         } else {
             setSubmitted(true);
@@ -123,6 +119,18 @@ function Create(props) {
         setErrorMsg(errMsg);
     }
 
+    let isInitializedWithValues = false;
+    const onInitialize = () => {
+        if (!isInitializedWithValues) {
+            onNewListFormChange((inputValue) => ({
+                ...inputValue,
+                userDataTableId: props.appData.userWishlistData.id,
+            }));
+            if (props.appData.userWishlistData.id) isInitializedWithValues = true;
+        }
+    }
+
+    useEffect(onInitialize, [props.appData.userWishlistData]);
 
     return (
         <div className="WishlistCreate">
