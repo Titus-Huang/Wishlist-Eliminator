@@ -51,7 +51,7 @@ function Login(props) {
                         fetch('/api/wishlists')
                             .then(res => res.json())
                             .then(loginData => {
-                                console.log('loginData:', loginData);
+                                // console.log('loginData:', loginData);
                                 props.updateUserWishlistDataData(loginData.userListdata);
                                 props.updateUserWishlistsData(loginData.userWishlists);
                                 props.updateUserData(userData);

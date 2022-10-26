@@ -54,7 +54,7 @@ function App() {
                 if (!data.error) {
                     console.log('user session found, local wishlist data... data being updated');
                     // console.table(data.userListData);
-                    console.log('returndata', data);
+                    // console.log('returndata', data);
                     updateAppData((existingAppData) => ({
                         ...existingAppData,
                         userWishlistData: data.userListData,
@@ -82,7 +82,7 @@ function App() {
     };
 
     const updateUserWishlistsData = data => {
-        console.log('wishlists being updated', data);
+        // console.log('wishlists being updated', data);
         updateAppData((existingAppData) => ({
             ...existingAppData,
             userWishlists: data,
@@ -90,7 +90,7 @@ function App() {
     };
 
     const updateUserWishlistDataData = data => {
-        console.log('wishlistData being updated', data);
+        // console.log('wishlistData being updated', data);
         updateAppData((existingAppData) => ({
             ...existingAppData,
             userWishlistData: data,

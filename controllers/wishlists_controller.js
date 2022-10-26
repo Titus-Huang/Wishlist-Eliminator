@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
             .getWishlistDataByUserId(req.session.userId)
             .then(wishlistData => {
                 returnData.userListdata = wishlistData;
-                console.log('wishlistData:', wishlistData);
+                // console.log('wishlistData:', wishlistData);
 
                 Wishlist
                     .getUserWishlists(wishlistData.id)
