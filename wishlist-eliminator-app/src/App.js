@@ -8,7 +8,7 @@ import Login from './components/users/Login';
 import Logout from './components/users/Logout';
 import SignUp from './components/users/Sign_Up';
 import Import from './components/wishlist/Import';
-import Create from './components/wishlist/Create';
+import WishlistModification from './components/wishlist/WishlistModification';
 
 function App() {
     const location = useLocation();
@@ -110,7 +110,8 @@ function App() {
                 <Route path='/users/login' element={<Login updateUserData={updateUserData} updateUserWishlistDataData={updateUserWishlistDataData} />} />
                 <Route path='/users/logout' element={<Logout />} />
                 <Route path='/wishlists/import' element={<Import userData={appData.userData} updateSteamWishlistData={updateSteamWishlistData} />} />
-                <Route path='/wishlists/create' element={<Create />} />
+                <Route path='/wishlists/create' element={<WishlistModification type={'create'} />} />
+                <Route path='/wishlists/edit' element={<WishlistModification type={'edit'} />} />
             </Routes>
         </div>
     );

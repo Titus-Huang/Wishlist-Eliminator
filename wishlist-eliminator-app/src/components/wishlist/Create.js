@@ -1,7 +1,9 @@
 
 function Create() {
     return (
-        <h2>Create Wishlist time</h2>
+        <div className="WishlistCreate">
+            <h2>Create Wishlist time</h2>
+        </div>
     );
 }
 
