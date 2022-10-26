@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 
 function WishlistDisplay(props) {
 
-    const [ list, updateList ] = useState([])
+    const [ test, updateTest ] = useState(false)
+    // const [ list, updateList ] = useState([])
+    let list = [];
 
     let isInitialized = false;
     const onInitialize = () => {
@@ -30,24 +32,35 @@ function WishlistDisplay(props) {
             isInitialized = true;
         }
     }
-    // useEffect(onInitialize, [isInitialized]);
 
-    const unpackList = (list) => {
-        if (list !== null) {
+
+    const unpackList = (listData) => {
+        if (listData !== null) {
             console.log('unpacking');
             // debugger
-            console.log(Object.keys(list));
-            console.log(Object.values(list));
-            const listKeys = Object.keys(list);
-            const listValues = Object.values(list);
-            let returnArr = []
+            // console.log(Object.keys(listData));
+            // console.log(Object.values(listData));
+            const listKeys = Object.keys(listData);
+            const listValues = Object.values(listData);
+            if (listValues.indexOf(null) === -1) {
+                let returnListArr = [];
+                for (let i = 0; i < listValues[0].length; i++) {
+                    let newArrData = {}
+                    for (let j = 0; j < listKeys.length; j++) {
+                        newArrData[listKeys[j]] = listValues[j][i];
+                    }
+                    // updateList((existingData) => ({
+                    //     ...existingData,
+                    //     newArrData,
+                    // }));
+                    returnListArr.push(newArrData);
+                }
 
-            // listValues.forEach((value, i) => {
-            //     console.log(value);
-            //     // listKeys.forEach((key, j) => {
-                    
-            //     // });
-            // });
+                list = returnListArr;
+                // updateList(returnListArr);
+                console.log('returnListArrrrrrrrr',returnListArr);
+                console.log('list',list);
+            }
         }
     }
 
@@ -55,8 +68,13 @@ function WishlistDisplay(props) {
 
     }
 
+    
+    // useEffect(editingReferenceRender, [test]);
+
     const editingReferenceRender = () => {
-        // onInitialize()
+        if (!test) return
+
+        onInitialize()
 
         return (
             <div className="editingReferenceRender">
@@ -66,7 +84,10 @@ function WishlistDisplay(props) {
                 <p>Description: {props.referenceListData.description}</p>
                 <br />
                 <div className="editingReferenceList">
-                    <WishlistCard />
+                    {console.log(list.length)}
+                    {list.map((cardData, i) => {
+                        return <WishlistCard key={i} />
+                    })}
                 </div>
                 
             </div>
