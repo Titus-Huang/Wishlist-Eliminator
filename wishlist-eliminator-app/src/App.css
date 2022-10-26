@@ -2,12 +2,12 @@ div {
   border: 1px solid darkslategrey;
 }
 
-div::after {
+/* div::after {
   content: 'div';
   display: block;
   width: fit-content;
   margin-left: auto;
-}
+} */
 
 
 .App {
