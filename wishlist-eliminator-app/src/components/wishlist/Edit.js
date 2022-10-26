@@ -95,10 +95,6 @@ function Edit(props) {
         }
     }
 
-    const getListsData = () => {
-        console.log('get lists data is being run');
-    }
-
     const updateListsData = () => {
         console.log('update list data is being run');
     }
@@ -114,8 +110,8 @@ function Edit(props) {
             <h2>Edit Wishlist time</h2>
 
             <div className="displayCreateColumns">
-                {(typeof referenceListData.listId !== 'undefined' ||manuallyShowReferenceData) && <WishlistDisplay />}
-                <WishlistDisplay />
+                {(typeof referenceListData.listId !== 'undefined' ||manuallyShowReferenceData) && <WishlistDisplay type={'editing-reference'} referenceListData={referenceListData} />}
+                <WishlistDisplay type={'editing-list'} editingListData={editingListData} />
             </div>
         </div>
     );
