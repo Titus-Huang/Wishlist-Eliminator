@@ -16,7 +16,7 @@ function App() {
 
     const [ appData, updateAppData ] = useState({
         wishlists: {},
-        steamWishlist: {},
+        steamWishlist: {}, // remove this down the line, as the data already exists within userWishlistData
         userWishlistData: {},
         userData: {}
     });
