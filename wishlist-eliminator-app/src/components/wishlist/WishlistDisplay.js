@@ -1,6 +1,7 @@
 import WishlistCard from "./WishlistCard";
 import { useState, useEffect } from "react";
 
+import './WishlistDisplay.scss';
 
 function WishlistDisplay(props) {
 
@@ -86,7 +87,7 @@ function WishlistDisplay(props) {
                 <div className="editingReferenceList">
                     {console.log(list.length)}
                     {list.map((cardData, i) => {
-                        return <WishlistCard key={i} />
+                        return <WishlistCard key={i} cardData={cardData} index={i} />
                     })}
                 </div>
                 

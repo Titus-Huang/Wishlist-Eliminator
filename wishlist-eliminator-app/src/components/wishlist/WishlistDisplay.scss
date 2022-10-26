@@ -1,0 +1,22 @@
+
+.WishlistCard {
+    height: 9em;
+    position: relative;
+    transition: height ease-in-out 0.6s;
+}
+
+.WishlistCard:hover {
+    height: 30em;
+}
+
+.gameTitle {
+    text-align: left;
+    position: absolute;
+    width: 100%;
+    top: 5em;
+}
+
+.gameInformation {
+    z-index: -1;
+}
+
