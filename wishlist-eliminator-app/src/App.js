@@ -54,7 +54,7 @@ function App() {
                 if (!data.error) {
                     console.log('user session found, local wishlist data... data being updated');
                     // console.table(data.userListData);
-                    console.log('returndata', data);
+                    // console.log('returndata', data);
                     updateAppData((existingAppData) => ({
                         ...existingAppData,
                         userWishlistData: data.userListData,
