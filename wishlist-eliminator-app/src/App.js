@@ -110,8 +110,8 @@ function App() {
                 <Route path='/users/login' element={<Login updateUserData={updateUserData} updateUserWishlistDataData={updateUserWishlistDataData} />} />
                 <Route path='/users/logout' element={<Logout />} />
                 <Route path='/wishlists/import' element={<Import userData={appData.userData} updateSteamWishlistData={updateSteamWishlistData} />} />
-                <Route path='/wishlists/create' element={<WishlistModification type={'create'} />} />
-                <Route path='/wishlists/edit' element={<WishlistModification type={'edit'} />} />
+                <Route path='/wishlists/create' element={<WishlistModification type={'create'} appData={appData} updateAppData={updateAppData} />} />
+                <Route path='/wishlists/edit' element={<WishlistModification type={'edit'} appData={appData} updateAppData={updateAppData} />} />
             </Routes>
         </div>
     );
