@@ -1,5 +1,5 @@
 
-function WishlistCard() {
+function WishlistCard(props) {
     return (
         <div className="WishlistCard">
             <h2>Wishlist Card time</h2>

@@ -1,5 +1,5 @@
 
-function Edit() {
+function Edit(props) {
     return (
         <div className="WishlistEdit">
             <h2>Edit Wishlist time</h2>

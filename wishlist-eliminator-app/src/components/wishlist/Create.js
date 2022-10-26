@@ -1,5 +1,5 @@
 
-function Create() {
+function Create(props) {
     return (
         <div className="WishlistCreate">
             <h2>Create Wishlist time</h2>
