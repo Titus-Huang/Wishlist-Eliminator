@@ -15,6 +15,7 @@ const User = {
                 $2,
                 $3,
                 'user',
+                '',
                 0
             )
             RETURNING *
@@ -43,10 +44,14 @@ const User = {
 
     updateSteamId: (id, steamId) => {
         const sql = `
-            UPDATE users
-            SET steam_id = $2
-            WHERE id = $1
-            RETURNING *
+            UPDATE
+                users
+            SET
+                steam_id = $2
+            WHERE
+                id = $1
+            RETURNING
+                *
         `;
 
         return db
@@ -56,8 +61,12 @@ const User = {
 
     findByEmail: email => {
         const sql = `
-            SELECT * FROM users
-            WHERE email = $1
+            SELECT
+                *
+            FROM
+                users
+            WHERE
+                email = $1
         `
     
         return db
@@ -67,8 +76,12 @@ const User = {
 
     findByUsername: username => {
         const sql = `
-            SELECT * FROM users
-            WHERE username = $1
+            SELECT
+                *
+            FROM
+                users
+            WHERE
+                username = $1
         `
     
         return db
@@ -78,8 +91,12 @@ const User = {
 
     findById: id => {
         const sql = `
-            SELECT * FROM users
-            WHERE id = $1
+            SELECT
+                *
+            FROM
+                users
+            WHERE
+                id = $1
         `
 
         return db
