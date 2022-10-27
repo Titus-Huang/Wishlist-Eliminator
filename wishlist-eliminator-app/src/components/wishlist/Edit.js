@@ -155,25 +155,48 @@ function Edit(props) {
             // current list is editing list
             // so therefore, need to move the data from the editing list to the reference list
             // setReferenceListData()
+            let transform = referenceListData.list_data;
+            let tfKeys = Object.keys(referenceListData.list_data)
+            tfKeys.forEach(dataName => {
+                if (transform[dataName] === null) {
+                    transform[dataName] = [ objData[dataName] ]
+                } else {
+                    transform[dataName].unshift(objData[dataName])
+                }
+            })
+            setReferenceListData((existingData) => ({
+                ...existingData,
+                list_data: transform,
+            }))
         }
     }
 
     const updateCurrentListData = (currentListType, listData) => {
+        console.log('is updated current list')
+
         if (currentListType === 'editing-reference') {
             // current list is reference list
             // so therefore, should update via setReferenceListData
-            setReferenceListData(listData)
+            setReferenceListData((existingData) => ({
+                ...existingData,
+                list_data: listData,
+            }))
         } else if (currentListType === 'editing-list') {
             // current list is editing list
             // so therefore, should update via setEditingListData
-            setEditingListData(listData)
+            setEditingListData((existingData) => ({
+                ...existingData,
+                list_data: listData,
+            }))
         }
     }
 
     const listActions = { addToOtherList, updateCurrentListData }
 
     // this should run on initialise
-    useEffect(onInitialize, [isInitialized])
+    useEffect(() => {
+        onInitialize()
+    }, [])
     // useEffect(updateListsData, [editingListData])
 
     const [ manuallyShowReferenceData, setManuallyShowReferenceData ] = useState(false);

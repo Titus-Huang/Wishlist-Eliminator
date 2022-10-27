@@ -47,15 +47,10 @@ function WishlistDisplay(props) {
         }
     }
 
-    const onListDataUpdated = () => {
-        // console.log(isInitialized)
-        //     console.log(isListUnpacked)
-        //     console.log(isListUnpacking)
-        if (isInitialized && !isListUnpacking && !isListRepacking && isUpdateTime) {
-            // console.log(isInitialized)
-            // console.log(isListUnpacked)
-            // console.log(isListUnpacking)
-            props.listActions.updateCurrentListData(props.type, repackList(list))
+    const onListDataUpdated = (newList) => {
+        if (isInitialized && !isListUnpacking && !isListRepacking) {
+            console.log('should be repacking');
+            props.listActions.updateCurrentListData(props.type, repackList(newList))
         }
     }
 
@@ -65,22 +60,25 @@ function WishlistDisplay(props) {
 
     useEffect(() => {
         if (props.type === 'editing-reference' && isInitialized && isListUnpacked) {
+            setIsUpdateTime(true);
             console.log('updated occured to reference data within,', props.type)
-            onUpstreamListDataUpdated()
+            onUpstreamListDataUpdated();
+            setIsUpdateTime(false);
         }
     }, [props.referenceListData]);
 
     useEffect(() => {
         if (props.type === 'editing-list' && isInitialized && isListUnpacked) {
+            setIsUpdateTime(true);
             console.log('updated occured to reference data within,', props.type)
-            onUpstreamListDataUpdated()
+            onUpstreamListDataUpdated();
+            setIsUpdateTime(false);
         }
     }, [props.editingListData]);
 
     const unpackList = (listData) => {
         if (listData !== null) {
             console.log('unpacking');
-            // console.log(listData)
             const listKeys = Object.keys(listData);
             const listValues = Object.values(listData);
             if (listValues.indexOf(null) === -1) {
@@ -150,9 +148,13 @@ function WishlistDisplay(props) {
         // console.table(updatedListData);
         updateList(updatedListData);
 
+        // console.log(props.type)
+        // console.log('checking update time', isUpdateTime);
+        onListDataUpdated(updatedListData);
+
         // meanwhile, uploads the data into the other list
         // console.log(dataToMove)
-        props.listActions.addToOtherList(props.type, dataToMove)
+        props.listActions.addToOtherList(props.type, dataToMove);
         setIsUpdateTime(false);
     }
 
@@ -197,11 +199,6 @@ function WishlistDisplay(props) {
             </div>
         )
     }
-
-    // useEffect(onInitialize, []);
-    useEffect(() => {
-        onListDataUpdated()
-    }, [isUpdateTime]);
 
     useEffect(() => {
         console.log('initialized from', props.type);
