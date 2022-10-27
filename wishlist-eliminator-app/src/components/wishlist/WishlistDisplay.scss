@@ -84,9 +84,14 @@
             transition: color 0.25s ease-in-out;
         }
 
-        .material-symbols-outlined:hover {
+        .game-header-icons:hover {
             cursor: pointer;
             color: red;
+        }
+
+        .disabled-btn {
+            cursor: not-allowed !important;
+            color: grey !important;
         }
     }
 }

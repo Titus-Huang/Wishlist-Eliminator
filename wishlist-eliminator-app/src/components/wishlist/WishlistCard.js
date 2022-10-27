@@ -39,7 +39,7 @@ function WishlistCard(props) {
             <div className="game-header">
                 {props.type === 'editing-list' && <div className="game-header-controls">
                     <div className="material-symbols-outlined game-header-icons purchased">{props.cardData.purchased ? 'select_check_box' : 'check_box_outline_blank'}</div>
-                    <div className="material-symbols-outlined game-header-icons edit">edit</div>
+                    <div className="material-symbols-outlined game-header-icons disabled-btn edit">edit</div>
                     <div className="material-symbols-outlined game-header-icons delete">delete</div>
                 </div>}
                 <div className="game-header-image">
