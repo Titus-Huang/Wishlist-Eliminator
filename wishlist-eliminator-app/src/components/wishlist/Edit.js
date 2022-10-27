@@ -104,13 +104,54 @@ function Edit(props) {
     // reaches here and then it PUT onto the other side of the list
 
     // actions include:
+    // transfering to the OTHER list
     // moving up/down the list
     // deleting data from the list
-    // transfering to the OTHER list
     // updating data within the list
 
     // then will need to send data BACK to the server
     // send back to server on each action
+
+
+    // editingListData
+    // referenceListData
+    // const transferObjectToOtherList = (currentListType, gameId) => {
+    //     if (currentListType === 'reference') {
+    //         // current list is reference list
+    //         // so therefore, need to move the data from the reference list to the editing list
+            
+    //     } else if (currentListType === 'list') {
+    //         // current list is editing list
+    //         // so therefore, need to move the data from the editing list to the reference list
+    //     }
+    // }
+
+    // setEditingListData, setReferenceListData
+
+    const addToOtherList = (currentListType, objData) => {
+        if (currentListType === 'reference') {
+            // current list is reference list
+            // so therefore, need to move the data from the reference list to the editing list
+            
+        } else if (currentListType === 'list') {
+            // current list is editing list
+            // so therefore, need to move the data from the editing list to the reference list
+        }
+    }
+
+    const updateCurrentListData = (currentListType, listData) => {
+        if (currentListType === 'reference') {
+            // current list is reference list
+            // so therefore, should update via setReferenceListData
+            setReferenceListData(listData)
+        } else if (currentListType === 'list') {
+            // current list is editing list
+            // so therefore, should update via setEditingListData
+            setEditingListData(listData)
+        }
+    }
+
+    const listActions = { addToOtherList, updateCurrentListData }
 
     // this should run on initialise
     useEffect(onInitialize, [isInitialized])
@@ -121,7 +162,7 @@ function Edit(props) {
     const renderLists = () => {
         return (
             <>
-                {(typeof referenceListData.listId !== 'undefined' || manuallyShowReferenceData) && <WishlistDisplay type={'editing-reference'} referenceListData={referenceListData} />}
+                {(typeof referenceListData.listId !== 'undefined' || manuallyShowReferenceData) && <WishlistDisplay type={'editing-reference'} referenceListData={referenceListData} listActions={listActions} />}
                 <WishlistDisplay type={'editing-list'} editingListData={editingListData} />
             </>
         )

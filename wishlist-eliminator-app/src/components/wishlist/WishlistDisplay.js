@@ -60,8 +60,27 @@ function WishlistDisplay(props) {
         }
     }
 
-    const repackList = (list) => {
+    const repackList = (listData) => {
+        if (listData !== null) {
+            console.log('packing');
+            const listKeys = Object.keys(listData);
+            const listValues = Object.values(listData);
+            if (listValues.indexOf(null) === -1) {
+                let returnListObj = [];
+                for (let i = 0; i < listValues[0].length; i++) {
+                    let newArrData = {}
+                    for (let j = 0; j < listKeys.length; j++) {
+                        newArrData[listKeys[j]] = listValues[j][i];
+                    }
+                    returnListObj.push(newArrData);
+                }
+                // updateList(returnListArr);
+                // props.listActions.
 
+                // console.log('returnListArrrrrrrrr',returnListArr);
+                // console.log('list',list);
+            }
+        }
     }
 
     
@@ -91,6 +110,17 @@ function WishlistDisplay(props) {
         return (
             <div className="editingListRender list-render">
                 <h2>Your List</h2>
+
+                <p>Title: {props.editingListData.name}</p>
+                <p>Description: {props.editingListData.description}</p>
+
+                <div className="editingReferenceList">
+                    {list?.map((cardData, index) => {
+                        // console.log('rendering card no', index)
+                        // console.log('card data', cardData)
+                        return <WishlistCard key={index} cardData={cardData} index={index} type={'reference'} />
+                    })}
+                </div>
             </div>
         )
     }
