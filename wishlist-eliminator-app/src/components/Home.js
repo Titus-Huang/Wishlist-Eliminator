@@ -27,7 +27,7 @@ function Home(props) {
 
     const loggedOutView = () => {
         return (
-            <div className='landing-page row'>
+            <div className='landing-page default-content-box row'>
                 <div className="landing-page-intro col-lg-8 col-sm-12">
                     <h1>Welcome to Wishlist Eliminator</h1>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis perspiciatis soluta deleniti quae dignissimos recusandae, eligendi odit officia, aut esse, at quam maiores? Autem nulla officia perferendis temporibus, reprehenderit qui!</p>

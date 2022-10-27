@@ -1,13 +1,26 @@
 
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 1,
-  'wght' 500,
-  'GRAD' 200,
-  'opsz' 48
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 500,
+    'GRAD' 200,
+    'opsz' 48
 }
 /* 
 
 .App {
-  text-align: center;
+    text-align: center;
 } */
+
+.default-content-box {
+    border: 1px black solid;
+    border-radius: 2em;
+    background-color: #545454;
+    color: white;
+
+    height: fit-content;
+    padding: 3em 1em;
+    display: flex;
+
+    margin: 5em;
+}
