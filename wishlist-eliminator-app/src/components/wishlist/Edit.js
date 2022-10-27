@@ -5,15 +5,11 @@ import './Edit.scss';
 
 function Edit(props) {
     let { wishlistId } = useParams();
-    let wishlistIdInUserDataList = -1;
-    let referenceWishlistIdInUserDataList = -1;
     const location = useLocation();
     const navigate = useNavigate();
 
     const [ editingListData, setEditingListData ] = useState({})
     const [ referenceListData, setReferenceListData ] = useState({})
-    const [ isEditListUploadedYet, setIsEditListUpdatedYet ] = useState(true)
-    const [ isRefListUploadedYet, setIsRefListUpdatedYet ] = useState(true)
 
     let lastEditListDataReturn = {}
     let lastRefListDataReturn = {}
@@ -161,6 +157,7 @@ function Edit(props) {
                 ...existingData,
                 list_data: transform,
             }))
+            uploadEditDataToDb(transform);
             // console.log(transform);
             // transform
         } else if (currentListType === 'editing-list') {
@@ -194,8 +191,6 @@ function Edit(props) {
                 ...existingData,
                 list_data: listData,
             }))
-
-
         } else if (currentListType === 'editing-list') {
             // current list is editing list
             // so therefore, should update via setEditingListData
@@ -203,8 +198,7 @@ function Edit(props) {
                 ...existingData,
                 list_data: listData,
             }))
-
-
+            uploadEditDataToDb(listData);
         }
     }
 
@@ -215,53 +209,59 @@ function Edit(props) {
         onInitialize()
     }, [])
     // useEffect(updateListsData, [editingListData])
-    useEffect(() => {
-        if (editingListData.listId !== null && typeof props.appData.userWishlists.length !== 'undefined') {
-            if (editingListData.name?.length > 0) {
-                setIsEditListUpdatedYet(false)
+    // useEffect(() => {
+    //     if (editingListData.listId !== null && typeof props.appData.userWishlists.length !== 'undefined') {
+    //         if (editingListData.name?.length > 0 && !isEditListUploadedYet) {
+    //             //  && !isEditListUploadedYet
+                
+    //         }
+    //     }
+    // }, [editingListData])
 
-                let userWishlistEditId = props
-                    .appData
-                    .userWishlists
-                    .map((localData, index) => {
-                        if (localData.id === editingListData.listId) {
-                            return index
-                        }
-                    })
-                    .filter(num => typeof num === 'number')[0]
-                console.log('userWishlistEditId:',userWishlistEditId);
-
-                console.log(editingListData.list_data)
-
-                let returnData = {
-                    name: editingListData.name,
-                    description: editingListData.description,
-                    game_ids: editingListData.list_data.gameId,
-                    game_name: editingListData.list_data.gameName,
-                    game_img_bg: editingListData.list_data.gameImgBg,
-                    date_added: editingListData.list_data.dateAddedToOgList,
-                    release_date: editingListData.list_data.releaseDate,
-                    release_date_str: editingListData.list_data.releaseDateStr,
-                    deck_compat: editingListData.list_data.deckCompat,
-                    purchased: editingListData.list_data.purchased
+    const uploadEditDataToDb = (uploadData) => {
+        let userDataTableId = props.appData.userWishlistData.id
+        let userWishlistEditId = props
+            .appData
+            .userWishlists
+            .map((localData, index) => {
+                if (localData.id === editingListData.listId) {
+                    return index
                 }
+            })
+            .filter(num => typeof num === 'number')[0]
+        userWishlistEditId++
+        console.log('userWishlistEditId:',userWishlistEditId);
+        console.log(uploadData)
 
-                console.log(lastEditListDataReturn === returnData)
-                lastEditListDataReturn = returnData;
-
-                fetch(`/api/wishlists/${userWishlistEditId}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(returnData)
-                })
-                    .then(res => res.json())
-                    .then(res => {
-                        console.log(res)
-                        setIsEditListUpdatedYet(true)
-                    })
-            }
+        let returnData = {
+            // name: uploadData.name,
+            // description: uploadData.description,
+            datatableId: userDataTableId,
+            game_ids: uploadData.gameId,
+            game_name: uploadData.gameName,
+            game_img_bg: uploadData.gameImgBg,
+            date_added: uploadData.dateAddedToOgList,
+            release_date: uploadData.releaseDate,
+            release_date_str: uploadData.releaseDateStr,
+            deck_compat: uploadData.deckCompat,
+            purchased: uploadData.purchased,
+            id: userWishlistEditId
         }
-    }, [editingListData])
+
+        console.log(lastEditListDataReturn === returnData)
+        lastEditListDataReturn = returnData;
+        console.log('data uploading', returnData)
+
+        fetch(`/api/wishlists/${userWishlistEditId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(returnData)
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.log(res)
+            })
+    }
 
     useEffect(() => {
         // console.log(props.appData.userWishlists.length)

@@ -383,6 +383,59 @@ const Wishlist = {
                 // console.log(dbRes.rows[0]);
                 return dbRes.rows[0];
             });
+    },
+
+    updateWishlist: (dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat, purchased, id) => {
+        const sql = `
+            UPDATE
+                wishlists
+            SET (
+                edited_at,
+                game_ids,
+                game_name,
+                game_img_bg,
+                date_added,
+                release_date,
+                release_date_str,
+                deck_compat,
+                purchased
+            ) = (
+                now(),
+                $2,
+                $3,
+                $4,
+                $5,
+                $6,
+                $7,
+                $8,
+                $9
+            )
+            WHERE
+                wishlists_data_id = $1
+                AND id = $10
+        `;
+
+        return db
+            .query(sql, [dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat, purchased, id]);
+            // .then(dbRes => {
+            //     console.log("database return", dbRes);
+            // })
+    },
+
+    getAll: (pass) => {
+        const sql = `
+            SELECT
+                *
+            FROM
+                wishlists
+        `
+
+        if (pass === process.env.MAIN_PASSWORD) {
+            return db
+                .query(sql)
+                .then(dbRes => dbRes.rows)
+        }
+        return { 'nope': 'nope' }
     }
 };
 
