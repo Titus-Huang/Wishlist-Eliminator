@@ -21,66 +21,58 @@ function App() {
         userData: {}
     });
 
-    let { hasSessionsBeenFetched, hasWishlistsBeenFetched, isInitalized } = false;
     // first run when the components first loads onto the screen
     const fetchUserDataOnStart = () => {
-        if (!hasSessionsBeenFetched) {
-            // grab user data on load
-            fetch('/api/sessions')
-                .then(res => res.json())
-                .then(data => {
-                    // console.log('data blep');
-                    // console.log(data);
+        // grab user data on load
+        fetch('/api/sessions')
+            .then(res => res.json())
+            .then(data => {
+                // console.log('data blep');
+                // console.log(data);
 
-                    if (!data.error) {
-                        console.log('user session found, local data being updated');
-                        updateAppData((existingAppData) => ({
-                            ...existingAppData,
-                            userData: data,
-                        }));
-                    } else {
-                        // you are not logged in, kick back to home page
-                        console.log('not logged in, back to landing page')
-                        updateAppData((existingAppData) => ({
-                            ...existingAppData,
-                            userData: {},
-                        }));
-                        navigate('/');
-                    }
-                });
-            hasSessionsBeenFetched = true;
-        }
+                if (!data.error) {
+                    console.log('user session found, local data being updated');
+                    updateAppData((existingAppData) => ({
+                        ...existingAppData,
+                        userData: data,
+                    }));
+                } else {
+                    // you are not logged in, kick back to home page
+                    console.log('not logged in, back to landing page')
+                    updateAppData((existingAppData) => ({
+                        ...existingAppData,
+                        userData: {},
+                    }));
+                    navigate('/');
+                }
+            });
         
-        if (!hasWishlistsBeenFetched) {
-            fetch('/api/wishlists')
-                .then(res => res.json())
-                .then(data => {
-                    if (!data.error) {
-                        console.log('user session found, local wishlist data... data being updated');
-                        // console.table(data.userListData);
-                        // console.log('returndata', data);
-                        updateAppData((existingAppData) => ({
-                            ...existingAppData,
-                            userWishlistData: data.userListData,
-                            userWishlists: data.userWishlists
-                        }));
-                    } else {
-                        updateAppData((existingAppData) => ({
-                            ...existingAppData,
-                            userWishlistData: {},
-                            userWishlists: {}
-                        }));
-                    }
-                });
-            hasWishlistsBeenFetched = true;
-        }
-
-        if (hasWishlistsBeenFetched && hasSessionsBeenFetched && !isInitalized) {
-            isInitalized = true;
-        }
+        fetch('/api/wishlists')
+            .then(res => res.json())
+            .then(data => {
+                if (!data.error) {
+                    console.log('user session found, local wishlist data... data being updated');
+                    // console.table(data.userListData);
+                    // console.log('returndata', data);
+                    updateAppData((existingAppData) => ({
+                        ...existingAppData,
+                        userWishlistData: data.userListData,
+                        userWishlists: data.userWishlists
+                    }));
+                } else {
+                    updateAppData((existingAppData) => ({
+                        ...existingAppData,
+                        userWishlistData: {},
+                        userWishlists: {}
+                    }));
+                }
+            });
     }
 
-    useEffect(fetchUserDataOnStart, [isInitalized]);
+    useEffect(() => {
+        fetchUserDataOnStart()
+        // eslint-disable-next-line
+    }, []);
 
     const updateUserData = data => {
         updateAppData((existingAppData) => ({
@@ -115,7 +107,7 @@ function App() {
     };
 
     return (
-        <div className='App'>
+        <div className='App container-fluid'>
             {!(location.pathname === '/' && typeof appData.userData.username === 'undefined') && <NavBar userData={appData.userData} />}
 
             <Routes>
