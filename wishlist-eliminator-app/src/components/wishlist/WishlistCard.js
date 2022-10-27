@@ -11,9 +11,15 @@ function WishlistCard(props) {
         }
         if (e.target.nodeName !== 'A' && !e.target.classList.contains('game-header-icons')) {
             setIsOpen(!isOpen);
-        } else if (e.target.classList.contains('game-header-icons')) {
+        } else if (e.target.classList.contains('forwarding')) {
             // console.log('action button clicked on')
             props.cardCommands.moveToOtherList(props.index)
+        } else if (e.target.classList.contains('purchased')) {
+            props.cardCommands.updatePurchasedItem(props.index)
+        } else if (e.target.classList.contains('edit')) {
+
+        } else if (e.target.classList.contains('delete')) {
+            props.cardCommands.deleteFromCurrentList(props.index)
         }
     }
 
@@ -32,15 +38,15 @@ function WishlistCard(props) {
         return (
             <div className="game-header">
                 {props.type === 'editing-list' && <div className="game-header-controls">
-                    <div className="material-symbols-outlined game-header-icons purchased">check_box_outline_blank</div>
-                    <div className="material-symbols-outlined game-header-icons">edit</div>
-                    <div className="material-symbols-outlined game-header-icons">delete</div>
+                    <div className="material-symbols-outlined game-header-icons purchased">{props.cardData.purchased ? 'select_check_box' : 'check_box_outline_blank'}</div>
+                    <div className="material-symbols-outlined game-header-icons edit">edit</div>
+                    <div className="material-symbols-outlined game-header-icons delete">delete</div>
                 </div>}
                 <div className="game-header-image">
                     <img src={props.cardData.gameImgBg} alt={props.cardData.gameName} />
                 </div>
                 {props.type === 'editing-reference' && <div className="game-header-controls">
-                    <div className="material-symbols-outlined game-header-icons">arrow_forward</div>
+                    <div className="material-symbols-outlined game-header-icons forwarding">arrow_forward</div>
                 </div>}
             </div>
         )

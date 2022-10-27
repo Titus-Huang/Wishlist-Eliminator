@@ -177,9 +177,35 @@ function WishlistDisplay(props) {
         }
         setIsUpdateTime(false);
     }
+    
+    const deleteFromCurrentList = (listIndex) => {
+        setIsUpdateTime(true);
+
+        // find local data and delete it form local, this should enable repack to send back up
+        const updatedListData = Object.values(list);
+        updatedListData.splice(listIndex, 1)
+        console.table(updatedListData);
+        updateList(updatedListData);
+
+        // upload list to update
+        onListDataUpdated(updatedListData);
+
+        setIsUpdateTime(false);
+    }
+
+    const updatePurchasedItem = (listIndex) => {
+        // list[listIndex][purchased]
+        // console.log('purchased');
+        // console.log(listIndex);
+        // console.log(list[listIndex].purchased);
+
+        const updatedListData = Object.values(list);
+        updatedListData[listIndex].purchased = !updatedListData[listIndex].purchased;
+        updateList(updatedListData)
+    }
 
     // commands that the cards are allowed to have
-    const cardCommands = { moveToOtherList }
+    const cardCommands = { moveToOtherList, deleteFromCurrentList, updatePurchasedItem }
 
     const editingReferenceRender = () => {
         return (
