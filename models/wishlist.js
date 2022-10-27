@@ -358,6 +358,8 @@ const Wishlist = {
                 wishlists
             WHERE
                 wishlists_data_id = $1
+            ORDER BY
+                id
         `;
 
         return db

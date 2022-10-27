@@ -71,6 +71,18 @@ router.get('/:wishlistId', (req, res) => {
     }
 })
 
+// 
+router.put('/:wishlistId', (req, res) => {
+    const { name, description, game_ids, game_name, game_img_bg, date_added, release_date, release_date_str, deck_compat, purchased } = req.body
+
+    if (req.session.userId) {
+        console.log('put request')
+        console.log(name, description, game_ids, game_name, game_img_bg, date_added, release_date, release_date_str, deck_compat, purchased)
+    } else {
+        res.json({ error: 'no one logged in' });
+    }
+})
+
 router.get('/data/:userId', (req, res) => {
     const { userId } = req.params;
 
