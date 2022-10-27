@@ -106,6 +106,7 @@ router.get('/import/:steamId', async (req, res) => {
                     // create list of games in order arranged
                     resKeys.forEach((key) => {
                         let gameSortIndex = steamWishlist[key].priority;
+
                         importedSteamList = {
                             ...importedSteamList,
                             [gameSortIndex] : key,
@@ -144,7 +145,17 @@ router.get('/import/:steamId', async (req, res) => {
                                         // console.log('game info', steamWishlist[importedSteamList[i]].name)
                                         gameIds.push(importedSteamList[i]);
                                         gameNames.push(steamWishlist[importedSteamList[i]].name);
-                                        gameImgBg.push(steamWishlist[importedSteamList[i]].background);
+
+                                        let newBackgroundUrls = steamWishlist[importedSteamList[i]].background
+                                        // update background image to the ACTUAL background images to be used
+                                        // https://cdn.cloudflare.steamstatic.com/steam/apps/{steam_id}/header.jpg
+                                        for (let j = 0; j < steamWishlist[importedSteamList[i]].background.length; j++) {
+                                            // console.log(steamWishlist[importedSteamList[i]].name[j]);
+                                            // console.log(importedSteamList[i]);
+                                            newBackgroundUrls = `https://cdn.cloudflare.steamstatic.com/steam/apps/${importedSteamList[i]}/header.jpg`
+                                            // console.log(steamWishlist[importedSteamList[i]].background[j]);
+                                        }
+                                        gameImgBg.push(newBackgroundUrls);
 
                                         let date_added = new Date(steamWishlist[importedSteamList[i]].added * 1000)
                                         dateAdded.push(date_added.toISOString());
