@@ -24,3 +24,24 @@
 
     margin: 5em;
 }
+
+body {
+    background-color: #000000;
+}
+
+#root {
+    /* background-color: #5aa0d2 !important; */
+    background-image: url('https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/items/460920/3a37b2ed1b077e2e94536252230946864e545630.jpg');
+    /* background-size: auto;
+    background-repeat: repeat-y;
+    position: relative;
+    min-width: 950px;
+    height: 100vh; */
+
+    /* background-size: auto; */
+    background-repeat: repeat-y;
+    /* position: relative; */
+    min-width: 950px;
+    min-height: 100vh;
+    height: fit-content;
+}

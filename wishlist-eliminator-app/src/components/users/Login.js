@@ -94,7 +94,6 @@ function Login(props) {
                     <div className='row mb-3'>
                         <label htmlFor='usernameOrEmail' className="col-sm-6 col-form-label col-form-label-lg">Username or Email: </label>
                         <div className="input-group">
-                            <span className="input-group-text" id="basic-addon1">@</span>
                             <input
                                 type="text"
                                 className="form-control form-control-lg form-field"
