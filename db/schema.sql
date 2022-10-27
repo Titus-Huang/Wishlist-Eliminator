@@ -16,8 +16,16 @@ CREATE TABLE users(
     email text,
     password_digest text,
     user_type user_types,
-    steam_id TEXT
+    steam_id text
 );
+
+CREATE TABLE test3 (
+    id serial primary key,
+    test_text text,
+    empty_text text
+);
+INSERT INTO test3 (test_text, empty_text)
+VALUES ('akdjawkldjaw', '');
 
 -- Display total data from users
 SELECT * FROM users;
@@ -71,6 +79,30 @@ CREATE TABLE wishlists(
     deck_compat integer[],
     purchased boolean[]
 );
+
+CREATE TABLE test1(
+    id serial primary key,
+    purchased boolean[]
+);
+
+INSERT INTO test1 (
+                purchased
+            )
+            VALUES (
+                ARRAY []
+            );
+
+CREATE TABLE test2(
+    id serial primary key,
+    time_test timestamp,
+    empty_text text[]
+);
+INSERT INTO test2 (
+    time_test, empty_text)
+    VALUES (
+        to_timestamp(0), ARRAY[]::text[]
+    );
+
 
 -- TO DO:
 -- Add in user notes/descriptions of each game, this would be awesome and I can't believe I forgot to do this

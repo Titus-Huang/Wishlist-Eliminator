@@ -9,6 +9,7 @@
 
     background-color: rgb(24, 24, 143);
     color: white;
+    overflow-y: hidden;
 }
 
 .WishlistCard-height {
@@ -21,9 +22,9 @@
 
     .game-title {
         font-size: 1.5em;
-        height: 2em;
-
-        padding: 0 0.4em;
+        height: 2.5em;
+        padding: 0 0.5em;
+        display: flex;
 
         p {
             margin: auto 0;
@@ -47,10 +48,14 @@
 
 .list-render {
     width: 500px;
-    padding: 1em;
 
-    h2 {
-        margin: 0;
+    .list-details {
+        padding: 1em;
+        height: 12em;
+        
+        h2 {
+            margin: 0;
+        }
     }
 }
 
@@ -75,14 +80,19 @@
         justify-content: flex-start;
     
         .game-header-icons {
-            padding: 25% 0;
+            padding: 22% 0;
             font-size: 32px;
             transition: color 0.25s ease-in-out;
         }
 
-        .material-symbols-outlined:hover {
+        .game-header-icons:hover {
             cursor: pointer;
             color: red;
+        }
+
+        .disabled-btn {
+            cursor: not-allowed !important;
+            color: grey !important;
         }
     }
 }
