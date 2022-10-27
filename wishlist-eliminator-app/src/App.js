@@ -107,7 +107,7 @@ function App() {
     };
 
     return (
-        <div className='App container-fluid'>
+        <div className='App container-fluid g-0'>
             {!(location.pathname === '/' && typeof appData.userData.username === 'undefined') && <NavBar userData={appData.userData} />}
 
             <Routes>
