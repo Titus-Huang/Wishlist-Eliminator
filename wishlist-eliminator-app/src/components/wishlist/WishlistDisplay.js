@@ -13,30 +13,37 @@ function WishlistDisplay(props) {
     const [ isListRepacked, setIsListRepacked ] = useState(false);
 
     const onInitialize = () => {
-        // console.log('props', props)
-        // console.log('props', Object.values(props)[1].listId)
-        // console.log('props', typeof Object.values(props)[1].listId === 'undefined')
-        if (!isInitialized && !isListUnpacking && typeof Object.values(props)[1].listId !== 'undefined') {
+        console.log("initialize ran")
+        // // console.log('props', props)
+        // // console.log('props', Object.values(props)[1].listId)
+        // console.log('is it not initialize', !isInitialized)
+        // console.log('is list not unpacking or repacking', !isListUnpacking && !isListRepacking);
+        // console.log('islist empty', typeof Object.values(props)[1].listId !== 'undefined')
+        if (!isInitialized && !isListUnpacking && !isListRepacking && typeof Object.values(props)[1].listId !== 'undefined') {
             console.log(Object.values(props)[1].listId)
             // temp fix, because react likes to add additional data for some reason
             // updateList([])
 
-            switch (props.type) {
-                case 'editing-reference':
-                    // console.log(props.referenceListData.list_data)
-                    unpackList(props.referenceListData.list_data)
-                    console.log('unpacking reference list');
-                    break;
-                case 'editing-list':
-                    unpackList(props.editingListData.list_data)
-                    console.log('unpacking editing list');
-                    break;
-                default:
-                    break;
-            }
+            grabbingDataFromUpstream()
             console.log('Wishlist Display is initialized!');
 
             setIsInitialized(true);
+        }
+    }
+
+    const grabbingDataFromUpstream = () => {
+        switch (props.type) {
+            case 'editing-reference':
+                // console.log(props.referenceListData.list_data)
+                unpackList(props.referenceListData.list_data)
+                console.log('unpacking reference list');
+                break;
+            case 'editing-list':
+                unpackList(props.editingListData.list_data)
+                console.log('unpacking editing list');
+                break;
+            default:
+                break;
         }
     }
 
@@ -44,7 +51,7 @@ function WishlistDisplay(props) {
         // console.log(isInitialized)
         //     console.log(isListUnpacked)
         //     console.log(isListUnpacking)
-        if (isInitialized && isListUnpacked && !isListUnpacking && !isListRepacking && isUpdateTime) {
+        if (isInitialized && !isListUnpacking && !isListRepacking && isUpdateTime) {
             // console.log(isInitialized)
             // console.log(isListUnpacked)
             // console.log(isListUnpacking)
@@ -52,11 +59,28 @@ function WishlistDisplay(props) {
         }
     }
 
+    const onUpstreamListDataUpdated = () => {
+        grabbingDataFromUpstream();
+    }
+
+    useEffect(() => {
+        if (props.type === 'editing-reference' && isInitialized && isListUnpacked) {
+            console.log('updated occured to reference data within,', props.type)
+            onUpstreamListDataUpdated()
+        }
+    }, [props.referenceListData]);
+
+    useEffect(() => {
+        if (props.type === 'editing-list' && isInitialized && isListUnpacked) {
+            console.log('updated occured to reference data within,', props.type)
+            onUpstreamListDataUpdated()
+        }
+    }, [props.editingListData]);
 
     const unpackList = (listData) => {
         if (listData !== null) {
             console.log('unpacking');
-            console.log(listData)
+            // console.log(listData)
             const listKeys = Object.keys(listData);
             const listValues = Object.values(listData);
             if (listValues.indexOf(null) === -1) {
@@ -71,11 +95,11 @@ function WishlistDisplay(props) {
                 }
                 updateList(returnListArr);
                 setIsListUnpacking(false);
-                setIsListUnpacked(true);
                 // console.log('returnListArrrrrrrrr',returnListArr);
                 // console.log('list',list);
             }
         }
+        setIsListUnpacked(true);
     }
 
     const repackList = (listData) => {
@@ -85,8 +109,8 @@ function WishlistDisplay(props) {
             const listKeys = Object.keys(listData[0]);
             const listValues = Object.values(listData);
 
-            console.log(listKeys);
-            console.log(listValues);
+            // console.log(listKeys);
+            // console.log(listValues);
 
             if (listKeys.indexOf(null) === -1) {
                 let returnListObj = {};
@@ -100,7 +124,7 @@ function WishlistDisplay(props) {
                 }
                 // props.listActions.
                 // setIsListUnpacked(false);
-                console.log('returnListObj',returnListObj);
+                // console.log('returnListObj',returnListObj);
                 setIsListRepacking(false);
                 setIsListRepacked(true);
                 return returnListObj;
@@ -108,6 +132,32 @@ function WishlistDisplay(props) {
             }
         }
     }
+
+    const moveToOtherList = (listIndex) => {
+        console.log('move', listIndex, 'to the other list');
+        setIsUpdateTime(true);
+        // grabs the data to move it away
+        const dataToMove = {}
+        const listKeys = Object.keys(list[0]);
+        listKeys.forEach(dataName => {
+            // console.log(list[listIndex])
+            dataToMove[dataName] = list[listIndex][dataName]
+        })
+
+        // find local data and delete it form local, this should enable repack to send back up
+        const updatedListData = Object.values(list);
+        updatedListData.splice(listIndex, 1)
+        // console.table(updatedListData);
+        updateList(updatedListData);
+
+        // meanwhile, uploads the data into the other list
+        // console.log(dataToMove)
+        props.listActions.addToOtherList(props.type, dataToMove)
+        setIsUpdateTime(false);
+    }
+
+    // commands that the cards are allowed to have
+    const cardCommands = { moveToOtherList }
 
     const editingReferenceRender = () => {
         return (
@@ -121,7 +171,7 @@ function WishlistDisplay(props) {
                     {list?.map((cardData, index) => {
                         // console.log('rendering card no', index)
                         // console.log('card data', cardData)
-                        return <WishlistCard key={index} cardData={cardData} index={index} type={'reference'} />
+                        return <WishlistCard key={index} cardData={cardData} index={index} type={props.type} cardCommands={cardCommands} />
                     })}
                 </div>
                 
@@ -141,23 +191,35 @@ function WishlistDisplay(props) {
                     {list?.map((cardData, index) => {
                         // console.log('rendering card no', index)
                         // console.log('card data', cardData)
-                        return <WishlistCard key={index} cardData={cardData} index={index} type={'reference'} />
+                        return <WishlistCard key={index} cardData={cardData} index={index} type={props.type} cardCommands={cardCommands} />
                     })}
                 </div>
             </div>
         )
     }
 
-    const moveToOtherList = () => {
-        
-    }
-
     // useEffect(onInitialize, []);
-    useEffect(onListDataUpdated, [isUpdateTime]);
-    useEffect(onInitialize, [props.referenceListData?.list_data, props.editingListData?.list_data]);
+    useEffect(() => {
+        onListDataUpdated()
+    }, [isUpdateTime]);
 
-    // commands that the cards are allowed to have
-    const cardCommands = { moveToOtherList }
+    useEffect(() => {
+        console.log('initialized from', props.type);
+        onInitialize()
+    }, []);
+
+    // useEffect(() => {
+    //     console.log('updated occured to reference data within,', props.type)
+    //     setIsInitialized(false)
+    //     onInitialize()
+    // }, [props.referenceListData]);
+
+    // useEffect(() => {
+    //     console.log('updated occured to reference data within,', props.type)
+    //     setIsInitialized(false)
+    //     onInitialize()
+    // }, [props.editingListData]);
+
 
     return (
         <div className="WishlistDisplay">

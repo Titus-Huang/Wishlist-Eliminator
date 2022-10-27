@@ -129,22 +129,41 @@ function Edit(props) {
     // setEditingListData, setReferenceListData
 
     const addToOtherList = (currentListType, objData) => {
-        if (currentListType === 'reference') {
+        if (currentListType === 'editing-reference') {
             // current list is reference list
             // so therefore, need to move the data from the reference list to the editing list
-            
-        } else if (currentListType === 'list') {
+            // setEditingListData()
+            let transform = editingListData.list_data;
+            let tfKeys = Object.keys(editingListData.list_data)
+            tfKeys.forEach(dataName => {
+                // console.log(dataName)
+                // console.log(transform[dataName])
+                // console.log(transform[dataName] === null)
+                if (transform[dataName] === null) {
+                    transform[dataName] = [ objData[dataName] ]
+                } else {
+                    transform[dataName].unshift(objData[dataName])
+                }
+            })
+            setEditingListData((existingData) => ({
+                ...existingData,
+                list_data: transform,
+            }))
+            // console.log(transform);
+            // transform
+        } else if (currentListType === 'editing-list') {
             // current list is editing list
             // so therefore, need to move the data from the editing list to the reference list
+            // setReferenceListData()
         }
     }
 
     const updateCurrentListData = (currentListType, listData) => {
-        if (currentListType === 'reference') {
+        if (currentListType === 'editing-reference') {
             // current list is reference list
             // so therefore, should update via setReferenceListData
             setReferenceListData(listData)
-        } else if (currentListType === 'list') {
+        } else if (currentListType === 'editing-list') {
             // current list is editing list
             // so therefore, should update via setEditingListData
             setEditingListData(listData)

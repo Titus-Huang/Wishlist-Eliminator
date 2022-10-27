@@ -11,6 +11,9 @@ function WishlistCard(props) {
         }
         if (e.target.nodeName !== 'A' && !e.target.classList.contains('game-header-icons')) {
             setIsOpen(!isOpen);
+        } else if (e.target.classList.contains('game-header-icons')) {
+            // console.log('action button clicked on')
+            props.cardCommands.moveToOtherList(props.index)
         }
     }
 
@@ -34,10 +37,10 @@ function WishlistCard(props) {
                     <img src={props.cardData.gameImgBg} alt={props.cardData.gameName} />
                 </div>
                 <div className="game-header-controls">
-                    {props.type === 'reference' && <div className="material-symbols-outlined game-header-icons">arrow_forward</div>}
-                    {props.type === 'list' && <div className="material-symbols-outlined game-header-icons">arrow_back</div>}
-                    {props.type === 'list' && <div className="material-symbols-outlined game-header-icons">edit</div>}
-                    {props.type === 'list' && <div className="material-symbols-outlined game-header-icons">delete</div>}
+                    {props.type === 'editing-reference' && <div className="material-symbols-outlined game-header-icons">arrow_forward</div>}
+                    {props.type === 'editing-list' && <div className="material-symbols-outlined game-header-icons">arrow_back</div>}
+                    {props.type === 'editing-list' && <div className="material-symbols-outlined game-header-icons">edit</div>}
+                    {props.type === 'editing-list' && <div className="material-symbols-outlined game-header-icons">delete</div>}
                 </div>
             </div>
             <div className="game-content">
