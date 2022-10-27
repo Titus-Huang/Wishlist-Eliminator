@@ -5,28 +5,45 @@
     position: relative;
     transition: height ease-in-out 0.6s;
     // height: calc(100vw * 460/215);
-    height: 18em;
+    height: 17em;
+
+    background-color: rgb(24, 24, 143);
+    color: white;
 }
 
-.WishlistCard:hover {
+.WishlistCard-height {
     height: 35em;
 }
 
-.gameTitle {
+.game-content {
     text-align: left;
-    position: absolute;
-    width: 100%;
-}
+    height: fit-content;
 
-.gameTitle::before {
-    padding-top: calc((215/460));
-    padding-top: calc(100 * 215/460);
-}
+    .game-title {
+        font-size: 1.5em;
+        height: 2em;
 
-.gameInformation {
-    z-index: -1;
-}
+        padding: 0 0.4em;
 
+        p {
+            margin: auto 0;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.22s ease-in;
+        }
+        a:hover {
+            color: rgb(214, 158, 118);
+        }
+    }
+
+    .gameInformation {
+        z-index: -1;
+        padding: 1em;
+        padding-bottom: 0;
+    }
+}
 
 .list-render {
     width: 500px;
@@ -37,6 +54,36 @@
     }
 }
 
-img {
+.game-header {
+    display: flex;
     width: 100%;
+
+    .game-header-image {
+        // display: inline-block;
+        width: 85%;
+    
+        img {
+            width: 100%;
+        }
+    }
+    
+    .game-header-controls {
+        display: flex;
+        width: 15%;
+        // height: 100%;
+        flex-direction: column;
+        justify-content: flex-start;
+    
+        .game-header-icons {
+            padding: 25% 0;
+            font-size: 32px;
+            transition: color 0.25s ease-in-out;
+        }
+
+        .material-symbols-outlined:hover {
+            cursor: pointer;
+            color: red;
+        }
+    }
 }
+

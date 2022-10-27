@@ -79,7 +79,7 @@ function WishlistDisplay(props) {
                     {list?.map((cardData, index) => {
                         // console.log('rendering card no', index)
                         // console.log('card data', cardData)
-                        return <WishlistCard key={index} cardData={cardData} index={index} />
+                        return <WishlistCard key={index} cardData={cardData} index={index} type={'reference'} />
                     })}
                 </div>
                 
