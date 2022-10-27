@@ -67,7 +67,7 @@ function Import(props) {
     };
 
     return (
-        <div className='wishlist-import-page'>
+        <div className='wishlist-import-page default-content-box'>
             <h2>Wishlist import</h2>
 
             <p>Find your Steam Id here: <a href='https://steamdb.info/calculator/' alt='Steam Calculator' title='Steam Calculator' target='_blank' rel='noreferrer'>Steam Calculator</a></p>

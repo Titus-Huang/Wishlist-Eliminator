@@ -12,7 +12,7 @@ function WishlistModification(props) {
     
 
     return (
-        <div className="WishlistModifications">
+        <div className="WishlistModifications default-content-box">
             {/* Would be an overarching page to modify wishlists */}
             {/* This would include... Creating, Editing, Deleting */}
             {/* <h2>Wishlist Modifications</h2> */}
