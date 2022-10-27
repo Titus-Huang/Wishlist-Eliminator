@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import './App.css';
+import './App.scss';
 
 import NavBar from './components/NavBar';
 import Home from './components/Home';
@@ -108,7 +108,7 @@ function App() {
 
     return (
         <div className='App container-fluid g-0'>
-            {!(location.pathname === '/' && typeof appData.userData.username === 'undefined') && <NavBar userData={appData.userData} />}
+            {!(/*location.pathname === '/' && */typeof appData.userData.username === 'undefined') && <NavBar userData={appData.userData} />}
 
             <Routes>
                 <Route path='/' element={<Home userData={appData.userData} />} />

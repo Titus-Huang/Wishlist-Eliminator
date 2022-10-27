@@ -45,3 +45,29 @@ body {
     min-height: 100vh;
     height: fit-content;
 }
+
+nav {
+    .container-fluid {
+        .navbar-brand, li {
+            transition: color ease-in 0.15s;
+        }
+
+        .navbar-brand {
+            margin-left: 0.5em;
+            font-size: 2em;
+        }
+        .navbar-brand:hover, li {
+            color: red;
+            cursor: pointer;
+        }
+
+        button {
+            padding: 0.4em 0.65em;
+            margin: 0.8em;
+        }
+
+        button:hover {
+            background-color: #495057;;
+        }
+    }
+}
