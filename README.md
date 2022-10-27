@@ -18,6 +18,8 @@ $ node app.js
 ## :pencil2: Planning & Problem Solving
 - (Day 1) Learning to implement a user authentication system across two different frameworks was tricky, but having implemented it several times within Express. It was just the matter of translating the front-end to React and figuring out how data communitation would flow in React's "waterfall" method and between to the Express API server.
 - (Day 2) Trying to get numerous API calls working between the online API and the local API has been tricky. Especially when also figuring how to manipulate that data while trying to have a coherant data structure that would make sense down the track. The most challenging things has been to process the data after the user imports the Wishlist alongside with trying to get the React/Express App working on Heroku.
+- (Day 3) stresses with getting React to work in the way that I had imagined
+- (Day 4) finally getting major components of the site working and "achieveing" MVP, started styling the website up
 - Talk about approach to the problem.
 - Add screenshots/drawings of doodles/plans during the planning phase.
 - Flow charts of app logic.
