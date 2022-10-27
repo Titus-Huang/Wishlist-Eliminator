@@ -3,8 +3,20 @@ const db = require('../db/db');
 const User = {
     create: (username, email, passwordDigest) => {
         const sql = `
-            INSERT INTO users (username, email, password_digest, user_type)
-            VALUES ($1, $2, $3, 'user')
+            INSERT INTO users (
+                username,
+                email,
+                password_digest,
+                user_type,
+                display_name,
+                steam_id
+            ) VALUES (
+                $1,
+                $2,
+                $3,
+                'user',
+                0
+            )
             RETURNING *
         `;
 
@@ -15,6 +27,18 @@ const User = {
                 if (typeof userData !== 'undefined') delete userData.password_digest;
                 return userData;
             });
+    },
+
+    quickTest: () => {
+        const sql = `
+            INSERT INTO test3 (test_text, empty_text)
+            VALUES ('akdjawkldjaw', '')
+            RETURNING *
+        `
+
+        return db
+            .query(sql)
+            .then(dbRes => dbRes.rows)
     },
 
     updateSteamId: (id, steamId) => {

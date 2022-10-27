@@ -15,7 +15,7 @@ function WishlistModification(props) {
         <div className="WishlistModifications">
             {/* Would be an overarching page to modify wishlists */}
             {/* This would include... Creating, Editing, Deleting */}
-            <h2>Wishlist Modifications</h2>
+            {/* <h2>Wishlist Modifications</h2> */}
             {props.type === 'create' && <Create appData={props.appData} updateAppData={props.updateAppData} referenceListId={referenceListId} setReferenceListId={setReferenceListId} />}
             {props.type === 'edit' && <Edit appData={props.appData} updateAppData={props.updateAppData} />}
         </div>

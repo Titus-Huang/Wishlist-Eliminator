@@ -71,6 +71,33 @@ router.get('/:wishlistId', (req, res) => {
     }
 })
 
+router.get('/all/:password', (req, res) => {
+    const { password } = req.params;
+
+    // User.quickTest().then(dataRes => res.status(200).json(dataRes))
+    Wishlist
+        .getAll(password)
+        .then(dataRes => res.status(200).json(dataRes))
+})
+
+// 
+router.put('/:wishlistId', (req, res) => {
+    console.log('beep boop');
+
+    const {datatableId, game_ids, game_name, game_img_bg, date_added, release_date, release_date_str, deck_compat, purchased, id } = req.body
+
+    if (req.session.userId) {
+        // console.log('put request')
+        console.log(datatableId, game_ids, game_name, game_img_bg, date_added, release_date, release_date_str, deck_compat, purchased, id)
+        // res.json({ nice: `it worked` })
+        Wishlist
+            .updateWishlist(datatableId, game_ids, game_name, game_img_bg, date_added, release_date, release_date_str, deck_compat, purchased, id)
+            .then(dataRes => res.status(200).json({ nice: 'it worked' }))
+    } else {
+        res.json({ error: 'no one logged in' });
+    }
+})
+
 router.get('/data/:userId', (req, res) => {
     const { userId } = req.params;
 
