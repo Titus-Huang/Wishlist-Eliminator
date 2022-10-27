@@ -32,7 +32,7 @@ function WishlistCard(props) {
         return (
             <div className="game-header">
                 {props.type === 'editing-list' && <div className="game-header-controls">
-                    <div className="material-symbols-outlined game-header-icons">arrow_back</div>
+                    <div className="material-symbols-outlined game-header-icons purchased">check_box_outline_blank</div>
                     <div className="material-symbols-outlined game-header-icons">edit</div>
                     <div className="material-symbols-outlined game-header-icons">delete</div>
                 </div>}

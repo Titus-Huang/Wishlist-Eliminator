@@ -115,16 +115,6 @@ function Edit(props) {
 
     // editingListData
     // referenceListData
-    // const transferObjectToOtherList = (currentListType, gameId) => {
-    //     if (currentListType === 'reference') {
-    //         // current list is reference list
-    //         // so therefore, need to move the data from the reference list to the editing list
-            
-    //     } else if (currentListType === 'list') {
-    //         // current list is editing list
-    //         // so therefore, need to move the data from the editing list to the reference list
-    //     }
-    // }
 
     // setEditingListData, setReferenceListData
 

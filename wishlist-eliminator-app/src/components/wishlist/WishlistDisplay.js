@@ -152,27 +152,29 @@ function WishlistDisplay(props) {
     const moveToOtherList = (listIndex) => {
         console.log('move', listIndex, 'to the other list');
         setIsUpdateTime(true);
-        // grabs the data to move it away
-        const dataToMove = {}
-        const listKeys = Object.keys(list[0]);
-        listKeys.forEach(dataName => {
-            // console.log(list[listIndex])
-            dataToMove[dataName] = list[listIndex][dataName]
-        })
 
-        // find local data and delete it form local, this should enable repack to send back up
-        const updatedListData = Object.values(list);
-        updatedListData.splice(listIndex, 1)
-        console.table(updatedListData);
-        updateList(updatedListData);
+        if (props.type === 'editing-reference') {
+            // grabs the data to copy it
+            const dataToMove = {}
+            const listKeys = Object.keys(list[0]);
+            listKeys.forEach(dataName => {
+                // console.log(list[listIndex])
+                dataToMove[dataName] = list[listIndex][dataName]
+            })
 
-        // console.log(props.type)
-        // console.log('checking update time', isUpdateTime);
-        onListDataUpdated(updatedListData);
+            // meanwhile, uploads the data into the other list
+            // console.log(dataToMove)
+            props.listActions.addToOtherList(props.type, dataToMove);
+        } else if (props.type === 'editing-list') {
+            // find local data and delete it form local, this should enable repack to send back up
+            const updatedListData = Object.values(list);
+            updatedListData.splice(listIndex, 1)
+            console.table(updatedListData);
+            updateList(updatedListData);
 
-        // meanwhile, uploads the data into the other list
-        // console.log(dataToMove)
-        props.listActions.addToOtherList(props.type, dataToMove);
+            // upload list to update
+            onListDataUpdated(updatedListData);
+        }
         setIsUpdateTime(false);
     }
 
