@@ -103,15 +103,24 @@ function Edit(props) {
     useEffect(onInitialize, [isInitialized])
     // useEffect(updateListsData, [editingListData])
 
-    const [ manuallyShowReferenceData, setManuallyShowReferenceData] = useState(false);
+    const [ manuallyShowReferenceData, setManuallyShowReferenceData ] = useState(false);
+
+    const renderLists = () => {
+        return (
+            <>
+                {(typeof referenceListData.listId !== 'undefined' || manuallyShowReferenceData) && <WishlistDisplay type={'editing-reference'} referenceListData={referenceListData} />}
+                <WishlistDisplay type={'editing-list'} editingListData={editingListData} />
+            </>
+        )
+    }
 
     return (
         <div className="WishlistEdit">
             <h2>Edit Wishlist time</h2>
 
             <div className="displayCreateColumns">
-                {(typeof referenceListData.listId !== 'undefined' ||manuallyShowReferenceData) && <WishlistDisplay type={'editing-reference'} referenceListData={referenceListData} />}
-                <WishlistDisplay type={'editing-list'} editingListData={editingListData} />
+                {props.appData.userWishlists?.length > 0 && renderLists()}
+                {/* {console.log(props.appData.userWishlists?.length)} */}
             </div>
         </div>
     );

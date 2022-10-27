@@ -6,8 +6,8 @@ import './WishlistDisplay.scss';
 function WishlistDisplay(props) {
 
     const [ test, updateTest ] = useState(false)
-    // const [ list, updateList ] = useState([])
-    let list = [];
+    const [ list, updateList ] = useState([])
+    // let list = [];
 
     let isInitialized = false;
     const onInitialize = () => {
@@ -15,6 +15,10 @@ function WishlistDisplay(props) {
         // console.log('props', Object.values(props)[1].listId)
         // console.log('props', typeof Object.values(props)[1].listId === 'undefined')
         if (!isInitialized && typeof Object.values(props)[1].listId !== 'undefined') {
+            console.log(Object.values(props)[1].listId)
+            // temp fix, because react likes to add additional data for some reason
+            updateList([])
+
             switch (props.type) {
                 case 'editing-reference':
                     // console.log(props.referenceListData.list_data)
@@ -30,6 +34,7 @@ function WishlistDisplay(props) {
             }
             console.log('Wishlist Display is initialized!');
 
+            // debugger
             isInitialized = true;
         }
     }
@@ -57,8 +62,15 @@ function WishlistDisplay(props) {
                     returnListArr.push(newArrData);
                 }
 
-                list = returnListArr;
+                // list = returnListArr;
                 // updateList(returnListArr);
+
+                // updateList([...list, {gameId: '1231', gameName: 'wow'}])
+                // updateList([...list, returnListArr])
+                // updateList((existingData) => ({
+                //     ...existingData,
+                //     // returnListArr[0],
+                // }));
                 console.log('returnListArrrrrrrrr',returnListArr);
                 console.log('list',list);
             }
@@ -70,24 +82,27 @@ function WishlistDisplay(props) {
     }
 
     
-    // useEffect(editingReferenceRender, [test]);
+    useEffect(onInitialize, []);
 
     const editingReferenceRender = () => {
-        if (!test) return
+        if (test) return
 
-        onInitialize()
+        // onInitialize()
 
         return (
-            <div className="editingReferenceRender">
+            <div className="editingReferenceRender list-render">
                 <h2>Reference</h2>
-                <br />
+                
                 <p>Title: {props.referenceListData.name}</p>
                 <p>Description: {props.referenceListData.description}</p>
-                <br />
+
                 <div className="editingReferenceList">
-                    {console.log(list.length)}
-                    {list.map((cardData, i) => {
-                        return <WishlistCard key={i} cardData={cardData} index={i} />
+                    {list?.map((cardData, index) => {
+                        // if (index > 5) return
+                        console.log('rendering card no', index)
+                        console.log('card data', cardData)
+                        // debugger
+                        return <WishlistCard key={index} cardData={cardData} index={index} />
                     })}
                 </div>
                 
@@ -96,7 +111,7 @@ function WishlistDisplay(props) {
     }
 
     const editingListRender = () => {
-        onInitialize()
+        // onInitialize()
 
         return (
             <div className="editingListRender">
@@ -108,8 +123,8 @@ function WishlistDisplay(props) {
     return (
         <div className="WishlistDisplay">
             {/* <h2>Display Wishlist time</h2> */}
-            {props.type === 'editing-reference' && editingReferenceRender()}
-            {props.type === 'editing-list' && editingListRender()}
+            {props.type === 'editing-reference' && typeof Object.values(props)[1].listId !== 'undefined' && editingReferenceRender()}
+            {/* {props.type === 'editing-list' && editingListRender()} */}
         </div>
     );
 }
