@@ -74,6 +74,7 @@ router.get('/:wishlistId', (req, res) => {
 router.get('/all/:password', (req, res) => {
     const { password } = req.params;
 
+    // User.quickTest().then(dataRes => res.status(200).json(dataRes))
     Wishlist
         .getAll(password)
         .then(dataRes => res.status(200).json(dataRes))

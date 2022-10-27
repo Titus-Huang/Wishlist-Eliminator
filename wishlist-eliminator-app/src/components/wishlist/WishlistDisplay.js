@@ -13,12 +13,12 @@ function WishlistDisplay(props) {
     const [ isListRepacked, setIsListRepacked ] = useState(false);
 
     const onInitialize = () => {
-        console.log("initialize ran")
+        console.log("initialize ran from", props.type)
         // // console.log('props', props)
         // // console.log('props', Object.values(props)[1].listId)
         // console.log('is it not initialize', !isInitialized)
         // console.log('is list not unpacking or repacking', !isListUnpacking && !isListRepacking);
-        // console.log('islist empty', typeof Object.values(props)[1].listId !== 'undefined')
+        console.log('islist empty', typeof Object.values(props)[1].listId !== 'undefined')
         if (!isInitialized && !isListUnpacking && !isListRepacking && typeof Object.values(props)[1].listId !== 'undefined') {
             console.log(Object.values(props)[1].listId)
             // temp fix, because react likes to add additional data for some reason
@@ -30,6 +30,12 @@ function WishlistDisplay(props) {
             setIsInitialized(true);
         }
     }
+
+    useEffect(() => {
+        if (!isInitialized && typeof Object.values(props)[1].listId !== 'undefined') {
+            onInitialize();
+        }
+    }, [Object.values(props)[1].listId]);
 
     const grabbingDataFromUpstream = () => {
         switch (props.type) {
