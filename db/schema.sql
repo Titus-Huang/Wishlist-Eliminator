@@ -72,6 +72,9 @@ CREATE TABLE wishlists(
     purchased boolean[]
 );
 
+-- TO DO:
+-- Add in user notes/descriptions of each game, this would be awesome and I can't believe I forgot to do this
+
 -- Display total data from wishlists
 SELECT * FROM wishlists;
 

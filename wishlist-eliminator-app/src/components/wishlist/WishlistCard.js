@@ -16,11 +16,11 @@ function WishlistCard(props) {
 
     const toggleCardSize = () => {
         if (typeof domObject !== 'undefined') {
-            if (isOpen) {
-                console.log('dom object', domObject, 'is going top open')
-            } else {
-                console.log('dom object', domObject, 'is going to close')
-            }
+            // if (isOpen) {
+            //     console.log('dom object', domObject, 'is going top open')
+            // } else {
+            //     console.log('dom object', domObject, 'is going to close')
+            // }
             domObject.classList.toggle('WishlistCard-height');
         }
     }
@@ -37,7 +37,7 @@ function WishlistCard(props) {
                     {props.type === 'reference' && <div className="material-symbols-outlined game-header-icons">arrow_forward</div>}
                     {props.type === 'list' && <div className="material-symbols-outlined game-header-icons">arrow_back</div>}
                     {props.type === 'list' && <div className="material-symbols-outlined game-header-icons">edit</div>}
-                    <div className="material-symbols-outlined game-header-icons">delete</div>
+                    {props.type === 'list' && <div className="material-symbols-outlined game-header-icons">delete</div>}
                 </div>
             </div>
             <div className="game-content">

@@ -99,6 +99,19 @@ function Edit(props) {
         console.log('update list data is being run');
     }
 
+    // To-do:
+    // When arrow is clicked on EITHER end, request data is sent back up through the waterfall
+    // reaches here and then it PUT onto the other side of the list
+
+    // actions include:
+    // moving up/down the list
+    // deleting data from the list
+    // transfering to the OTHER list
+    // updating data within the list
+
+    // then will need to send data BACK to the server
+    // send back to server on each action
+
     // this should run on initialise
     useEffect(onInitialize, [isInitialized])
     // useEffect(updateListsData, [editingListData])
