@@ -91,9 +91,10 @@ function WishlistDisplay(props) {
                     }
                     returnListArr.push(newArrData);
                 }
+                
                 updateList(returnListArr);
                 setIsListUnpacking(false);
-                // console.log('returnListArrrrrrrrr',returnListArr);
+                console.log('returnListArrrrrrrrr',returnListArr);
                 // console.log('list',list);
             }
         }
@@ -103,32 +104,50 @@ function WishlistDisplay(props) {
     const repackList = (listData) => {
         if (listData !== null) {
             console.log('repacking');
+            // console.log(listData);
+            // console.log(listData[0])
             setIsListRepacking(true);
-            const listKeys = Object.keys(listData[0]);
-            const listValues = Object.values(listData);
-
-            // console.log(listKeys);
-            // console.log(listValues);
-
-            if (listKeys.indexOf(null) === -1) {
-                let returnListObj = {};
-                for (let i = 0; i < listKeys[0].length; i++) {
-                    let newArrData = []
-                    for (let j = 0; j < listValues.length; j++) {
-                        // console.log(listValues[j][listKeys[i]])
-                        newArrData[j] = listValues[j][listKeys[i]];
+            if (listData?.length !== 0) {
+                try {
+                    const listKeys = Object.keys(listData[0]);
+                    const listValues = Object.values(listData);
+    
+                    if (listKeys.indexOf(null) === -1) {
+                        let returnListObj = {};
+                        for (let i = 0; i < listKeys[0].length; i++) {
+                            let newArrData = []
+                            for (let j = 0; j < listValues.length; j++) {
+                                // console.log(listValues[j][listKeys[i]])
+                                newArrData[j] = listValues[j][listKeys[i]];
+                            }
+                            returnListObj[listKeys[i]] = newArrData;
+                        }
+                        // props.listActions.
+                        // setIsListUnpacked(false);
+                        // console.log('returnListObj',returnListObj);
+                        setIsListRepacking(false);
+                        setIsListRepacked(true);
+                        return returnListObj;
+                        // console.log('list',list);
                     }
-                    returnListObj[listKeys[i]] = newArrData;
                 }
-                // props.listActions.
-                // setIsListUnpacked(false);
-                // console.log('returnListObj',returnListObj);
-                setIsListRepacking(false);
-                setIsListRepacked(true);
-                return returnListObj;
-                // console.log('list',list);
+                catch (err) {
+                    console.error(err)
+                }
+            } else {
+                // console.log('now an empty list again, now what?');
+                return {
+                    gameId: [],
+                    gameName: [],
+                    gameImgBg: [],
+                    dateAddedToOgList: [],
+                    releaseDate: [],
+                    releaseDateStr: [],
+                    deckCompat: [],
+                    purchased: []
+                }
             }
-        }
+        } 
     }
 
     const moveToOtherList = (listIndex) => {

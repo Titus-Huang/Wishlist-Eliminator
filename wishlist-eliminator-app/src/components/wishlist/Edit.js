@@ -95,10 +95,6 @@ function Edit(props) {
         }
     }
 
-    const updateListsData = () => {
-        console.log('update list data is being run');
-    }
-
     // To-do:
     // When arrow is clicked on EITHER end, request data is sent back up through the waterfall
     // reaches here and then it PUT onto the other side of the list
@@ -173,6 +169,7 @@ function Edit(props) {
 
     const updateCurrentListData = (currentListType, listData) => {
         console.log('is updated current list')
+        console.log(listData)
 
         if (currentListType === 'editing-reference') {
             // current list is reference list
@@ -204,8 +201,9 @@ function Edit(props) {
     const renderLists = () => {
         return (
             <>
-                {(typeof referenceListData.listId !== 'undefined' || manuallyShowReferenceData) && <WishlistDisplay type={'editing-reference'} referenceListData={referenceListData} listActions={listActions} />}
-                <WishlistDisplay type={'editing-list'} editingListData={editingListData} />
+                {(typeof referenceListData.listId !== 'undefined' || manuallyShowReferenceData) &&
+                <WishlistDisplay type={'editing-reference'} referenceListData={referenceListData} listActions={listActions} />}
+                <WishlistDisplay type={'editing-list'} editingListData={editingListData} listActions={listActions}/>
             </>
         )
     }
