@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon -r dotenv/config server.js",
+    "dev": "nodemon --ignore wishlist-eliminator-app/ --ignore build/ -r dotenv/config server.js",
     "heroku-postbuild": "cd wishlist-eliminator-app; npm run herokuDeploy"
   },
   "keywords": [],

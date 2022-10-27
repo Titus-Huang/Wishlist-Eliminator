@@ -1,5 +1,8 @@
 const db = require('../db/db');
 
+// FUTURE TO DO...
+// user authentication...
+
 // < wishlists_data >
 
 // id serial primary key,
@@ -10,7 +13,7 @@ const db = require('../db/db');
 // steam_sorted_game_ids integer[],
 
 // -- local list data
-// local_lists integer[]
+// lists integer[]
 
 
 
@@ -20,7 +23,9 @@ const db = require('../db/db');
 
 // -- row data
 // wishlists_data_id integer,
-// master_reference boolean
+// main_reference boolean,
+// name text,
+// description text,
 // created_at timestamp,
 // edited_at timestamp,
 
@@ -115,6 +120,47 @@ const WishlistData = {
         return db
             .query(sql, [userId])
             .then(dbRes => dbRes.rows[0]);
+    },
+
+    addNewListId: (userId, newListId) => {
+        console.log('newListId:', newListId)
+        // const sqlErrCheck = `
+        //     UPDATE
+        //         wishlists_data
+        //     SET
+        //         lists = lists || $2
+        //     WHERE NOT
+        //         lists @> '{$2}'
+        //         AND
+        //         user_id = $1
+        // `;
+
+        const sql = `
+            UPDATE
+                wishlists_data
+            SET
+                lists = array_append(lists, $2)
+            WHERE
+                user_id = $1
+        `;
+
+        return db
+            .query(sql, [userId, newListId])
+            .then(() => {console.log('New list has been created by user id:', userId)});
+    },
+
+    updateListIds: (userId, arrOfListIds) => {
+        const sql = `
+            UPDATE
+                wishlists_data
+            SET
+                lists = $2
+            WHERE
+                user_id = $1
+        `;
+
+        return db
+            .query(sql, [userId, arrOfListIds]);
     }
 };
 
@@ -122,11 +168,13 @@ const WishlistData = {
 // individual lists (users can have multiple)
 const Wishlist = {
     // called when Steam Wishlist data is imported
-    createMasterReference: (dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
+    createMainReference: (userId, dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
         const sql = `
             INSERT INTO wishlists (
                 wishlists_data_id,
-                master_reference,
+                main_reference,
+                name,
+                description,
                 created_at,
                 game_ids,
                 game_name,
@@ -134,11 +182,14 @@ const Wishlist = {
                 date_added,
                 release_date,
                 release_date_str,
-                deck_compat
+                deck_compat,
+                purchased
             )
             VALUES (
                 $1,
                 'true',
+                'Main Reference',
+                'The Main Reference that the app uses from your imported Steam Wishlist',
                 now(),
                 $2,
                 $3,
@@ -146,15 +197,26 @@ const Wishlist = {
                 $5,
                 $6,
                 $7,
-                $8
+                $8,
+                $9
             )
+            RETURNING
+                id
         `;
 
+        let purchasedArr;
+        if (gameIds.length > 0) {
+            purchasedArr = 'false '.repeat(gameIds.length).trim(' ').split(' ')
+        }
+
         return db
-            .query(sql, [dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat]);
+            .query(sql, [dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat, purchasedArr])
+            .then(dbRes => {
+                WishlistData.addNewListId(userId, dbRes.rows[0].id)
+            });
     },
     
-    updateMasterReference: (dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
+    updateMainReference: (dataTableId, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
         const sql = `
             UPDATE
                 wishlists
@@ -179,7 +241,7 @@ const Wishlist = {
             )
             WHERE
                 wishlists_data_id = $1
-                AND master_reference = 'true'
+                AND main_reference = 'true'
         `;
 
         return db
@@ -189,7 +251,7 @@ const Wishlist = {
             // })
     },
 
-    doesMasterReferenceExist: (wishlistDataId) => {
+    doesMainReferenceExist: (wishlistsDataId) => {
         const sql = `
             SELECT
                 *
@@ -197,15 +259,15 @@ const Wishlist = {
                 wishlists
             WHERE
                 wishlists_data_id = $1
-                AND master_reference = 'true'
+                AND main_reference = 'true'
         `;
 
         return db
-            .query(sql, [wishlistDataId])
+            .query(sql, [wishlistsDataId])
             .then(dbRes => typeof dbRes.rows[0] !== 'undefined');
     },
 
-    getUserMasterReference: (wishlistDataId) => {
+    getUserMainReference: (wishlistsDataId) => {
         const sql = `
             SELECT
                 *
@@ -213,12 +275,112 @@ const Wishlist = {
                 wishlists
             WHERE
                 wishlists_data_id = $1
-                AND master_reference = 'true'
+                AND main_reference = 'true'
         `;
         
         return db
-            .query(sql, [wishlistDataId])
+            .query(sql, [wishlistsDataId])
             .then(dbRes => dbRes.rows[0]);
+    },
+
+    addNewUserWishlist: (userId, dataTableId, listTitle, listDescription) => {
+        const sql = `
+            INSERT INTO wishlists (
+                wishlists_data_id,
+                main_reference,
+                name,
+                description,
+                created_at
+            )
+            VALUES (
+                $1,
+                'false',
+                $2,
+                $3,
+                now()
+            )
+            RETURNING
+                *
+        `;
+
+        return db
+            .query(sql, [dataTableId, listTitle, listDescription])
+            .then(dbRes => {
+                WishlistData.addNewListId(userId, dbRes.rows[0].id);
+                return dbRes.rows[0];
+            });
+    },
+
+    addNewUserWishlistWithData: (userId, dataTableId, listTitle, listDescription, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat) => {
+        const sql = `
+            INSERT INTO wishlists (
+                wishlists_data_id,
+                main_reference,
+                name,
+                description,
+                created_at,
+                game_ids,
+                game_name,
+                game_img_bg,
+                date_added,
+                release_date,
+                release_date_str,
+                deck_compat
+            )
+            VALUES (
+                $1,
+                'false',
+                $2,
+                $3,
+                now(),
+                $4,
+                $5,
+                $6,
+                $7,
+                $8,
+                $9,
+                $10
+            )
+            RETURNING
+                id
+        `;
+
+        return db
+            .query(sql, [dataTableId, listTitle, listDescription, gameIds, gameNames, gameImgBg, dateAdded, releaseDates, releaseDatesStr, deckCompat])
+            .then(dbRes => WishlistData.addNewListId(userId, dbRes.rows[0]));
+    },
+
+    getUserWishlists: (wishlistsDataId) => {
+        const sql = `
+            SELECT
+                *
+            FROM
+                wishlists
+            WHERE
+                wishlists_data_id = $1
+        `;
+
+        return db
+            .query(sql, [wishlistsDataId])
+            .then(dbRes => dbRes.rows);
+    },
+
+    getUserWishlist: (wishlistsId) => {
+        const sql = `
+            SELECT
+                *
+            FROM
+                wishlists
+            WHERE
+                id = $1
+        `;
+
+        return db
+            .query(sql, [wishlistsId])
+            .then(dbRes => {
+                // console.log(dbRes.rows[0]);
+                return dbRes.rows[0];
+            });
     }
 };
 
