@@ -47,10 +47,14 @@
 
 .list-render {
     width: 500px;
-    padding: 1em;
 
-    h2 {
-        margin: 0;
+    .list-details {
+        padding: 1em;
+        height: 12em;
+        
+        h2 {
+            margin: 0;
+        }
     }
 }
 
@@ -75,7 +79,7 @@
         justify-content: flex-start;
     
         .game-header-icons {
-            padding: 25% 0;
+            padding: 22% 0;
             font-size: 32px;
             transition: color 0.25s ease-in-out;
         }

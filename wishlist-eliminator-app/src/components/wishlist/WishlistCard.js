@@ -28,21 +28,29 @@ function WishlistCard(props) {
         }
     }
 
+    const renderGameHeader = () => {
+        return (
+            <div className="game-header">
+                {props.type === 'editing-list' && <div className="game-header-controls">
+                    <div className="material-symbols-outlined game-header-icons">arrow_back</div>
+                    <div className="material-symbols-outlined game-header-icons">edit</div>
+                    <div className="material-symbols-outlined game-header-icons">delete</div>
+                </div>}
+                <div className="game-header-image">
+                    <img src={props.cardData.gameImgBg} alt={props.cardData.gameName} />
+                </div>
+                {props.type === 'editing-reference' && <div className="game-header-controls">
+                    <div className="material-symbols-outlined game-header-icons">arrow_forward</div>
+                </div>}
+            </div>
+        )
+    }
+
     useEffect(toggleCardSize, [isOpen])
 
     return (
         <div className="WishlistCard" onClick={clicked}>
-            <div className="game-header">
-                <div className="game-header-image">
-                    <img src={props.cardData.gameImgBg} alt={props.cardData.gameName} />
-                </div>
-                <div className="game-header-controls">
-                    {props.type === 'editing-reference' && <div className="material-symbols-outlined game-header-icons">arrow_forward</div>}
-                    {props.type === 'editing-list' && <div className="material-symbols-outlined game-header-icons">arrow_back</div>}
-                    {props.type === 'editing-list' && <div className="material-symbols-outlined game-header-icons">edit</div>}
-                    {props.type === 'editing-list' && <div className="material-symbols-outlined game-header-icons">delete</div>}
-                </div>
-            </div>
+            {renderGameHeader()}
             <div className="game-content">
                 <div className="game-title">
                     <p>{props.index + 1}. <a href={'https://store.steampowered.com/app/' + props.cardData.gameId} title={props.cardData.gameName} target='_blank'  rel='noreferrer'>{props.cardData.gameName}</a></p>

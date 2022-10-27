@@ -212,8 +212,7 @@ function Edit(props) {
 
     return (
         <div className="WishlistEdit">
-            <h2>Edit Wishlist time</h2>
-
+            <h2>Edit Wishlist</h2>
             <div className="displayCreateColumns">
                 {props.appData.userWishlists?.length > 0 && renderLists()}
                 {/* {console.log(props.appData.userWishlists?.length)} */}

@@ -164,15 +164,13 @@ function WishlistDisplay(props) {
     const editingReferenceRender = () => {
         return (
             <div className="editingReferenceRender list-render">
-                <h2>Reference</h2>
-
-                <p>Title: {props.referenceListData.name}</p>
-                <p>Description: {props.referenceListData.description}</p>
-
+                <div className="list-details">
+                    <h2>Reference</h2>
+                    <p>Title: {props.referenceListData.name}</p>
+                    <p>Description: {props.referenceListData.description}</p>
+                </div>
                 <div className="editingReferenceList">
                     {list?.map((cardData, index) => {
-                        // console.log('rendering card no', index)
-                        // console.log('card data', cardData)
                         return <WishlistCard key={index} cardData={cardData} index={index} type={props.type} cardCommands={cardCommands} />
                     })}
                 </div>
@@ -184,15 +182,13 @@ function WishlistDisplay(props) {
     const editingListRender = () => {
         return (
             <div className="editingListRender list-render">
-                <h2>Your List</h2>
-
-                <p>Title: {props.editingListData.name}</p>
-                <p>Description: {props.editingListData.description}</p>
-
+                <div className="list-details">
+                    <h2>Your List</h2>
+                    <p>Title: {props.editingListData.name}</p>
+                    <p>Description: {props.editingListData.description}</p>
+                </div>
                 <div className="editingReferenceList">
                     {list?.map((cardData, index) => {
-                        // console.log('rendering card no', index)
-                        // console.log('card data', cardData)
                         return <WishlistCard key={index} cardData={cardData} index={index} type={props.type} cardCommands={cardCommands} />
                     })}
                 </div>
@@ -204,19 +200,6 @@ function WishlistDisplay(props) {
         console.log('initialized from', props.type);
         onInitialize()
     }, []);
-
-    // useEffect(() => {
-    //     console.log('updated occured to reference data within,', props.type)
-    //     setIsInitialized(false)
-    //     onInitialize()
-    // }, [props.referenceListData]);
-
-    // useEffect(() => {
-    //     console.log('updated occured to reference data within,', props.type)
-    //     setIsInitialized(false)
-    //     onInitialize()
-    // }, [props.editingListData]);
-
 
     return (
         <div className="WishlistDisplay">
