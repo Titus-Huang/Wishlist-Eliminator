@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './OnBoarding.scss';
 
 function Login(props) {
     const navigate = useNavigate();
@@ -74,45 +75,65 @@ function Login(props) {
     }
 
     return (
-        <div className='login-page'>
-            <h2>Log in:</h2>
+        <div className='login-page default-content-box row'>
+            <div className='log-in-form-title col-xl-3 col-lg-3 col-12 row'>
+                <div className="col-lg-12 col-6">
+                    <h2>Log in:</h2>
+                </div>
+                <div className="col-lg-12 col-6 btn-align btn-group">
+                    <button type="button" className="btn btn-lg btn-secondary" onClick={() => navigate('/users/sign-up')}>Sign Up</button>
+                    <button type="button" className="btn btn-lg btn-secondary" onClick={() => navigate('/')}>Home</button>
+                </div>
+            </div>
 
-            <div className='login-form-div'>
-                <form className='login-form' onSubmit={handleSubmit}>
-                    {submitted && valid && !error && <div className='success-message'>Success! Logging in...</div>}
-                    {submitted && valid && error && <div className='failure-response'>Error! {errorMsg}</div>}
+            <div className='log-in-form-div col-xl-9 col-lg-9 col-12 g-4'>
+                <form className='log-in-form row' onSubmit={handleSubmit}>
+                    {submitted && valid && !error && <div className="success-message">Success! Thank you for registering</div>}
+                    {submitted && valid && error && <div className="failure-response">Error! {errorMsg}</div>}
 
-                    <label htmlFor='usernameOrEmail'>Username or Email: </label>
-                    <input
-                        id='usernameOrEmail'
-                        className='form-field'
-                        type='text'
-                        name='usernameOrEmail'
-                        autoComplete='username email'
-                        value={loginForm.usernameOrEmail}
-                        onChange={handleUsernameOrEmailInputChange}
-                    />
-                    {submitted && !loginForm.usernameOrEmail && <span id='username-error'>Please enter a username or email</span>}
+                    <div className='row mb-3'>
+                        <label htmlFor='usernameOrEmail' className="col-sm-6 col-form-label col-form-label-lg">Username or Email: </label>
+                        <div className="input-group">
+                            <span className="input-group-text" id="basic-addon1">@</span>
+                            <input
+                                type="text"
+                                className="form-control form-control-lg form-field"
+                                id='usernameOrEmail'
+                                name='usernameOrEmail'
+                                autoComplete='username email'
+                                value={loginForm.usernameOrEmail}
+                                onChange={handleUsernameOrEmailInputChange}
+                            />
+                        </div>
+                    </div>
+                    <br />
+                    {submitted && !loginForm.usernameOrEmail && <span className="failure-response" id='username-error'>Please enter a username or email</span>}
 
                     <br />
 
-                    <label htmlFor='password'>Password: </label>
-                    <input
-                        id='password'
-                        className='form-field'
-                        type='password'
-                        name='password'
-                        autoComplete='password'
-                        value={loginForm.password}
-                        onChange={handlePasswordInputChange}
-                    />
-                    {submitted && !loginForm.password && <span id='password-error'>Please enter a password</span>}
+                    <div className='row mb-3'>
+                        <label htmlFor='password' className="col-sm-3 col-form-label col-form-label-lg">Password: </label>
+                        <div className="input-group">
+                            <input
+                                id='password'
+                                className='form-control form-control-lg form-field'
+                                type='password'
+                                name='password'
+                                autoComplete='current-password'
+                                value={loginForm.password}
+                                onChange={handlePasswordInputChange}
+                            />
+                        </div>
+                    </div>
+                    <br />
+                    {submitted && !loginForm.password && <span className="failure-response" id="password-error">Please enter a password</span>}
 
                     <br />
+                    <br />
 
-                    <button className='form-field' type='submit'>
-                        Login
-                    </button>
+                    <div className="col-auto">
+                        <button type="submit" className="form-field btn btn-lg btn-primary">Login</button>
+                    </div>
                 </form>
             </div>
         </div>
