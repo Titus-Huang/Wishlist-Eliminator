@@ -1,3 +1,24 @@
+/* div {
+  border: 1px solid darkslategrey;
+} */
+
+/* div::after {
+  content: 'div';
+  display: block;
+  width: fit-content;
+  margin-left: auto;
+} */
+
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 500,
+  'GRAD' 200,
+  'opsz' 48
+}
+
+
 .App {
   text-align: center;
 }

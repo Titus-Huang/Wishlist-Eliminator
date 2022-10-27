@@ -50,13 +50,15 @@ function Login(props) {
                     } else {
                         fetch('/api/wishlists')
                             .then(res => res.json())
-                            .then(wishlistDataData => {
-                                props.updateUserWishlistDataData(wishlistDataData);
+                            .then(loginData => {
+                                // console.log('loginData:', loginData);
+                                props.updateUserWishlistDataData(loginData.userListData);
+                                props.updateUserWishlistsData(loginData.userWishlists);
                                 props.updateUserData(userData);
-                                console.log("Logged in...");
+                                console.log('Logged in...');
 
                                 // auto move
-                                navigate('/');
+                                navigate('/wishlists/edit/2?ref=1');
                             })
                     } // call back hellllllll
                 });
@@ -77,8 +79,8 @@ function Login(props) {
 
             <div className='login-form-div'>
                 <form className='login-form' onSubmit={handleSubmit}>
-                    {submitted && valid && !error && <div className="success-message">Success! Logging in...</div>}
-                    {submitted && valid && error && <div className="failure-response">Error! {errorMsg}</div>}
+                    {submitted && valid && !error && <div className='success-message'>Success! Logging in...</div>}
+                    {submitted && valid && error && <div className='failure-response'>Error! {errorMsg}</div>}
 
                     <label htmlFor='usernameOrEmail'>Username or Email: </label>
                     <input
@@ -86,10 +88,11 @@ function Login(props) {
                         className='form-field'
                         type='text'
                         name='usernameOrEmail'
+                        autoComplete='username email'
                         value={loginForm.usernameOrEmail}
                         onChange={handleUsernameOrEmailInputChange}
                     />
-                    {submitted && !loginForm.usernameOrEmail && <span id="username-error">Please enter a username or email</span>}
+                    {submitted && !loginForm.usernameOrEmail && <span id='username-error'>Please enter a username or email</span>}
 
                     <br />
 
@@ -99,14 +102,15 @@ function Login(props) {
                         className='form-field'
                         type='password'
                         name='password'
+                        autoComplete='password'
                         value={loginForm.password}
                         onChange={handlePasswordInputChange}
                     />
-                    {submitted && !loginForm.password && <span id="password-error">Please enter a password</span>}
+                    {submitted && !loginForm.password && <span id='password-error'>Please enter a password</span>}
 
                     <br />
 
-                    <button className="form-field" type="submit">
+                    <button className='form-field' type='submit'>
                         Login
                     </button>
                 </form>

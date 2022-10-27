@@ -39,7 +39,7 @@ CREATE TABLE wishlists_data(
     added_at timestamp,
     steam_sorted_game_ids integer[],
     -- local list data
-    local_lists integer[]
+    lists integer[]
 );
 
 -- Display total data from wishlists_data
@@ -56,7 +56,9 @@ CREATE TABLE wishlists(
     id serial primary key,
     -- row data
     wishlists_data_id integer,
-    master_reference boolean,
+    main_reference boolean,
+    name text,
+    description text,
     created_at timestamp,
     edited_at timestamp,
     -- local data
@@ -69,6 +71,9 @@ CREATE TABLE wishlists(
     deck_compat integer[],
     purchased boolean[]
 );
+
+-- TO DO:
+-- Add in user notes/descriptions of each game, this would be awesome and I can't believe I forgot to do this
 
 -- Display total data from wishlists
 SELECT * FROM wishlists;
