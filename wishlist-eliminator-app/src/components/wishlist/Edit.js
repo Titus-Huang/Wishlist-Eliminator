@@ -35,6 +35,19 @@ function Edit(props) {
                 .then(res => res.json())
                 .then(data => {
                     if (!data.error) {
+                        // console.log('editing wishlist check')
+                        // console.log(typeof data.game_ids)
+                        let checkedListData = {
+                            gameId: data.game_ids === null ? [] : data.game_ids,
+                            gameName: data.game_name === null ? [] : data.game_name,
+                            gameImgBg: data.game_img_bg === null ? [] : data.game_img_bg,
+                            dateAddedToOgList: data.date_added === null ? [] : data.date_added,
+                            releaseDate: data.release_date === null ? [] : data.release_date,
+                            releaseDateStr: data.release_date_str === null ? [] : data.release_date_str,
+                            deckCompat: data.deck_compat === null ? [] : data.deck_compat,
+                            purchased: data.purchased === null ? [] : data.purchased,
+                        }
+
                         setEditingListData({
                             listId: data.id,
                             name: data.name,
@@ -42,16 +55,7 @@ function Edit(props) {
                             mainReference: data.main_reference,
                             createdAt: data.created_at,
                             editedAt: data.edited_at,
-                            list_data: {
-                                gameId: data.game_ids,
-                                gameName: data.game_name,
-                                gameImgBg: data.game_img_bg,
-                                dateAddedToOgList: data.date_added,
-                                releaseDate: data.release_date,
-                                releaseDateStr: data.release_date_str,
-                                deckCompat: data.deck_compat,
-                                purchased: data.purchased
-                            }
+                            list_data: checkedListData
                         })
                     } else {
                         console.error("list not found, try again");

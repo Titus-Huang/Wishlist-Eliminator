@@ -48,8 +48,10 @@ function WishlistDisplay(props) {
     }
 
     const onListDataUpdated = (newList) => {
+        console.log((isInitialized, isListUnpacking, isListRepacking))
         if (isInitialized && !isListUnpacking && !isListRepacking) {
             console.log('should be repacking');
+            // debugger
             props.listActions.updateCurrentListData(props.type, repackList(newList))
         }
     }
@@ -107,35 +109,32 @@ function WishlistDisplay(props) {
             // console.log(listData);
             // console.log(listData[0])
             setIsListRepacking(true);
-            if (listData?.length !== 0) {
-                try {
-                    const listKeys = Object.keys(listData[0]);
-                    const listValues = Object.values(listData);
-    
-                    if (listKeys.indexOf(null) === -1) {
-                        let returnListObj = {};
-                        for (let i = 0; i < listKeys[0].length; i++) {
-                            let newArrData = []
-                            for (let j = 0; j < listValues.length; j++) {
-                                // console.log(listValues[j][listKeys[i]])
-                                newArrData[j] = listValues[j][listKeys[i]];
-                            }
-                            returnListObj[listKeys[i]] = newArrData;
+            console.log(listData.length)
+            if (listData.length > 0) {
+                const listKeys = Object.keys(listData[0]);
+                const listValues = Object.values(listData);
+                if (listKeys.indexOf(null) === -1) {
+                    let returnListObj = {};
+                    for (let i = 0; i < listKeys[0].length; i++) {
+                        let newArrData = []
+                        for (let j = 0; j < listValues.length; j++) {
+                            // console.log(listValues[j][listKeys[i]])
+                            newArrData[j] = listValues[j][listKeys[i]];
                         }
-                        // props.listActions.
-                        // setIsListUnpacked(false);
-                        // console.log('returnListObj',returnListObj);
-                        setIsListRepacking(false);
-                        setIsListRepacked(true);
-                        return returnListObj;
-                        // console.log('list',list);
+                        returnListObj[listKeys[i]] = newArrData;
                     }
-                }
-                catch (err) {
-                    console.error(err)
+                    // props.listActions.
+                    // setIsListUnpacked(false);
+                    // console.log('returnListObj',returnListObj);
+                    setIsListRepacking(false);
+                    setIsListRepacked(true);
+                    return returnListObj;
+                    // console.log('list',list);
                 }
             } else {
                 // console.log('now an empty list again, now what?');
+                setIsListRepacking(false);
+                setIsListRepacked(true);
                 return {
                     gameId: [],
                     gameName: [],
@@ -164,7 +163,7 @@ function WishlistDisplay(props) {
         // find local data and delete it form local, this should enable repack to send back up
         const updatedListData = Object.values(list);
         updatedListData.splice(listIndex, 1)
-        // console.table(updatedListData);
+        console.table(updatedListData);
         updateList(updatedListData);
 
         // console.log(props.type)
