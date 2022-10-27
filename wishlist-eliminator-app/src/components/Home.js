@@ -13,8 +13,13 @@ function Home(props) {
 
     const loggedInView = () => {
         return (
-            <div className='home-page'>
-                <h1>Welcome <i>{props.userData.username}</i> to my App</h1>
+            <div className='home-page default-content-box row'>
+                <div className="col-lg-6 col-12">
+                    <h1>Welcome to Wishlist Eliminator</h1>
+                </div>
+                <div className="col-lg-6 col-12">
+                    <p>Hi <i>{props.userData.username}</i>, hope you're enjoying your time on this site {'<3'}</p>
+                </div>
                 {/* <p>Counter: {counter}</p>
                 <button onClick={increaseCounter}>Count</button> */}
             </div>
