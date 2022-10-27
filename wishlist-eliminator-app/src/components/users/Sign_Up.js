@@ -82,7 +82,7 @@ function SignUp() {
                     <h2>Sign Up:</h2>
                 </div>
                 <div className="col-lg-12 col-2 btn-align">
-                    <button type="button" class="btn btn-lg btn-secondary" onClick={() => navigate('/')}>Back</button>
+                    <button type="button" className="btn btn-lg btn-secondary" onClick={() => navigate('/')}>Back</button>
                 </div>
             </div>
 
@@ -94,7 +94,7 @@ function SignUp() {
                     <div className='row mb-3'>
                         <label htmlFor='username' className="col-sm-3 col-form-label col-form-label-lg">Username: </label>
                         <div className="input-group">
-                            <span class="input-group-text" id="basic-addon1">@</span>
+                            <span className="input-group-text" id="basic-addon1">@</span>
                             <input
                                 type="text"
                                 className="form-control form-control-lg form-field"
