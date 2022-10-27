@@ -63,7 +63,7 @@ function WishlistDisplay(props) {
                 }
 
                 // list = returnListArr;
-                // updateList(returnListArr);
+                updateList(returnListArr);
 
                 // updateList([...list, {gameId: '1231', gameName: 'wow'}])
                 // updateList([...list, returnListArr])
@@ -92,7 +92,7 @@ function WishlistDisplay(props) {
         return (
             <div className="editingReferenceRender list-render">
                 <h2>Reference</h2>
-                
+
                 <p>Title: {props.referenceListData.name}</p>
                 <p>Description: {props.referenceListData.description}</p>
 
