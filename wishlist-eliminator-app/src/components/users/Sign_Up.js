@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Sign_Up.scss';
+import './OnBoarding.scss';
 
 function SignUp() {
     const navigate = useNavigate();
@@ -100,13 +100,14 @@ function SignUp() {
                                 className="form-control form-control-lg form-field"
                                 id='username'
                                 name='username'
+                                autoComplete='username'
                                 value={signupForm.username}
                                 onChange={handleUsernameInputChange}
                             />
                         </div>
                     </div>
-                    
-                    {submitted && !signupForm.username && <span id="username-error">Please enter a username</span>}
+                    <br />
+                    {submitted && !signupForm.username && <span className="failure-response" id="username-error">Please enter a username</span>}
 
                     <br />
 
@@ -118,13 +119,14 @@ function SignUp() {
                                 className='form-control form-control-lg form-field'
                                 type='text'
                                 name='email'
+                                autoComplete='email'
                                 value={signupForm.email}
                                 onChange={handleEmailInputChange}
                             />
                         </div>
                     </div>
                     <br />
-                    {submitted && !signupForm.email && <span id="email-error">Please enter an email addreess</span>}
+                    {submitted && !signupForm.email && <span className="failure-response" id="email-error">Please enter an email addreess</span>}
 
                     <br />
                     <br />
@@ -137,13 +139,14 @@ function SignUp() {
                                 className='form-control form-control-lg form-field'
                                 type='password'
                                 name='password'
+                                autoComplete='new-password'
                                 value={signupForm.password}
                                 onChange={handlePasswordInputChange}
                             />
                         </div>
                     </div>
                     <br />
-                    {submitted && !signupForm.password && <span id="password-error">Please enter a password</span>}
+                    {submitted && !signupForm.password && <span className="failure-response" id="password-error">Please enter a password</span>}
 
                     <br />
                     <br />

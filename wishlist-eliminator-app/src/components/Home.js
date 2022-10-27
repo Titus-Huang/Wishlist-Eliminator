@@ -20,11 +20,7 @@ function Home(props) {
             </div>
         );
     }
-
-    const btnLink = (link) => {
-        navigate(link);
-    }
-
+    
     const loggedOutView = () => {
         return (
             <div className='landing-page default-content-box row'>
@@ -35,8 +31,8 @@ function Home(props) {
                 </div>
                 <div className="landing-page-user-links col-lg-4 col-sm12">
                     <div className="btn-group btn-group-lg" role="user-onboarding" aria-label="Sign up and Log in buttons">
-                        <button className='btn btn-primary' onClick={() => btnLink('/users/sign-up')}>Sign up</button>
-                        <button className='btn btn-primary' onClick={() => btnLink('/users/login')}>Log in</button>
+                        <button className='btn btn-primary' onClick={() => navigate('/users/sign-up')}>Sign up</button>
+                        <button className='btn btn-primary' onClick={() => navigate('/users/login')}>Log in</button>
                     </div>
                 </div>
             </div>
