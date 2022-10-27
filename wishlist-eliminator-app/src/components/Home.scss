@@ -11,24 +11,17 @@ body {
     color: white;
 
     height: fit-content;
-    padding: 1em;
+    padding: 3em 1em;
     display: flex;
+
+    margin: 5em;
 
     .landing-page-intro, .landing-page-user-links {
         text-align: center;
         padding: 1em;
-    }
 
-    .landing-page-user-links > ul {
-        list-style-type: none;
-
-        li {
-            display: inline-block;
-
-            button {
-                width: 8em;
-                height: 3em;
-            }
+        h1 {
+            font-size: 3.5em;
         }
     }
 }
