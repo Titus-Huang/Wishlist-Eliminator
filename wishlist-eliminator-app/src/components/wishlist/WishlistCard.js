@@ -2,7 +2,11 @@
 function WishlistCard(props) {
 
     const backgroundImg = {
-        backgroundImage: `url(${props.cardData.gameImgBg})`
+        // backgroundImage: `url(${props.cardData.gameImgBg})`,
+        // backgroundSize: '100%',
+        // backgroundRepeat: 'no-repeat',
+        backgroundColor: '#224',
+        color: 'white'
     }
     
     // https://code.tutsplus.com/tutorials/how-to-code-a-random-color-generator-in-javascript--cms-39861
@@ -43,7 +47,10 @@ function WishlistCard(props) {
     }
 
     return (
-        <div className="WishlistCard" style={backgroundColor}>
+        <div className="WishlistCard" style={backgroundImg}>
+            <div className="game-header-image">
+                <img src={props.cardData.gameImgBg} alt={props.cardData.gameName} />
+            </div>
             <div className="gameTitle">
                 <p>{props.index + 1}. <a href={'https://store.steampowered.com/app/' + props.cardData.gameId}>{props.cardData.gameName}</a></p>
 

@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import './WishlistDisplay.scss';
 
 function WishlistDisplay(props) {
-
-    const [ test, updateTest ] = useState(false)
     const [ list, updateList ] = useState([])
     // let list = [];
 
@@ -17,7 +15,7 @@ function WishlistDisplay(props) {
         if (!isInitialized && typeof Object.values(props)[1].listId !== 'undefined') {
             console.log(Object.values(props)[1].listId)
             // temp fix, because react likes to add additional data for some reason
-            updateList([])
+            // updateList([])
 
             switch (props.type) {
                 case 'editing-reference':
@@ -34,7 +32,6 @@ function WishlistDisplay(props) {
             }
             console.log('Wishlist Display is initialized!');
 
-            // debugger
             isInitialized = true;
         }
     }
@@ -42,10 +39,7 @@ function WishlistDisplay(props) {
 
     const unpackList = (listData) => {
         if (listData !== null) {
-            console.log('unpacking');
-            // debugger
-            // console.log(Object.keys(listData));
-            // console.log(Object.values(listData));
+            // console.log('unpacking');
             const listKeys = Object.keys(listData);
             const listValues = Object.values(listData);
             if (listValues.indexOf(null) === -1) {
@@ -55,24 +49,13 @@ function WishlistDisplay(props) {
                     for (let j = 0; j < listKeys.length; j++) {
                         newArrData[listKeys[j]] = listValues[j][i];
                     }
-                    // updateList((existingData) => ({
-                    //     ...existingData,
-                    //     newArrData,
-                    // }));
                     returnListArr.push(newArrData);
                 }
 
-                // list = returnListArr;
                 updateList(returnListArr);
 
-                // updateList([...list, {gameId: '1231', gameName: 'wow'}])
-                // updateList([...list, returnListArr])
-                // updateList((existingData) => ({
-                //     ...existingData,
-                //     // returnListArr[0],
-                // }));
-                console.log('returnListArrrrrrrrr',returnListArr);
-                console.log('list',list);
+                // console.log('returnListArrrrrrrrr',returnListArr);
+                // console.log('list',list);
             }
         }
     }
@@ -85,10 +68,6 @@ function WishlistDisplay(props) {
     useEffect(onInitialize, []);
 
     const editingReferenceRender = () => {
-        if (test) return
-
-        // onInitialize()
-
         return (
             <div className="editingReferenceRender list-render">
                 <h2>Reference</h2>
@@ -98,10 +77,8 @@ function WishlistDisplay(props) {
 
                 <div className="editingReferenceList">
                     {list?.map((cardData, index) => {
-                        // if (index > 5) return
-                        console.log('rendering card no', index)
-                        console.log('card data', cardData)
-                        // debugger
+                        // console.log('rendering card no', index)
+                        // console.log('card data', cardData)
                         return <WishlistCard key={index} cardData={cardData} index={index} />
                     })}
                 </div>
@@ -111,10 +88,8 @@ function WishlistDisplay(props) {
     }
 
     const editingListRender = () => {
-        // onInitialize()
-
         return (
-            <div className="editingListRender">
+            <div className="editingListRender list-render">
                 <h2>Your List</h2>
             </div>
         )
@@ -123,8 +98,8 @@ function WishlistDisplay(props) {
     return (
         <div className="WishlistDisplay">
             {/* <h2>Display Wishlist time</h2> */}
-            {props.type === 'editing-reference' && typeof Object.values(props)[1].listId !== 'undefined' && editingReferenceRender()}
-            {/* {props.type === 'editing-list' && editingListRender()} */}
+            {props.type === 'editing-reference' && editingReferenceRender()}
+            {props.type === 'editing-list' && editingListRender()}
         </div>
     );
 }

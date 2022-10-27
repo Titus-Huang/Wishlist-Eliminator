@@ -88,6 +88,7 @@ function Login(props) {
                         className='form-field'
                         type='text'
                         name='usernameOrEmail'
+                        autoComplete='username email'
                         value={loginForm.usernameOrEmail}
                         onChange={handleUsernameOrEmailInputChange}
                     />
@@ -101,6 +102,7 @@ function Login(props) {
                         className='form-field'
                         type='password'
                         name='password'
+                        autoComplete='password'
                         value={loginForm.password}
                         onChange={handlePasswordInputChange}
                     />

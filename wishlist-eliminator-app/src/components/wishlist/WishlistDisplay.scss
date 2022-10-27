@@ -1,19 +1,26 @@
 
 .WishlistCard {
-    height: 9em;
+    // 460 by 215 height
+    width: inherit;
     position: relative;
     transition: height ease-in-out 0.6s;
+    // height: calc(100vw * 460/215);
+    height: 18em;
 }
 
 .WishlistCard:hover {
-    height: 30em;
+    height: 35em;
 }
 
 .gameTitle {
     text-align: left;
     position: absolute;
     width: 100%;
-    top: 5em;
+}
+
+.gameTitle::before {
+    padding-top: calc((215/460));
+    padding-top: calc(100 * 215/460);
 }
 
 .gameInformation {
@@ -28,4 +35,8 @@
     h2 {
         margin: 0;
     }
+}
+
+img {
+    width: 100%;
 }
