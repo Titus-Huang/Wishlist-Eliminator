@@ -6,11 +6,10 @@
     'GRAD' 200,
     'opsz' 48
 }
-/* 
 
 .App {
-    text-align: center;
-} */
+    padding-bottom: 5em;
+}
 
 .default-content-box {
     border: 1px black solid;
@@ -43,10 +42,9 @@ body {
     /* position: relative; */
     // min-width: 950px;
     min-width: 576px;
-    min-height: 100vh;
+    min-height: 95vh;
     height: fit-content;
     background-position-x: center;
-    padding-bottom: 5em;
 }
 
 nav {
