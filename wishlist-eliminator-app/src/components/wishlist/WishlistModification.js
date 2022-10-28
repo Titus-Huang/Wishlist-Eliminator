@@ -8,11 +8,9 @@ function WishlistModification(props) {
     // default in the future will automatically find user's Main Reference within appData.userWishlists
     // referenceListId: -1
     const [ referenceListId, setReferenceListId ] = useState(1)
-    
-    
 
     return (
-        <div className="WishlistModifications">
+        <div className="WishlistModifications default-content-box">
             {/* Would be an overarching page to modify wishlists */}
             {/* This would include... Creating, Editing, Deleting */}
             {/* <h2>Wishlist Modifications</h2> */}

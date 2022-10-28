@@ -226,14 +226,13 @@ function WishlistDisplay(props) {
                         return <WishlistCard key={index} cardData={cardData} index={index} type={props.type} cardCommands={cardCommands} />
                     })}
                 </div>
-                
             </div>
         )
     }
 
     const editingListRender = () => {
         return (
-            <div className="editingListRender list-render">
+            <div className='editingListRender list-render'>
                 <div className="list-details">
                     <h2>Your List</h2>
                     <p>Title: {props.editingListData.name}</p>
@@ -254,7 +253,11 @@ function WishlistDisplay(props) {
     }, []);
 
     return (
-        <div className="WishlistDisplay">
+        <div className={
+                props.type === 'editing-list' ?
+                    props.listActions.doesRefListExist() ?
+                    'WishlistDisplay col-6' : 'WishlistDisplay col-12 alone' : 'WishlistDisplay col-6'
+            }>
             {/* <h2>Display Wishlist time</h2> */}
             {props.type === 'editing-reference' && editingReferenceRender()}
             {props.type === 'editing-list' && editingListRender()}

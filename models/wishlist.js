@@ -245,7 +245,8 @@ const Wishlist = {
             )
             WHERE
                 wishlists_data_id = $1
-                AND main_reference = 'true'
+                AND
+                main_reference = 'true'
         `;
 
         return db
@@ -263,7 +264,8 @@ const Wishlist = {
                 wishlists
             WHERE
                 wishlists_data_id = $1
-                AND main_reference = 'true'
+                AND
+                main_reference = 'true'
         `;
 
         return db
@@ -279,7 +281,8 @@ const Wishlist = {
                 wishlists
             WHERE
                 wishlists_data_id = $1
-                AND main_reference = 'true'
+                AND
+                main_reference = 'true'
         `;
         
         return db
@@ -341,6 +344,7 @@ const Wishlist = {
                 name,
                 description,
                 created_at,
+                edited_at,
                 game_ids,
                 game_name,
                 game_img_bg,
@@ -356,6 +360,7 @@ const Wishlist = {
                 $2,
                 $3,
                 now(),
+                to_timestamp(0),
                 $4,
                 $5,
                 $6,
@@ -436,7 +441,8 @@ const Wishlist = {
             )
             WHERE
                 wishlists_data_id = $1
-                AND id = $10
+                AND
+                id = $10
         `;
 
         return db

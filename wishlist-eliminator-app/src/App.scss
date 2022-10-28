@@ -1,0 +1,80 @@
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 500,
+    'GRAD' 200,
+    'opsz' 48
+}
+
+.App {
+    padding-bottom: 5em;
+}
+
+.default-content-box {
+    border: 1px black solid;
+    border-radius: 2em;
+    background-color: rgba(84, 84, 84, 0.95);
+    color: white;
+
+    height: fit-content;
+    padding: 3em 1em;
+    display: flex;
+
+    margin: 2em 3.5em;
+}
+
+body {
+    background-color: #000000;
+}
+
+#root {
+    /* background-color: #5aa0d2 !important; */
+    background-image: url('https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/items/460920/3a37b2ed1b077e2e94536252230946864e545630.jpg');
+    /* background-size: auto;
+    background-repeat: repeat-y;
+    position: relative;
+    min-width: 950px;
+    height: 100vh; */
+
+    /* background-size: auto; */
+    background-repeat: repeat-y;
+    /* position: relative; */
+    // min-width: 950px;
+    min-width: 576px;
+    min-height: 95vh;
+    height: fit-content;
+    background-position-x: center;
+}
+
+nav {
+    .container-fluid {
+        .navbar-brand, li {
+            transition: color ease-in 0.15s;
+        }
+
+        .navbar-brand {
+            margin-left: 0.5em;
+            font-size: 2em;
+        }
+        .navbar-brand:hover, li {
+            color: red;
+            cursor: pointer;
+        }
+
+        button {
+            padding: 0.4em 0.65em;
+            margin: 0.8em;
+        }
+
+        button:hover {
+            background-color: #495057;;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .default-content-box {
+        margin: 1em 2em;
+    }
+}

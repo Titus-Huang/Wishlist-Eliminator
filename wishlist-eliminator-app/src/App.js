@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import './App.css';
+import './App.scss';
 
 import NavBar from './components/NavBar';
 import Home from './components/Home';
@@ -8,6 +8,7 @@ import Login from './components/users/Login';
 import Logout from './components/users/Logout';
 import SignUp from './components/users/Sign_Up';
 import Import from './components/wishlist/Import';
+import View from './components/wishlist/View';
 import WishlistModification from './components/wishlist/WishlistModification';
 
 function App() {
@@ -108,13 +109,14 @@ function App() {
 
     return (
         <div className='App container-fluid g-0'>
-            {!(location.pathname === '/' && typeof appData.userData.username === 'undefined') && <NavBar userData={appData.userData} />}
+            {!(/*location.pathname === '/' && */typeof appData.userData.username === 'undefined') && <NavBar userData={appData.userData} />}
 
             <Routes>
                 <Route path='/' element={<Home userData={appData.userData} />} />
                 <Route path='/users/sign-up' element={<SignUp />} />
                 <Route path='/users/login' element={<Login updateUserData={updateUserData} updateUserWishlistDataData={updateUserWishlistDataData} updateUserWishlistsData={updateUserWishlistsData} />} />
                 <Route path='/users/logout' element={<Logout />} />
+                <Route path='/wishlists/view/all/' element={<View type={'logged-in'} />} />
                 <Route path='/wishlists/import' element={<Import userData={appData.userData} updateSteamWishlistData={updateSteamWishlistData} />} />
                 <Route path='/wishlists/create' element={<WishlistModification type={'create'} appData={appData} updateAppData={updateAppData} />} />
                 <Route path='/wishlists/edit/:wishlistId' element={<WishlistModification type={'edit'} appData={appData} updateAppData={updateAppData} />} />
