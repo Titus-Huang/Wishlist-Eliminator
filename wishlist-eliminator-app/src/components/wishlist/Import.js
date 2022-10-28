@@ -67,42 +67,62 @@ function Import(props) {
     };
 
     return (
-        <div className='wishlist-import-page'>
-            <h2>Wishlist import</h2>
-
-            <p>Find your Steam Id here: <a href='https://steamdb.info/calculator/' alt='Steam Calculator' title='Steam Calculator' target='_blank' rel='noreferrer'>Steam Calculator</a></p>
-
-            <p>Find what is your Steam Profile URL and paste the link into the website.</p> 
-            
-            <img src="https://files.treblesketch.com/2022/10/4aad8a5d79ff52b3_2022-10-25.png" alt="Show where to put in your Steam profile link" />
-            
-            <p>Click on the button highlighted in the image below to copy your Steam Id.</p>
-
-            <img src="https://files.treblesketch.com/2022/10/f4664f5935a95ea4_2022-10-25.png" alt="Shows which Steam Id to input below" />
-
-            <div className='import-form-div'>
-                <form className='import-form' onSubmit={handleSubmit}>
-                    {submitted && valid && !error && <div className='success-message'>Success! Importing wishlist...</div>}
-                    {submitted && valid && error && <div className='failure-response'>Error! {errorMsg}</div>}
-
-                    <label htmlFor='steam-id'>Steam Id: </label>
-                    <input 
-                        id='steam-id'
-                        className='form-field'
-                        type='text'
-                        name='steam-id'
-                        value={steamId}
-                        onChange={handleSteamIdInputChange}
-                    />
-                    {submitted && !steamId && <span id='steam-id-error'>Please enter your Steam Id</span>}
-
-                    <br />
-
-                    <button className='form-field' type='submit'>
-                        Import Wishlist
-                    </button>
-                </form>
+        <div className='wishlist-import-page default-content-box row'>
+            <div className="col-12">
+                <h2>Wishlist import</h2>
             </div>
+            
+            <div className="col-12">
+                <p>You will be importing your Steam Wishlist, this will be your Main Reference list to add/remove/delete/edit of off.</p>
+
+                <p>Find your Steam Id here: <a href='https://steamdb.info/calculator/' alt='Steam Calculator' title='Steam Calculator' target='_blank' rel='noreferrer'>Steam Calculator</a></p>
+
+                <div className="row">
+                    <div className="col-md-6 col-12">
+                        <img src="https://files.treblesketch.com/2022/10/4aad8a5d79ff52b3_2022-10-25.png" alt="Show where to put in your Steam profile link" />
+                        <p>Find what is your Steam Profile URL and paste the link into the website.</p> 
+                    </div>
+                    <div className="col-md-6 col-12">
+                        <img src="https://files.treblesketch.com/2022/10/f4664f5935a95ea4_2022-10-25.png" alt="Shows which Steam Id to input below" />
+                        <p>Click on the button highlighted in the image below to copy your Steam Id.</p>
+                    </div>
+                </div>
+
+                <div className='import-form-div col-xl-9 col-lg-9 col-12 g-4'>
+                    <form className='import-form row' onSubmit={handleSubmit}>
+                        {submitted && valid && !error && <div className='success-message'>Success! Importing wishlist...</div>}
+                        {submitted && valid && error && <div className='failure-response'>Error! {errorMsg}</div>}
+
+                        <div className='row mb-3'>
+                            <label htmlFor='steam-id' className="col-sm-6 col-form-label col-form-label-lg">Steam Id: </label>
+                            <div className="input-group">
+                                <input 
+                                    id='steam-id'
+                                    className='form-control form-control-lg form-field'
+                                    type='text'
+                                    name='steam-id'
+                                    value={steamId}
+                                    onChange={handleSteamIdInputChange}
+                                />
+                            </div>
+                        </div>
+
+                        <br />
+
+                        {submitted && !steamId && <span className="failure-response" id='steam-id-error'>Please enter your Steam Id</span>}
+
+                        <br />
+                        <br />
+
+                        <div className="col-auto">
+                            <button className='form-field btn btn-lg btn-primary' type='submit'>
+                                Import Wishlist
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
         </div>
     );
 }

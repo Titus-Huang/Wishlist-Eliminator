@@ -1,9 +1,5 @@
 
 
-body {
-    background-color: #5aa0d2 !important;
-}
-
 .landing-page {
 
     .landing-page-intro, .landing-page-user-links {
@@ -12,6 +8,30 @@ body {
 
         h1 {
             font-size: 3.5em;
+        }
+    }
+}
+
+.home-buffer {
+    padding-top: 15vh;
+}
+
+.home-page {
+    h1 {
+        margin: 0 auto;
+    }
+
+    .footer {
+        margin-top: 5em;
+
+        a {
+            text-decoration: none;
+            color: greenyellow;
+            transition: color 0.2s ease-out;
+        }
+
+        a:hover {
+            color: orangered;
         }
     }
 }
