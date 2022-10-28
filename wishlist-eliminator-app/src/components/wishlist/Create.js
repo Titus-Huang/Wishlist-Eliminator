@@ -133,46 +133,68 @@ function Create(props) {
     useEffect(onInitialize, [props.appData.userWishlistData]);
 
     return (
-        <div className="WishlistCreate">
-            <h2>Create Wishlist time</h2>
-            <p>the left would show the "main" wishlist, imported from Steam. While the right would show the "new" wishlist that is being created.</p>
-            <p>The top would allow the addition of wishlist name/description and so on.</p>
+        <div className="WishlistCreate row">
+            <div className="col-lg-6 col-12">
+                <h2>Create Wishlist</h2>
+                <p>The top would allow the addition of wishlist name/description and so on.</p>
+            </div>
 
-            <div className="createNewWishlistPrompt">
-                <h2>Create New List</h2>
-                <form className='login-form' onSubmit={handleSubmit}>
-                    {submitted && valid && !error && <div className='success-message'>Success! Creating new list...</div>}
-                    {submitted && valid && error && <div className='failure-response'>Error! {errorMsg}</div>}
+            <div className="col-lg-6 col-12">
+                <div className="createNewWishlistPrompt">
+                    <div className='new-list-form-title col-12'>
+                        <h2>Create New List</h2>
+                    </div>
 
-                    <label htmlFor='title'>Title: </label>
-                    <input
-                        id='title'
-                        className='form-field'
-                        type='text'
-                        name='title'
-                        value={newListForm.title}
-                        onChange={handleTitleInputChange}
-                    />
-                    {submitted && !newListForm.title && <span id='title-error'>Please enter a list title</span>}
+                    <div className='create-list-form-div col-12'>
+                        <form className='create-list-form row' onSubmit={handleSubmit}>
+                            {submitted && valid && !error && <div className='success-message'>Success! Creating new list...</div>}
+                            {submitted && valid && error && <div className='failure-response'>Error! {errorMsg}</div>}
 
-                    <br />
+                            <div className='row mb-3'>
+                                <label htmlFor='title' className="col-sm-6 col-form-label col-form-label-lg">Title: </label>
+                                <div className="input-group">
+                                    <input
+                                        id='title'
+                                        className='form-control form-control-lg form-field'
+                                        type='text'
+                                        name='title'
+                                        value={newListForm.title}
+                                        onChange={handleTitleInputChange}
+                                    />
+                                </div>
+                            </div>
+                            <br />
+                            {submitted && !newListForm.title && <span className='failure-response' id='title-error'>Please enter a list title</span>}
 
-                    <label htmlFor='description'>Description: </label>
-                    <textarea
-                        id='description'
-                        className='form-field'
-                        type='textfield'
-                        name='description'
-                        value={newListForm.description}
-                        onChange={handleDescriptionInputChange}
-                    />
+                            <br />
+                            <br />
 
-                    <br />
+                            <div className='row mb-3'>
+                                <label htmlFor='description' className="col-sm-6 col-form-label col-form-label-lg">Description: </label>
+                                <div className="input-group">
+                                    <textarea
+                                        id='description'
+                                        className='form-field form-control form-control-lg'
+                                        type='textfield'
+                                        name='description'
+                                        rows="5"
+                                        value={newListForm.description}
+                                        onChange={handleDescriptionInputChange}
+                                    />
+                                </div>
+                            </div>
 
-                    <button className='form-field' type='submit'>
-                        Create
-                    </button>
-                </form>
+                            <br />
+                            <br />
+
+                            <div className="col-auto">
+                                <button className='form-field btn btn-lg btn-primary' type='submit'>
+                                    Create
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     );
