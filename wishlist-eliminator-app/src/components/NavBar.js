@@ -27,7 +27,7 @@ function NavBar(props) {
             <>
                 {/* <li className='nav-item'><a className='nav-link' onClick={() => navigate('/wishlists/edit/1'>Edit First Wishlist</a>></li>
                 <li className='nav-item'><a className='nav-link' onClick={() => navigate('/wishlists/view/1'>View First Wishlist</a>></li> */}
-                <li className='nav-item'><a className='nav-link' onClick={() => navigate('/wishlists/')}>View all your (and "public") Wishlists</a></li>
+                <li className='nav-item'><a className='nav-link' onClick={() => navigate('/wishlists/view/all/')}>View all your (and "public") Wishlists</a></li>
                 <li className='nav-item'><a className='nav-link' onClick={() => navigate('/wishlists/edit/2?ref=1')}>Edit Second Wishlist & Referencing First Wishlist</a></li>
                 {/* <li className='nav-item'><a className='nav-link' onClick={() => navigate('/wishlists/edit/4'>Edit Fourth Wishlist</a>></li>
                 <li className='nav-item'><a className='nav-link' onClick={() => navigate('/wishlists/view/4'>View Fourth Wishlist</a>></li> */}

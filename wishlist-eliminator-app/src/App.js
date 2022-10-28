@@ -8,6 +8,7 @@ import Login from './components/users/Login';
 import Logout from './components/users/Logout';
 import SignUp from './components/users/Sign_Up';
 import Import from './components/wishlist/Import';
+import View from './components/wishlist/View';
 import WishlistModification from './components/wishlist/WishlistModification';
 
 function App() {
@@ -115,6 +116,7 @@ function App() {
                 <Route path='/users/sign-up' element={<SignUp />} />
                 <Route path='/users/login' element={<Login updateUserData={updateUserData} updateUserWishlistDataData={updateUserWishlistDataData} updateUserWishlistsData={updateUserWishlistsData} />} />
                 <Route path='/users/logout' element={<Logout />} />
+                <Route path='/wishlists/view/all/' element={<View type={'logged-in'} />} />
                 <Route path='/wishlists/import' element={<Import userData={appData.userData} updateSteamWishlistData={updateSteamWishlistData} />} />
                 <Route path='/wishlists/create' element={<WishlistModification type={'create'} appData={appData} updateAppData={updateAppData} />} />
                 <Route path='/wishlists/edit/:wishlistId' element={<WishlistModification type={'edit'} appData={appData} updateAppData={updateAppData} />} />
