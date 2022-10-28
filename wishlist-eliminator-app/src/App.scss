@@ -15,7 +15,7 @@
 .default-content-box {
     border: 1px black solid;
     border-radius: 2em;
-    background-color: #545454;
+    background-color: rgba(84, 84, 84, 0.95);
     color: white;
 
     height: fit-content;
@@ -45,7 +45,7 @@ body {
     min-width: 576px;
     min-height: 100vh;
     height: fit-content;
-
+    background-position-x: center;
     padding-bottom: 5em;
 }
 
