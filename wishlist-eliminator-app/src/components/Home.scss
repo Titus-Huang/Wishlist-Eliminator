@@ -15,4 +15,18 @@
     h1 {
         margin: 0 auto;
     }
+
+    .footer {
+        margin-top: 5em;
+
+        a {
+            text-decoration: none;
+            color: greenyellow;
+            transition: color 0.2s ease-out;
+        }
+
+        a:hover {
+            color: orangered;
+        }
+    }
 }

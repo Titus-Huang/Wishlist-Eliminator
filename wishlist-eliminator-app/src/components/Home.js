@@ -20,6 +20,12 @@ function Home(props) {
                 <div className="col-lg-6 col-12">
                     <p>Hi <i>{props.userData.username}</i>, hope you're enjoying your time on this site {'<3'}</p>
                 </div>
+                
+                <div className="col-12 text-center footer">
+                    <p>Made with &hearts; in Adelaide</p>
+                    <p>Created by <a href="https://github.com/Titus-Huang">Titus Huang</a></p>
+                    <p>&copy; 2022, General Assembly SEiR 61, MIT Licence</p>
+                </div>
                 {/* <p>Counter: {counter}</p>
                 <button onClick={increaseCounter}>Count</button> */}
             </div>
