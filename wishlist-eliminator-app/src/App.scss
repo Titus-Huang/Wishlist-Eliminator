@@ -22,7 +22,7 @@
     padding: 3em 1em;
     display: flex;
 
-    margin: 5em;
+    margin: 2em 3.5em;
 }
 
 body {
@@ -41,7 +41,8 @@ body {
     /* background-size: auto; */
     background-repeat: repeat-y;
     /* position: relative; */
-    min-width: 950px;
+    // min-width: 950px;
+    min-width: 576px;
     min-height: 100vh;
     height: fit-content;
 }
@@ -69,5 +70,11 @@ nav {
         button:hover {
             background-color: #495057;;
         }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .default-content-box {
+        margin: 1em 2em;
     }
 }
