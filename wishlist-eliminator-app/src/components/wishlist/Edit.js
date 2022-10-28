@@ -202,7 +202,11 @@ function Edit(props) {
         }
     }
 
-    const listActions = { addToOtherList, updateCurrentListData }
+    const doesRefListExist = () => {
+        return location.search.includes('ref')
+    }
+
+    const listActions = { addToOtherList, updateCurrentListData, doesRefListExist }
 
     // this should run on initialise
     useEffect(() => {
@@ -285,22 +289,21 @@ function Edit(props) {
 
     const renderLists = () => {
         return (
-            <>
+            <div className="col-12 row g-0">
                 {(typeof referenceListData.listId !== 'undefined' || manuallyShowReferenceData) &&
                 <WishlistDisplay type={'editing-reference'} referenceListData={referenceListData} listActions={listActions} />}
                 <WishlistDisplay type={'editing-list'} editingListData={editingListData} listActions={listActions}/>
-            </>
+            </div>
         )
     }
 
     return (
-        <div className="WishlistEdit">
-            <h2>Edit Wishlist</h2>
-            <p>The left would show the "main" wishlist, imported from Steam. While the right would show the "new" wishlist that is being created.</p>
-            <div className="displayCreateColumns">
-                .{props.appData.userWishlists?.length > 0 && renderLists()}
-                {/* {console.log(props.appData.userWishlists?.length)} */}
+        <div className="WishlistEdit row text-center">
+            <div className="col-12">
+                <h2>Edit Wishlist</h2>
+                <p>The left would show the "main" wishlist, imported from Steam. While the right would show the "new" wishlist that is being created.</p>
             </div>
+            {props.appData.userWishlists?.length > 0 && renderLists()}
         </div>
     );
 }

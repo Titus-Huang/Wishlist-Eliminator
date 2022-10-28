@@ -11,6 +11,14 @@
     }
 }
 
+.alone {
+    margin: 0 auto;
+    width: fit-content;
+    .editingListRender {
+        margin: 0;
+    }
+}
+
 .WishlistCard {
     // 460 by 215 height
     width: inherit;
@@ -59,6 +67,7 @@
 }
 
 .list-render {
+    margin: 0 auto;
     width: 500px;
 
     .list-details {
