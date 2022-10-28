@@ -296,6 +296,7 @@ function Edit(props) {
     return (
         <div className="WishlistEdit">
             <h2>Edit Wishlist</h2>
+            <p>The left would show the "main" wishlist, imported from Steam. While the right would show the "new" wishlist that is being created.</p>
             <div className="displayCreateColumns">
                 .{props.appData.userWishlists?.length > 0 && renderLists()}
                 {/* {console.log(props.appData.userWishlists?.length)} */}
