@@ -35,6 +35,8 @@ function Home(props) {
     }
     
     const loggedOutView = () => {
+        // Note to future self
+        // make sure ALL ELEMENTS TILL home-buffer needs to BE 100% height
         return (
             <div className='Home col-12 home-buffer'>
                 <div className='landing-page default-content-box row'>
@@ -43,7 +45,7 @@ function Home(props) {
                         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis perspiciatis soluta deleniti quae dignissimos recusandae, eligendi odit officia, aut esse, at quam maiores? Autem nulla officia perferendis temporibus, reprehenderit qui!</p>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Necessitatibus id odit voluptatem beatae repellat quos nihil iste aut quo. Fuga vitae culpa iusto ipsam molestiae recusandae? Adipisci dolor necessitatibus reprehenderit! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Porro facilis sit quos facere exercitationem ut quidem voluptate distinctio natus deserunt laborum alias, error voluptatibus delectus, repudiandae soluta reiciendis ad temporibus.</p>
                     </div>
-                    <div className="landing-page-user-links col-lg-4 col-sm12">
+                    <div className="d-flex justify-content-center align-items-center landing-page-user-links col-lg-4 col-sm-12">
                         <div className="btn-group btn-group-lg" role="user-onboarding" aria-label="Sign up and Log in buttons">
                             <button className='btn btn-primary' onClick={() => navigate('/users/sign-up')}>Sign up</button>
                             <button className='btn btn-primary' onClick={() => navigate('/users/login')}>Log in</button>
